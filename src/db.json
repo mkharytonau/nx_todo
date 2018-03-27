@@ -1,0 +1,81 @@
+{
+  "tasks": [
+    {
+      "description": null,
+      "priority": null,
+      "reminder": {
+        "interval": 1,
+        "timeBefore": 10,
+        "daysOfWeek": null,
+        "fromMoment": null,
+        "datetime": null
+      },
+      "owners": null,
+      "category": null,
+      "title": "its_task_was_added_by_terminal",
+      "status": null,
+      "subtasks": null,
+      "deadline": null
+    },
+    {
+      "description": null,
+      "priority": null,
+      "reminder": {
+        "interval": 1,
+        "timeBefore": 10,
+        "daysOfWeek": null,
+        "fromMoment": null,
+        "datetime": null
+      },
+      "owners": null,
+      "category": null,
+      "title": "lolka",
+      "status": null,
+      "subtasks": null,
+      "deadline": null
+    },
+    {
+      "description": null,
+      "priority": null,
+      "reminder": {
+        "interval": 1,
+        "timeBefore": 10,
+        "daysOfWeek": null,
+        "fromMoment": null,
+        "datetime": null
+      },
+      "owners": null,
+      "category": "All",
+      "title": "taska",
+      "status": null,
+      "subtasks": null,
+      "deadline": null
+    }
+  ],
+  "events": [
+    {
+      "description": null,
+      "datefrom": null,
+      "reminder": null,
+      "participants": null,
+      "category": "sport",
+      "dateto": null,
+      "title": "this_is_event",
+      "place": "hotel",
+      "timefrom": null,
+      "timeto": null
+    },
+    {
+      "description": null,
+      "datefrom": null,
+      "reminder": null,
+      "participants": null,
+      "category": "sport",
+      "dateto": null,
+      "title": "other_event",
+      "place": "hotel",
+      "timefrom": null,
+      "timeto": null
+    }
+  ]
+}
