@@ -1,2 +1,4 @@
-.idea
-__pycache__
+src/.idea
+src/__pycache__
+src/nxtodo
+
