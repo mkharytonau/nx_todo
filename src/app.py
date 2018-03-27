@@ -32,7 +32,7 @@ def main():
 
     initialize()
 
-    arguments = 'add event other_event -c sport -P hotel'.split()
+    arguments = 'add event _event -c sport -P hotel'.split()
     args = parser.parse(arguments)
     user_choice_command.get(args.command, lambda args: print("No such command."))(args)
 

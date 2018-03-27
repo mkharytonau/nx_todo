@@ -1,81 +1,93 @@
 {
   "tasks": [
     {
-      "description": null,
       "priority": null,
-      "reminder": {
-        "interval": 1,
-        "timeBefore": 10,
-        "daysOfWeek": null,
-        "fromMoment": null,
-        "datetime": null
-      },
-      "owners": null,
-      "category": null,
+      "status": null,
+      "deadline": null,
       "title": "its_task_was_added_by_terminal",
-      "status": null,
-      "subtasks": null,
-      "deadline": null
-    },
-    {
-      "description": null,
-      "priority": null,
       "reminder": {
         "interval": 1,
-        "timeBefore": 10,
-        "daysOfWeek": null,
         "fromMoment": null,
-        "datetime": null
+        "datetime": null,
+        "timeBefore": 10,
+        "daysOfWeek": null
       },
+      "description": null,
+      "subtasks": null,
       "owners": null,
-      "category": null,
+      "category": null
+    },
+    {
+      "priority": null,
+      "status": null,
+      "deadline": null,
       "title": "lolka",
-      "status": null,
-      "subtasks": null,
-      "deadline": null
-    },
-    {
-      "description": null,
-      "priority": null,
       "reminder": {
         "interval": 1,
-        "timeBefore": 10,
-        "daysOfWeek": null,
         "fromMoment": null,
-        "datetime": null
+        "datetime": null,
+        "timeBefore": 10,
+        "daysOfWeek": null
       },
-      "owners": null,
-      "category": "All",
-      "title": "taska",
-      "status": null,
+      "description": null,
       "subtasks": null,
-      "deadline": null
+      "owners": null,
+      "category": null
+    },
+    {
+      "priority": null,
+      "status": null,
+      "deadline": null,
+      "title": "taska",
+      "reminder": {
+        "interval": 1,
+        "fromMoment": null,
+        "datetime": null,
+        "timeBefore": 10,
+        "daysOfWeek": null
+      },
+      "description": null,
+      "subtasks": null,
+      "owners": null,
+      "category": "All"
     }
   ],
   "events": [
     {
-      "description": null,
-      "datefrom": null,
-      "reminder": null,
-      "participants": null,
-      "category": "sport",
+      "timeto": null,
       "dateto": null,
+      "datefrom": null,
       "title": "this_is_event",
       "place": "hotel",
+      "reminder": null,
+      "description": null,
       "timefrom": null,
-      "timeto": null
+      "participants": null,
+      "category": "sport"
     },
     {
-      "description": null,
-      "datefrom": null,
-      "reminder": null,
-      "participants": null,
-      "category": "sport",
+      "timeto": null,
       "dateto": null,
+      "datefrom": null,
       "title": "other_event",
       "place": "hotel",
+      "reminder": null,
+      "description": null,
       "timefrom": null,
-      "timeto": null
+      "participants": null,
+      "category": "sport"
+    },
+    {
+      "timeto": null,
+      "dateto": null,
+      "datefrom": null,
+      "title": "_event",
+      "place": "hotel",
+      "reminder": null,
+      "description": null,
+      "timefrom": null,
+      "participants": null,
+      "category": "sport"
     }
   ]
 }
