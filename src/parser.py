@@ -70,5 +70,5 @@ def parse(arguments):
     del_event_group.add_argument('-t', '--title')
     del_event_group.add_argument('-c', '--category')
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     return args
