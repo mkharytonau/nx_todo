@@ -40,7 +40,7 @@ def parse(arguments):
     parser_add_task.add_argument('-r', '--reminder')
     parser_add_task.add_argument('-c', '--category')
     parser_add_task.add_argument('-o', '--owners')
-    parser_add_task.add_argument('-d', '--deadline')
+    parser_add_task.add_argument('-d', '--deadline', nargs=2)
     parser_add_task.add_argument('-p', '--priority', type=int)
     parser_add_task.add_argument('-s', '--status')
     parser_add_task.add_argument('-S', '--subtasks')
@@ -50,11 +50,8 @@ def parse(arguments):
     parser_add_event.add_argument('-D', '--description')
     parser_add_event.add_argument('-r', '--reminder')
     parser_add_event.add_argument('-c', '--category')
-    parser_add_event.add_argument('-df', '--datefrom')
-    parser_add_event.add_argument('-tf', '--timefrom')
-    parser_add_event.add_argument('-dt', '--dateto')
-    parser_add_event.add_argument('-tt', '--timeto')
-    parser_add_event.add_argument('-t', '--time')
+    parser_add_event.add_argument('-f', '--fromdt', nargs=2, required=True)
+    parser_add_event.add_argument('-t', '--todt', nargs=2, required=True)
     parser_add_event.add_argument('-P', '--place')
     parser_add_event.add_argument('-p', '--participants')
 
@@ -73,5 +70,5 @@ def parse(arguments):
     del_event_group.add_argument('-t', '--title')
     del_event_group.add_argument('-c', '--category')
 
-    args = parser.parse_args(arguments)
+    args = parser.parse_args()
     return args

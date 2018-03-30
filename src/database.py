@@ -1,4 +1,6 @@
 import json
+from datetime import datetime
+from colored import bg, attr, fg
 from task import Task
 from event import Event
 from reminder import Reminder
@@ -31,13 +33,18 @@ class Database:
             db.create_from_dict(data)
         return db
 
-    def write(self):
-        with open('db.json', 'w') as file:
-            json.dump(self, file, default=lambda o: o.__dict__, indent=2)
-
     def create_from_dict(self, dictionary):
         self.tasks = [Task.create_from_dict(task) for task in dictionary["tasks"]]
         self.events = [Event.create_from_dict(event) for event in dictionary["events"]]
+
+    def json_serial(self, obj):
+        if isinstance(obj, datetime):
+            return obj.strftime("%Y/%m/%d %H:%M:%S")
+        return obj.__dict__
+
+    def write(self):
+        with open('db.json', 'w') as file:
+            json.dump(self, file, default=self.json_serial, indent=2)
 
     def push_task(self, task):
         self.tasks.append(task)
@@ -67,9 +74,9 @@ class Database:
             i = i + 1
 
     def show_all(self, args):
-        print('Tasks:')
+        print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
         self.show_task(args)
-        print('\nEvents:')
+        print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
         self.show_event(args)
 
     def show_task(self, args):
@@ -103,13 +110,21 @@ class Database:
         self.print_list(founded_events, args)
 
     def add_task(self, args):
+        try:
+            if not args.deadline is None:
+                deadline = datetime(*map(int, args.deadline[0].split('/')), *map(int, args.deadline[1].split(':')))
+            else:
+                deadline = None
+        except:
+            print('Incorrect data. Please, try again...')
+            return
         self.push_task(Task(
             args.title,
             args.description,
             Reminder(),
             args.category,
             args.owners,
-            args.deadline,
+            deadline,
             args.priority,
             args.status,
             args.subtasks
@@ -117,15 +132,19 @@ class Database:
         self.write()
 
     def add_event(self, args):
+        try:
+            from_datetime = datetime(*map(int, args.fromdt[0].split('/')), *map(int, args.fromdt[1].split(':')))
+            to_datetime = datetime(*map(int, args.todt[0].split('/')), *map(int, args.todt[1].split(':')))
+        except:
+            print('Incorrect data. Please, try again...')
+            return
         self.push_event(Event(
             args.title,
             args.description,
             args.reminder,
             args.category,
-            args.datefrom,
-            args.timefrom,
-            args.dateto,
-            args.timeto,
+            from_datetime,
+            to_datetime,
             args.place,
             args.participants
         ))
@@ -136,38 +155,24 @@ class Database:
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
                 help_tuple = ('tasks', kind_of_search, getattr(args, kind_of_search))
-        try:
-            self.del_instance_by(help_tuple)
-        except ValueError:
-            print('There is no task with this attribute. Please, try again...')
-            return
-        self.write()
+        self.del_instance_by(help_tuple)
 
     def del_event(self, args):
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
                 help_tuple = ('events', kind_of_search, getattr(args, kind_of_search))
+        self.del_instance_by(help_tuple)
+
+    def del_instance_by(self, help_tuple):
         try:
-            self.del_instance_by(help_tuple)
+            found = self.find_instance_by(help_tuple)
         except ValueError:
             print('There is no task with this attribute. Please, try again...')
             return
+        for f in found:
+            self.__getattribute__(help_tuple[0]).remove(f)
         self.write()
-
-    def del_instance_by(self, help_tuple):
-        isfound = False
-        for inst in self.__getattribute__(help_tuple[0]):
-            if inst.__getattribute__(help_tuple[1]) == help_tuple[2]:
-                if help_tuple[0] == 'tasks':
-                    self.tasks.remove(inst)
-                if help_tuple[0] == 'events':
-                    self.events.remove(inst)
-                isfound = True
-        if not isfound:
-            raise ValueError
-        else:
-            return
 
     def find_instance_by(self, help_tuple):
         found = []
@@ -179,6 +184,4 @@ class Database:
                     found.append(inst)
         if len(found) == 0:
             raise ValueError
-        else:
-            return found
-
+        return found

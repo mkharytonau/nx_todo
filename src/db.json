@@ -1,93 +1,84 @@
 {
   "tasks": [
     {
-      "priority": null,
-      "status": null,
-      "deadline": null,
-      "title": "its_task_was_added_by_terminal",
-      "reminder": {
-        "interval": 1,
-        "fromMoment": null,
-        "datetime": null,
-        "timeBefore": 10,
-        "daysOfWeek": null
-      },
       "description": null,
-      "subtasks": null,
+      "priority": 3,
       "owners": null,
-      "category": null
+      "status": null,
+      "category": null,
+      "reminder": {
+        "daysOfWeek": null,
+        "datetime": null,
+        "fromMoment": null,
+        "timeBefore": 10,
+        "interval": 1
+      },
+      "deadline": "2018/03/23 10:00:00",
+      "title": "tasoshka",
+      "subtasks": null
     },
     {
-      "priority": null,
-      "status": null,
-      "deadline": null,
-      "title": "lolka",
-      "reminder": {
-        "interval": 1,
-        "fromMoment": null,
-        "datetime": null,
-        "timeBefore": 10,
-        "daysOfWeek": null
-      },
       "description": null,
-      "subtasks": null,
+      "priority": 2,
       "owners": null,
-      "category": null
+      "status": null,
+      "category": "photo",
+      "reminder": {
+        "daysOfWeek": null,
+        "datetime": null,
+        "fromMoment": null,
+        "timeBefore": 10,
+        "interval": 1
+      },
+      "deadline": null,
+      "title": "example1",
+      "subtasks": null
     },
     {
-      "priority": null,
-      "status": null,
-      "deadline": null,
-      "title": "taska",
-      "reminder": {
-        "interval": 1,
-        "fromMoment": null,
-        "datetime": null,
-        "timeBefore": 10,
-        "daysOfWeek": null
-      },
       "description": null,
-      "subtasks": null,
+      "priority": 1,
       "owners": null,
-      "category": "All"
+      "status": null,
+      "category": "sport",
+      "reminder": {
+        "daysOfWeek": null,
+        "datetime": null,
+        "fromMoment": null,
+        "timeBefore": 10,
+        "interval": 1
+      },
+      "deadline": null,
+      "title": "example2",
+      "subtasks": null
+    },
+    {
+      "description": null,
+      "priority": null,
+      "owners": null,
+      "status": null,
+      "category": null,
+      "reminder": {
+        "daysOfWeek": null,
+        "datetime": null,
+        "fromMoment": null,
+        "timeBefore": 10,
+        "interval": 1
+      },
+      "deadline": null,
+      "title": "sanya_pidor",
+      "subtasks": null
     }
   ],
   "events": [
     {
-      "timeto": null,
-      "dateto": null,
-      "datefrom": null,
-      "title": "this_is_event",
-      "place": "hotel",
-      "reminder": null,
       "description": null,
-      "timefrom": null,
-      "participants": null,
-      "category": "sport"
-    },
-    {
-      "timeto": null,
-      "dateto": null,
-      "datefrom": null,
-      "title": "other_event",
-      "place": "hotel",
+      "from_datetime": "2018/05/12 12:00:00",
+      "place": null,
+      "category": "sport",
       "reminder": null,
-      "description": null,
-      "timefrom": null,
       "participants": null,
-      "category": "sport"
-    },
-    {
-      "timeto": null,
-      "dateto": null,
-      "datefrom": null,
-      "title": "_event",
-      "place": "hotel",
-      "reminder": null,
-      "description": null,
-      "timefrom": null,
-      "participants": null,
-      "category": "sport"
+      "to_datetime": "2019/12/28 13:00:00",
+      "title": "ex1"
     }
   ]
 }
