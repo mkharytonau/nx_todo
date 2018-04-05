@@ -1,84 +1,40 @@
 {
+  "events": [],
   "tasks": [
     {
-      "description": null,
-      "priority": 3,
-      "owners": null,
-      "status": null,
+      "subtasks": null,
       "category": null,
-      "reminder": {
-        "daysOfWeek": null,
-        "datetime": null,
-        "fromMoment": null,
-        "timeBefore": 10,
-        "interval": 1
-      },
-      "deadline": "2018/03/23 10:00:00",
-      "title": "tasoshka",
-      "subtasks": null
-    },
-    {
-      "description": null,
-      "priority": 2,
-      "owners": null,
-      "status": null,
-      "category": "photo",
-      "reminder": {
-        "daysOfWeek": null,
-        "datetime": null,
-        "fromMoment": null,
-        "timeBefore": 10,
-        "interval": 1
-      },
-      "deadline": null,
-      "title": "example1",
-      "subtasks": null
-    },
-    {
-      "description": null,
-      "priority": 1,
-      "owners": null,
-      "status": null,
-      "category": "sport",
-      "reminder": {
-        "daysOfWeek": null,
-        "datetime": null,
-        "fromMoment": null,
-        "timeBefore": 10,
-        "interval": 1
-      },
-      "deadline": null,
-      "title": "example2",
-      "subtasks": null
-    },
-    {
-      "description": null,
       "priority": null,
+      "title": "example3",
       "owners": null,
       "status": null,
-      "category": null,
-      "reminder": {
-        "daysOfWeek": null,
-        "datetime": null,
-        "fromMoment": null,
-        "timeBefore": 10,
-        "interval": 1
-      },
-      "deadline": null,
-      "title": "sanya_pidor",
-      "subtasks": null
-    }
-  ],
-  "events": [
-    {
       "description": null,
-      "from_datetime": "2018/05/12 12:00:00",
-      "place": null,
-      "category": "sport",
-      "reminder": null,
-      "participants": null,
-      "to_datetime": "2019/12/28 13:00:00",
-      "title": "ex1"
+      "deadline": "2018/05/25 10:00:00",
+      "reminder": {
+        "stop_in_moment": "2018/05/25 10:00:00",
+        "flags": {
+          "interval": 0,
+          "datetimes": 0,
+          "weekdays": "2018/05/09"
+        },
+        "interval": "0:0:2:0",
+        "remind_in": "0:3:0:0",
+        "start_remind_from": "2018/05/10 12:00:00",
+        "kind": "task",
+        "parent": {
+          "deadline": "2018/05/25 10:00:00",
+          "title": "example3"
+        },
+        "datetimes": [
+          "2018/05/20 20:00:00",
+          "2018/05/21 20:00:00",
+          "2018/05/22 20:00:00"
+        ],
+        "weekdays": [
+          2,
+          3
+        ]
+      }
     }
   ]
 }

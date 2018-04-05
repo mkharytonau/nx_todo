@@ -1,9 +1,12 @@
 import json
-from datetime import datetime
+import thirdparty
 from colored import bg, attr, fg
 from task import Task
 from event import Event
 from reminder import Reminder
+from thirdparty import Parent
+from thirdparty import print_list
+from parse_datetime import parse_datetime
 
 
 class Database:
@@ -24,6 +27,10 @@ class Database:
         'task': lambda obj, args: obj.del_task(args),
         'event': lambda obj, args: obj.del_event(args)
     }
+    user_choice_check = {
+        'task': lambda obj, args: obj.check_task(args),
+        'event': lambda obj, args: obj.check_event(args)
+    }
 
     @staticmethod
     def load():
@@ -37,14 +44,9 @@ class Database:
         self.tasks = [Task.create_from_dict(task) for task in dictionary["tasks"]]
         self.events = [Event.create_from_dict(event) for event in dictionary["events"]]
 
-    def json_serial(self, obj):
-        if isinstance(obj, datetime):
-            return obj.strftime("%Y/%m/%d %H:%M:%S")
-        return obj.__dict__
-
     def write(self):
         with open('db.json', 'w') as file:
-            json.dump(self, file, default=self.json_serial, indent=2)
+            json.dump(self, file, default=thirdparty.json_serial, indent=2)
 
     def push_task(self, task):
         self.tasks.append(task)
@@ -61,17 +63,8 @@ class Database:
     def delete(self, args):
         self.user_choice_del.get(args.kind)(self, args)
 
-    def print_list(self, list, args):
-        if not len(list):
-            print('List is empty.')
-            return
-        i = 1
-        for item in list:
-            if args.full:
-                print(str(i) + '. ' + item.to_full())
-            else:
-                print(str(i) + '. ' + item.to_short())
-            i = i + 1
+    def check(self, args):
+        self.user_choice_check.get(args.kind)(self, args)
 
     def show_all(self, args):
         print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
@@ -81,7 +74,7 @@ class Database:
 
     def show_task(self, args):
         if args.all:
-            self.print_list(self.tasks, args)
+            print_list(self.tasks, args)
             return
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
@@ -92,11 +85,11 @@ class Database:
         except ValueError:
             print('There is no task with this attribute. Please, try again...')
             return
-        self.print_list(founded_tasks, args)
+        print_list(founded_tasks, args)
 
     def show_event(self, args):
         if args.all:
-            self.print_list(self.events, args)
+            print_list(self.events, args)
             return
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
@@ -107,21 +100,32 @@ class Database:
         except ValueError:
             print('There is no event with this attribute. Please, try again...')
             return
-        self.print_list(founded_events, args)
+        print_list(founded_events, args)
 
     def add_task(self, args):
         try:
-            if not args.deadline is None:
-                deadline = datetime(*map(int, args.deadline[0].split('/')), *map(int, args.deadline[1].split(':')))
-            else:
-                deadline = None
-        except:
-            print('Incorrect data. Please, try again...')
+            deadline = parse_datetime(args.deadline, thirdparty.Formats.ordinary)
+
+            start_remind_before = parse_datetime(args.remind_before, thirdparty.Formats.delta)
+            remind_in = parse_datetime(args.remind_in, thirdparty.Formats.delta)
+            if (not start_remind_before is None or not remind_in is None) and deadline is None:
+                print('You can not set -rb and -ri arguments, without -d(deadline)')
+                raise ValueError
+            start_remind_from = parse_datetime(args.remind_from, thirdparty.Formats.ordinary)
+            datetimes = parse_datetime(args.datetimes, thirdparty.Formats.ordinary_list)
+            interval = parse_datetime(args.interval, thirdparty.Formats.delta)
+            weekdays = parse_datetime(args.weekdays, thirdparty.Formats.weekdays)
+
+            parent = Parent(args.title, deadline)
+
+            reminder = Reminder(start_remind_before, start_remind_from, deadline, remind_in, datetimes,
+                                interval, weekdays, parent, thirdparty.Classes.task)
+        except ValueError:
             return
         self.push_task(Task(
             args.title,
             args.description,
-            Reminder(),
+            reminder,
             args.category,
             args.owners,
             deadline,
@@ -133,10 +137,9 @@ class Database:
 
     def add_event(self, args):
         try:
-            from_datetime = datetime(*map(int, args.fromdt[0].split('/')), *map(int, args.fromdt[1].split(':')))
-            to_datetime = datetime(*map(int, args.todt[0].split('/')), *map(int, args.todt[1].split(':')))
-        except:
-            print('Incorrect data. Please, try again...')
+            from_datetime = parse_datetime(args.fromdt)
+            to_datetime = parse_datetime(args.todt)
+        except ValueError:
             return
         self.push_event(Event(
             args.title,

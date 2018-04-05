@@ -1,4 +1,5 @@
 from datetime import datetime
+from parse_datetime import parse_datetime
 import base
 
 
@@ -20,8 +21,8 @@ class Event(base.Base):
             dictionary["description"],
             dictionary["reminder"],
             dictionary["category"],
-            datetime(*map(int, from_datetime_str[0].split('/')), *map(int, from_datetime_str[1].split(':'))),
-            datetime(*map(int, to_datetime_str[0].split('/')), *map(int, to_datetime_str[1].split(':'))),
+            parse_datetime(from_datetime_str, 'y/m/d h:m:s'),
+            parse_datetime(to_datetime_str, 'y/m/d h:m:s'),
             dictionary["place"],
             dictionary["participants"]
         )

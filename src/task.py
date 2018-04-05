@@ -1,6 +1,7 @@
-from datetime import datetime
-from colored import fg, attr
 import base
+from reminder import Reminder
+from colored import fg, attr
+from parse_datetime import parse_datetime
 
 
 class Task(base.Base):
@@ -15,15 +16,13 @@ class Task(base.Base):
 
     @staticmethod
     def create_from_dict(dictionary):
-        if not dictionary["deadline"] is None:
-            deadline_str = dictionary["deadline"].split()
-            deadline = datetime(*map(int, deadline_str[0].split('/')), *map(int, deadline_str[1].split(':')))
-        else:
-            deadline = None
+        deadline = parse_datetime(dictionary["deadline"].split(), 'y/m/d h:m:s') \
+            if not dictionary["deadline"] is None else None
+        reminder = Reminder.create_from_dict(dictionary["reminder"])
         task = Task(
             dictionary["title"],
             dictionary["description"],
-            dictionary["reminder"],
+            reminder,
             dictionary["category"],
             dictionary["owners"],
             deadline,
