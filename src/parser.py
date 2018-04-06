@@ -50,7 +50,7 @@ def parse(arguments):
     task_reminder_group_timestart = task_reminder_group.add_mutually_exclusive_group()
     task_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs='+')
     task_reminder_group_timestart.add_argument('-rb', '--remind_before')
-    task_reminder_group_kind = task_reminder_group.add_mutually_exclusive_group()
+    task_reminder_group_kind = task_reminder_group.add_argument_group()
     task_reminder_group_kind.add_argument('-ri', '--remind_in')
     task_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')
     task_reminder_group_kind.add_argument('-i', '--interval')
@@ -60,12 +60,22 @@ def parse(arguments):
     parser_add_event = subparsers_for_add.add_parser('event')
     parser_add_event.add_argument('title')
     parser_add_event.add_argument('-D', '--description')
-    parser_add_event.add_argument('-r', '--reminder')
     parser_add_event.add_argument('-c', '--category')
     parser_add_event.add_argument('-f', '--fromdt', nargs=2, required=True)
     parser_add_event.add_argument('-t', '--todt', nargs=2, required=True)
     parser_add_event.add_argument('-P', '--place')
     parser_add_event.add_argument('-p', '--participants')
+    event_reminder_group = parser_add_event.add_argument_group('Reminder', 'This group of '
+                                                                         'arguments uses to create a reminder.')
+    event_reminder_group_timestart = event_reminder_group.add_mutually_exclusive_group()
+    event_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs='+')
+    event_reminder_group_timestart.add_argument('-rb', '--remind_before')
+    event_reminder_group_kind = event_reminder_group.add_argument_group()
+    event_reminder_group_kind.add_argument('-ri', '--remind_in')
+    event_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')
+    event_reminder_group_kind.add_argument('-i', '--interval')
+    event_reminder_group_kind.add_argument('-wd', '--weekdays', nargs='+')
+
 
 
     # Parsing the 'del' command ----------------------------------------------------------------
@@ -82,5 +92,32 @@ def parse(arguments):
     del_event_group.add_argument('-t', '--title')
     del_event_group.add_argument('-c', '--category')
 
-    args = parser.parse_args(arguments)
+    # Parsing for the 'check' command-----------------------------------------------------------------
+    parser_check = subparsers_for_command.add_parser('check')
+    subparsers_for_check = parser_check.add_subparsers(dest='kind')
+
+    parser_check_task = subparsers_for_check.add_parser('task')
+    check_task_group = parser_check_task.add_mutually_exclusive_group(required=True)
+    check_task_group.add_argument('-a', '--all', action='store_true')
+    check_task_group.add_argument('-t', '--title')
+    check_task_group.add_argument('-c', '--category')
+
+    parser_check_event = subparsers_for_check.add_parser('event')
+    check_event_group = parser_check_event.add_mutually_exclusive_group(required=True)
+    check_event_group.add_argument('-a', '--all', action='store_true')
+    check_event_group.add_argument('-t', '--title')
+    check_event_group.add_argument('-c', '--category')
+
+    parser_check_all = subparsers_for_check.add_parser('all')
+    check_all_group = parser_check_all.add_mutually_exclusive_group(required=True)
+    check_all_group.add_argument('-a', '--all', action='store_true')
+    check_all_group.add_argument('-t', '--title')
+    check_all_group.add_argument('-c', '--category')
+    parser_check_all.add_argument('-bg', '--background', action='store_true')
+
+    parser_stop = subparsers_for_check.add_parser('stop')
+
+    # Parsing for the 'stop' command-------------------------------------------------------------------
+
+    args = parser.parse_args()
     return args

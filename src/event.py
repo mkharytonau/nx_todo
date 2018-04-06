@@ -1,6 +1,6 @@
-from datetime import datetime
-from parse_datetime import parse_datetime
 import base
+from parse_datetime import parse_datetime
+from reminder import Reminder
 
 
 class Event(base.Base):
@@ -16,10 +16,11 @@ class Event(base.Base):
     def create_from_dict(dictionary):
         from_datetime_str = dictionary["from_datetime"].split()
         to_datetime_str = dictionary["to_datetime"].split()
+        reminder = Reminder.create_from_dict(dictionary["reminder"])
         event = Event(
             dictionary["title"],
             dictionary["description"],
-            dictionary["reminder"],
+            reminder,
             dictionary["category"],
             parse_datetime(from_datetime_str, 'y/m/d h:m:s'),
             parse_datetime(to_datetime_str, 'y/m/d h:m:s'),
@@ -38,8 +39,8 @@ class Event(base.Base):
                'From: {From}\n' \
                'To: {To}\n' \
                'Reminder: {reminder}\n' \
-               'Description: {description}\n'.format(title=str(self.title), place=str(self.place), category=str(self.category),
-                                                    participants=str(self.participants),
-                                                    From=str(self.from_datetime), To=str(self.to_datetime),
-                                                    reminder=str(self.reminder),
-                                                    description=str(self.description))
+               'Description: {description}\n'.format(title=str(self.title), place=str(self.place),
+                                                     category=str(self.category), participants=str(self.participants),
+                                                     From=str(self.from_datetime), To=str(self.to_datetime),
+                                                     reminder=str(self.reminder),
+                                                     description=str(self.description))

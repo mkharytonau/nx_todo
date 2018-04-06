@@ -5,7 +5,7 @@ from task import Task
 from event import Event
 from reminder import Reminder
 from thirdparty import Parent
-from thirdparty import print_list
+from thirdparty import print_list, get_notifications, print_notifications
 from parse_datetime import parse_datetime
 
 
@@ -28,25 +28,26 @@ class Database:
         'event': lambda obj, args: obj.del_event(args)
     }
     user_choice_check = {
-        'task': lambda obj, args: obj.check_task(args),
-        'event': lambda obj, args: obj.check_event(args)
+        'all': lambda obj, args, style: obj.check_all(args, style),
+        'task': lambda obj, args, style: obj.check_task(args, style),
+        'event': lambda obj, args, style: obj.check_event(args, style)
     }
 
-    @staticmethod
-    def load():
-        db = Database()
+    def load(self):
         with open('db.json', 'r') as file:
             data = json.load(file)
-            db.create_from_dict(data)
-        return db
+            self.create_from_dict(data)
 
     def create_from_dict(self, dictionary):
         self.tasks = [Task.create_from_dict(task) for task in dictionary["tasks"]]
         self.events = [Event.create_from_dict(event) for event in dictionary["events"]]
 
     def write(self):
-        with open('db.json', 'w') as file:
-            json.dump(self, file, default=thirdparty.json_serial, indent=2)
+        try:
+            with open('db.json', 'w') as file:
+                json.dump(self, file, default=thirdparty.json_serial, indent=2)
+        except IOError as e:
+            print(e.errno, e.strerror)
 
     def push_task(self, task):
         self.tasks.append(task)
@@ -63,8 +64,10 @@ class Database:
     def delete(self, args):
         self.user_choice_del.get(args.kind)(self, args)
 
-    def check(self, args):
-        self.user_choice_check.get(args.kind)(self, args)
+    def check(self, args, style):
+        notifications = self.user_choice_check.get(args.kind)(self, args, style)
+        self.write()
+        return notifications
 
     def show_all(self, args):
         print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
@@ -106,20 +109,9 @@ class Database:
         try:
             deadline = parse_datetime(args.deadline, thirdparty.Formats.ordinary)
 
-            start_remind_before = parse_datetime(args.remind_before, thirdparty.Formats.delta)
-            remind_in = parse_datetime(args.remind_in, thirdparty.Formats.delta)
-            if (not start_remind_before is None or not remind_in is None) and deadline is None:
-                print('You can not set -rb and -ri arguments, without -d(deadline)')
-                raise ValueError
-            start_remind_from = parse_datetime(args.remind_from, thirdparty.Formats.ordinary)
-            datetimes = parse_datetime(args.datetimes, thirdparty.Formats.ordinary_list)
-            interval = parse_datetime(args.interval, thirdparty.Formats.delta)
-            weekdays = parse_datetime(args.weekdays, thirdparty.Formats.weekdays)
-
             parent = Parent(args.title, deadline)
 
-            reminder = Reminder(start_remind_before, start_remind_from, deadline, remind_in, datetimes,
-                                interval, weekdays, parent, thirdparty.Classes.task)
+            reminder = Reminder.parse_create(args, deadline, parent, thirdparty.Classes.task)
         except ValueError:
             return
         self.push_task(Task(
@@ -137,14 +129,18 @@ class Database:
 
     def add_event(self, args):
         try:
-            from_datetime = parse_datetime(args.fromdt)
-            to_datetime = parse_datetime(args.todt)
+            from_datetime = parse_datetime(args.fromdt, thirdparty.Formats.ordinary)
+            to_datetime = parse_datetime(args.todt, thirdparty.Formats.ordinary)
+
+            parent = Parent(args.title, from_datetime, to_datetime)
+
+            reminder = Reminder.parse_create(args, from_datetime, parent, thirdparty.Classes.event)
         except ValueError:
             return
         self.push_event(Event(
             args.title,
             args.description,
-            args.reminder,
+            reminder,
             args.category,
             from_datetime,
             to_datetime,
@@ -166,6 +162,43 @@ class Database:
             if not getattr(args, kind_of_search) is None:
                 help_tuple = ('events', kind_of_search, getattr(args, kind_of_search))
         self.del_instance_by(help_tuple)
+
+    def check_all(self, args, style):
+        print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
+        notifications_from_task = self.check_task(args, style)
+        print_notifications(notifications_from_task)
+        print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
+        notifications_from_event = self.check_event(args, style)
+        print_notifications(notifications_from_event)
+        return notifications_from_task + notifications_from_event
+
+    def check_task(self, args, style):
+        if args.all:
+            return get_notifications(self.tasks, style)
+        help_tuple = ()
+        for kind_of_search in ['title', 'category']:
+            if not getattr(args, kind_of_search) is None:
+                help_tuple = ('tasks', kind_of_search, getattr(args, kind_of_search))
+        try:
+            founded_tasks = self.find_instance_by(help_tuple)
+        except ValueError:
+            print('There is no task with this attribute. Please, try again...')
+            return
+        return get_notifications(founded_tasks, style)
+
+    def check_event(self, args, style):
+        if args.all:
+            return get_notifications(self.events, style)
+        help_tuple = ()
+        for kind_of_search in ['title', 'category']:
+            if not getattr(args, kind_of_search) is None:
+                help_tuple = ('events', kind_of_search, getattr(args, kind_of_search))
+        try:
+            founded_events = self.find_instance_by(help_tuple)
+        except ValueError:
+            print('There is no event with this attribute. Please, try again...')
+            return
+        return get_notifications(founded_events, style)
 
     def del_instance_by(self, help_tuple):
         try:

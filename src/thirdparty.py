@@ -17,19 +17,26 @@ class Formats():
 
 
 class Weekdays():
-    mon = 0,
-    tue = 1,
-    wed = 2,
-    thu = 3,
-    fri = 4,
-    sat = 5,
+    mon = 0
+    tue = 1
+    wed = 2
+    thu = 3
+    fri = 4
+    sat = 5
     sun = 6
 
 
+class Styles():
+    terminal = 'terminal'
+    gui = 'gui'
+
+
 class Parent():
-    def __init__(self, title, deadline):
+    def __init__(self, title, deadline, *to_datetime):
         self.title = title
         self.deadline = deadline
+        if len(to_datetime) > 0:
+            self.to_datetime = to_datetime[0]
 
 def json_serial(obj):
     if isinstance(obj, datetime):
@@ -59,5 +66,26 @@ def print_list(list, args):
         else:
             print(str(i) + '. ' + item.to_short())
         i = i + 1
+
+
+def get_notifications(list, style):
+    if not len(list):
+        print('List is empty.')
+        return
+    notifications = []
+    for obj in list:
+        notification = obj.reminder.check(style)
+        if notification is not None:
+            notifications.append(notification)
+    return notifications
+
+
+def print_notifications(list):
+    if len(list) == 0:
+        print('List is empty.')
+        return
+    for n in list:
+        print(n)
+
 
 

@@ -1,6 +1,6 @@
 import base
-from reminder import Reminder
 from colored import fg, attr
+from reminder import Reminder
 from parse_datetime import parse_datetime
 
 

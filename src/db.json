@@ -1,40 +1,74 @@
 {
-  "events": [],
-  "tasks": [
+  "events": [
     {
-      "subtasks": null,
-      "category": null,
-      "priority": null,
-      "title": "example3",
-      "owners": null,
-      "status": null,
-      "description": null,
-      "deadline": "2018/05/25 10:00:00",
+      "participants": null,
+      "title": "testiruem",
       "reminder": {
-        "stop_in_moment": "2018/05/25 10:00:00",
+        "interval": null,
+        "kind": "event",
+        "start_remind_from": "2018/04/06 19:35:00",
+        "datetimes": null,
         "flags": {
           "interval": 0,
+          "missed": true,
           "datetimes": 0,
-          "weekdays": "2018/05/09"
+          "weekdays": "2018/04/05",
+          "remind_in": false,
+          "right_now": true
         },
-        "interval": "0:0:2:0",
-        "remind_in": "0:3:0:0",
-        "start_remind_from": "2018/05/10 12:00:00",
-        "kind": "task",
+        "weekdays": null,
+        "remind_in": "0:0:0:2",
         "parent": {
-          "deadline": "2018/05/25 10:00:00",
-          "title": "example3"
+          "title": "testiruem",
+          "to_datetime": "2018/04/06 23:40:00",
+          "deadline": "2018/04/06 19:40:00"
         },
+        "stop_in_moment": "2018/04/06 19:40:00"
+      },
+      "description": null,
+      "to_datetime": "2018/04/06 23:40:00",
+      "place": null,
+      "category": null,
+      "from_datetime": "2018/04/06 19:40:00"
+    }
+  ],
+  "tasks": [
+    {
+      "deadline": "2018/04/15 10:00:00",
+      "owners": null,
+      "title": "TEST_GUI",
+      "reminder": {
+        "interval": "0:0:0:1",
+        "kind": "task",
+        "start_remind_from": "2018/04/06 19:00:00",
         "datetimes": [
-          "2018/05/20 20:00:00",
-          "2018/05/21 20:00:00",
-          "2018/05/22 20:00:00"
+          "2018/04/06 19:10:30"
         ],
+        "flags": {
+          "interval": 283,
+          "missed": false,
+          "datetimes": 1,
+          "weekdays": "2018/04/06",
+          "remind_in": false,
+          "right_now": false
+        },
         "weekdays": [
           2,
-          3
-        ]
-      }
+          3,
+          4
+        ],
+        "remind_in": "1:0:0:0",
+        "parent": {
+          "title": "TEST_GUI",
+          "deadline": "2018/04/15 10:00:00"
+        },
+        "stop_in_moment": "2018/04/15 10:00:00"
+      },
+      "description": null,
+      "priority": null,
+      "category": null,
+      "status": null,
+      "subtasks": null
     }
   ]
 }

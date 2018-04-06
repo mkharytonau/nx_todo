@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-
 import parser
 from database import Database
+from daemon import MyDaemon
+from thirdparty import Styles
 
 
 user_choice_command = {
@@ -24,26 +25,31 @@ def add(args):
 def delete(args):
     db.delete(args)
 
+
 def check(args):
-    db.check(args)
+    daemon = MyDaemon('/tmp/nxtodo_daemon.pid')
+    if args.kind == 'stop':
+        daemon.stop()
+        return
+    db.check(args, Styles.terminal)
+    if args.background:
+        daemon.start(db, args)
 
 
 def initialize():
     global db
-    db = Database.load()
-
-
-def testing_gui():
-    pass
+    db = Database()
+    db.load()
 
 
 def main():
 
     initialize()
 
-    #arguments = 'add task example3 -d 2018/05/25 10:00 -rf 2018/05/10 12:00 -dt 2018/05/20 20:00 2018/05/21 20:00 2018/05/22 20:00'.split()
-    #args = parser.parse(arguments)
-    #user_choice_command.get(args.command, lambda args: print("No such command."))(args)
+    #arguments = 'add event studying -f 2018/04/08 08:00 -t 2018/04/08 15:00 -rf 2018/04/05 13:00 -ri 0:1:0:0 -dt 2018/04/06 19:00 2018/04/07 19:00 -i 0:0:6:0 -wd fri'.split()
+    arguments = 'check all -a -bg'.split()
+    args = parser.parse(arguments)
+    user_choice_command.get(args.command, lambda args: print("No such command."))(args)
 
 
 if __name__ == "__main__":

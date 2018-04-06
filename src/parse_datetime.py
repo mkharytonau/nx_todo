@@ -1,11 +1,11 @@
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
-import thirdparty
+from thirdparty import Formats, Weekdays
 
 
 def parse_datetime(dtlist, format):
-    if format == thirdparty.Formats.ordinary:
+    if format == Formats.ordinary:
         if dtlist is None:
             return None
         try:
@@ -15,7 +15,7 @@ def parse_datetime(dtlist, format):
             raise ValueError
         return dt
 
-    if format == thirdparty.Formats.delta:
+    if format == Formats.delta:
         if dtlist is None:
             return None
         try:
@@ -26,7 +26,7 @@ def parse_datetime(dtlist, format):
             raise ValueError
         return td
 
-    if format == thirdparty.Formats.ordinary_list:
+    if format == Formats.ordinary_list:
         if dtlist is None:
             return None
         try:
@@ -37,17 +37,17 @@ def parse_datetime(dtlist, format):
             raise ValueError
         return list_of_dates
 
-    if format == thirdparty.Formats.weekdays:
+    if format == Formats.weekdays:
         if dtlist is None:
             return None
         try:
-            weekdays_ints = [getattr(thirdparty.Weekdays, i) for i in dtlist]
+            weekdays_ints = [getattr(Weekdays, i) for i in dtlist]
         except:
             print('Incorrect data. Please, try again...')
             raise ValueError
         return weekdays_ints
 
-    if format == thirdparty.Formats.date:
+    if format == Formats.date:
         if dtlist is None:
             return None
         try:

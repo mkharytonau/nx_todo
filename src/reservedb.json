@@ -1,0 +1,74 @@
+{
+  "tasks": [
+    {
+      "title": "example1",
+      "description": null,
+      "priority": null,
+      "reminder": {
+        "start_remind_from": "2018/04/05 12:00:00",
+        "flags": {
+          "interval": 0,
+          "weekdays": "2018/04/04",
+          "datetimes": 0
+        },
+        "remind_in": "1:0:0:0",
+        "stop_in_moment": "2018/04/15 10:00:00",
+        "datetimes": [
+          "2018/04/09 20:00:00",
+          "2018/04/12 20:00:00",
+          "2018/04/13 20:00:00"
+        ],
+        "interval": "0:0:0:10",
+        "kind": "task",
+        "weekdays": [
+          2,
+          3,
+          4
+        ],
+        "parent": {
+          "title": "example1",
+          "deadline": "2018/04/15 10:00:00"
+        }
+      },
+      "deadline": "2018/04/15 10:00:00",
+      "subtasks": null,
+      "category": null,
+      "status": null,
+      "owners": null
+    }
+  ],
+  "events": [
+    {
+      "title": "studying",
+      "description": null,
+      "place": null,
+      "to_datetime": "2018/04/08 15:00:00",
+      "reminder": {
+        "start_remind_from": "2018/04/05 13:00:00",
+        "flags": {
+          "interval": 0,
+          "weekdays": "2018/04/04",
+          "datetimes": 0
+        },
+        "remind_in": "0:1:0:0",
+        "stop_in_moment": "2018/04/08 08:00:00",
+        "datetimes": [
+          "2018/04/06 19:00:00",
+          "2018/04/07 19:00:00"
+        ],
+        "interval": "0:0:1:0",
+        "kind": "event",
+        "weekdays": [
+          4
+        ],
+        "parent": {
+          "title": "studying",
+          "deadline": "2018/04/08 08:00:00"
+        }
+      },
+      "participants": null,
+      "from_datetime": "2018/04/08 08:00:00",
+      "category": null
+    }
+  ]
+}
