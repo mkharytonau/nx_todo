@@ -1,10 +1,12 @@
 import json
 import thirdparty
 from colored import bg, attr, fg
+from datetime import datetime
 from task import Task
 from event import Event
 from reminder import Reminder
 from thirdparty import Parent
+from nxcalendar import nxCalendar
 from thirdparty import print_list, get_notifications, print_notifications
 from parse_datetime import parse_datetime
 
@@ -15,9 +17,9 @@ class Database:
         self.events = []
 
     user_choice_show = {
-        'all': lambda obj, args: obj.show_all(args),
-        'task': lambda obj, args: obj.show_task(args),
-        'event': lambda obj, args: obj.show_event(args)
+        'all': lambda obj, args, cal: obj.show_all(args, cal),
+        'task': lambda obj, args, cal: obj.show_task(args, cal),
+        'event': lambda obj, args, cal: obj.show_event(args, cal)
     }
     user_choice_add = {
         'task': lambda obj, args: obj.add_task(args),
@@ -56,7 +58,28 @@ class Database:
         self.events.append(event)
 
     def show(self, args):
-        self.user_choice_show.get(args.kind)(self, args)
+        cal = nxCalendar(datetime.today())
+        #self.user_choice_show.get(args.kind)(self, args, cal)
+        if args.kind == 'task':
+            founded_tasks = self.show_task(args)
+            cal.link_to(founded_tasks)
+            cal.show(2)
+            print_list(founded_tasks, args)
+        if args.kind == 'event':
+            founded_events = self.show_event(args)
+            cal.link_to(founded_events)
+            cal.show(2)
+            print_list(founded_events, args)
+        if args.kind == 'all':
+            founded_tasks = self.show_task(args)
+            cal.link_to(founded_tasks)
+            founded_events = self.show_event(args)
+            cal.link_to(founded_events)
+            cal.show(2)
+            print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
+            print_list(founded_tasks, args)
+            print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
+            print_list(founded_events, args)
 
     def add(self, args):
         self.user_choice_add.get(args.kind)(self, args)
@@ -69,16 +92,15 @@ class Database:
         self.write()
         return notifications
 
-    def show_all(self, args):
-        print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
-        self.show_task(args)
-        print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
-        self.show_event(args)
+    #def show_all(self, args):
+    #    print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
+    #    self.show_task(args)
+    #    print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
+    #    self.show_event(args)
 
     def show_task(self, args):
         if args.all:
-            print_list(self.tasks, args)
-            return
+            return self.tasks
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
@@ -88,12 +110,11 @@ class Database:
         except ValueError:
             print('There is no task with this attribute. Please, try again...')
             return
-        print_list(founded_tasks, args)
+        return  founded_tasks
 
     def show_event(self, args):
         if args.all:
-            print_list(self.events, args)
-            return
+            return self.events
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
@@ -103,7 +124,7 @@ class Database:
         except ValueError:
             print('There is no event with this attribute. Please, try again...')
             return
-        print_list(founded_events, args)
+        return founded_events
 
     def add_task(self, args):
         try:

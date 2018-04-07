@@ -47,7 +47,7 @@ def main():
     initialize()
 
     #arguments = 'add event studying -f 2018/04/08 08:00 -t 2018/04/08 15:00 -rf 2018/04/05 13:00 -ri 0:1:0:0 -dt 2018/04/06 19:00 2018/04/07 19:00 -i 0:0:6:0 -wd fri'.split()
-    arguments = 'check all -a -bg'.split()
+    arguments = 'show task -a'.split()
     args = parser.parse(arguments)
     user_choice_command.get(args.command, lambda args: print("No such command."))(args)
 

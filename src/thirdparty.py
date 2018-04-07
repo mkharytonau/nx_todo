@@ -31,6 +31,15 @@ class Styles():
     gui = 'gui'
 
 
+class Colors():
+    red = 124
+    yellow = 136
+    grey = 240
+    taskbg = 229
+    eventbg = 131
+    foreground = 235
+
+
 class Parent():
     def __init__(self, title, deadline, *to_datetime):
         self.title = title
@@ -68,23 +77,23 @@ def print_list(list, args):
         i = i + 1
 
 
-def get_notifications(list, style):
-    if not len(list):
+def get_notifications(arr, style):
+    if not len(arr):
         print('List is empty.')
         return
     notifications = []
-    for obj in list:
+    for obj in arr:
         notification = obj.reminder.check(style)
         if notification is not None:
             notifications.append(notification)
     return notifications
 
 
-def print_notifications(list):
-    if len(list) == 0:
+def print_notifications(arr):
+    if len(arr) == 0:
         print('List is empty.')
         return
-    for n in list:
+    for n in arr:
         print(n)
 
 
