@@ -1,9 +1,9 @@
 from datetime import datetime
 from datetime import timedelta
 from colored import fg, attr
-from notification import Notification
-from thirdparty import Parent, Formats, Classes, Styles
-from parse_datetime import parse_datetime
+from reminding.notification import Notification
+from thirdparty.thirdparty import Parent, Formats, Classes, Styles
+from thirdparty.parse_datetime import parse_datetime
 
 
 class Reminder:

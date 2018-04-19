@@ -117,7 +117,15 @@ def parse(arguments):
 
     parser_stop = subparsers_for_check.add_parser('stop')
 
-    # Parsing for the 'stop' command-------------------------------------------------------------------
+    # Parsing for the 'edit' command-------------------------------------------------------------------
+    parser_edit = subparsers_for_command.add_parser('edit')
+    subparsers_for_edit = parser_edit.add_subparsers(dest='kind')
+
+    parser_edit_task = subparsers_for_edit.add_parser('task')
+    parser_edit_task.add_argument('title')
+
+    parser_edit_event = subparsers_for_edit.add_parser('event')
+    parser_edit_event.add_argument('title')
 
     args = parser.parse_args()
     return args

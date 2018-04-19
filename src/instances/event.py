@@ -1,6 +1,6 @@
-import base
-from parse_datetime import parse_datetime
-from reminder import Reminder
+from instances import base
+from thirdparty.parse_datetime import parse_datetime
+from reminding.reminder import Reminder
 
 
 class Event(base.Base):

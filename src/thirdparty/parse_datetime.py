@@ -1,7 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
-from thirdparty import Formats, Weekdays
+from thirdparty.thirdparty import Formats, Weekdays
 
 
 def parse_datetime(dtlist, format):

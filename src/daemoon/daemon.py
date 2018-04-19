@@ -1,6 +1,6 @@
 import sys, os, time, atexit, signal
 import notify2
-from thirdparty import Styles
+from thirdparty.thirdparty import Styles
 
 
 class Daemon:

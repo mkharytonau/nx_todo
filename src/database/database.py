@@ -1,14 +1,12 @@
 import json
-import thirdparty
+from thirdparty import thirdparty
+from thirdparty import nxcalendar
 from colored import bg, attr, fg
 from datetime import datetime
-from task import Task
-from event import Event
-from reminder import Reminder
-from thirdparty import Parent
-from nxcalendar import nxCalendar
-from thirdparty import print_list, get_notifications, print_notifications
-from parse_datetime import parse_datetime
+from instances.task import Task
+from instances.event import Event
+from reminding.reminder import Reminder
+from thirdparty.parse_datetime import parse_datetime
 
 
 class Database:
@@ -21,14 +19,22 @@ class Database:
         'task': lambda obj, args, cal: obj.show_task(args, cal),
         'event': lambda obj, args, cal: obj.show_event(args, cal)
     }
+
     user_choice_add = {
         'task': lambda obj, args: obj.add_task(args),
         'event': lambda obj, args: obj.add_event(args)
     }
+
     user_choice_del = {
         'task': lambda obj, args: obj.del_task(args),
         'event': lambda obj, args: obj.del_event(args)
     }
+
+    user_choice_edit = {
+        'task': lambda obj, args: obj.edit_task(args),
+        'event': lambda obj, args: obj.edit_event(args)
+    }
+
     user_choice_check = {
         'all': lambda obj, args, style: obj.check_all(args, style),
         'task': lambda obj, args, style: obj.check_task(args, style),
@@ -36,7 +42,7 @@ class Database:
     }
 
     def load(self):
-        with open('db.json', 'r') as file:
+        with open('./database/db.json', 'r') as file:
             data = json.load(file)
             self.create_from_dict(data)
 
@@ -46,7 +52,7 @@ class Database:
 
     def write(self):
         try:
-            with open('db.json', 'w') as file:
+            with open('./database/db.json', 'w') as file:
                 json.dump(self, file, default=thirdparty.json_serial, indent=2)
         except IOError as e:
             print(e.errno, e.strerror)
@@ -58,28 +64,35 @@ class Database:
         self.events.append(event)
 
     def show(self, args):
-        cal = nxCalendar(datetime.today())
-        #self.user_choice_show.get(args.kind)(self, args, cal)
+        cal = nxcalendar.nxCalendar(datetime.today())
         if args.kind == 'task':
             founded_tasks = self.show_task(args)
-            cal.link_to(founded_tasks)
-            cal.show(2)
-            print_list(founded_tasks, args)
+            cal.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
+                                                       task.deadline.day, thirdparty.Colors.taskbg)
+                                for task in founded_tasks]
+            cal.show(3)
+            thirdparty.print_list(founded_tasks, args)
         if args.kind == 'event':
             founded_events = self.show_event(args)
-            cal.link_to(founded_events)
-            cal.show(2)
-            print_list(founded_events, args)
+            cal.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                        event.from_datetime.day, thirdparty.Colors.eventbg)
+                                for event in founded_events]
+            cal.show(3)
+            thirdparty.print_list(founded_events, args)
         if args.kind == 'all':
             founded_tasks = self.show_task(args)
-            cal.link_to(founded_tasks)
+            cal.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
+                                                       task.deadline.day, thirdparty.Colors.taskbg)
+                                for task in founded_tasks]
             founded_events = self.show_event(args)
-            cal.link_to(founded_events)
-            cal.show(2)
+            cal.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                        event.from_datetime.day, thirdparty.Colors.eventbg)
+                                 for event in founded_events]
+            cal.show(3)
             print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
-            print_list(founded_tasks, args)
+            thirdparty.print_list(founded_tasks, args)
             print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
-            print_list(founded_events, args)
+            thirdparty.print_list(founded_events, args)
 
     def add(self, args):
         self.user_choice_add.get(args.kind)(self, args)
@@ -87,16 +100,13 @@ class Database:
     def delete(self, args):
         self.user_choice_del.get(args.kind)(self, args)
 
+    def edit(self, args):
+        self.user_choice_edit.get(args.kind)(self, args)
+
     def check(self, args, style):
         notifications = self.user_choice_check.get(args.kind)(self, args, style)
         self.write()
         return notifications
-
-    #def show_all(self, args):
-    #    print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
-    #    self.show_task(args)
-    #    print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
-    #    self.show_event(args)
 
     def show_task(self, args):
         if args.all:
@@ -130,7 +140,7 @@ class Database:
         try:
             deadline = parse_datetime(args.deadline, thirdparty.Formats.ordinary)
 
-            parent = Parent(args.title, deadline)
+            parent = thirdparty.Parent(args.title, deadline)
 
             reminder = Reminder.parse_create(args, deadline, parent, thirdparty.Classes.task)
         except ValueError:
@@ -153,7 +163,7 @@ class Database:
             from_datetime = parse_datetime(args.fromdt, thirdparty.Formats.ordinary)
             to_datetime = parse_datetime(args.todt, thirdparty.Formats.ordinary)
 
-            parent = Parent(args.title, from_datetime, to_datetime)
+            parent = thirdparty.Parent(args.title, from_datetime, to_datetime)
 
             reminder = Reminder.parse_create(args, from_datetime, parent, thirdparty.Classes.event)
         except ValueError:
@@ -169,6 +179,9 @@ class Database:
             args.participants
         ))
         self.write()
+
+    def edit_task(self, args):
+        help_tuple = ()
 
     def del_task(self, args):
         help_tuple = ()
@@ -187,15 +200,15 @@ class Database:
     def check_all(self, args, style):
         print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
         notifications_from_task = self.check_task(args, style)
-        print_notifications(notifications_from_task)
+        thirdparty.print_notifications(notifications_from_task)
         print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
         notifications_from_event = self.check_event(args, style)
-        print_notifications(notifications_from_event)
+        thirdparty.print_notifications(notifications_from_event)
         return notifications_from_task + notifications_from_event
 
     def check_task(self, args, style):
         if args.all:
-            return get_notifications(self.tasks, style)
+            return thirdparty.get_notifications(self.tasks, style)
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
@@ -205,11 +218,11 @@ class Database:
         except ValueError:
             print('There is no task with this attribute. Please, try again...')
             return
-        return get_notifications(founded_tasks, style)
+        return thirdparty.get_notifications(founded_tasks, style)
 
     def check_event(self, args, style):
         if args.all:
-            return get_notifications(self.events, style)
+            return thirdparty.get_notifications(self.events, style)
         help_tuple = ()
         for kind_of_search in ['title', 'category']:
             if not getattr(args, kind_of_search) is None:
@@ -219,26 +232,28 @@ class Database:
         except ValueError:
             print('There is no event with this attribute. Please, try again...')
             return
-        return get_notifications(founded_events, style)
+        return thirdparty.get_notifications(founded_events, style)
 
     def del_instance_by(self, help_tuple):
         try:
             found = self.find_instance_by(help_tuple)
         except ValueError:
-            print('There is no task with this attribute. Please, try again...')
+            print('There is no event with this attribute. Please, try again...')
             return
         for f in found:
             self.__getattribute__(help_tuple[0]).remove(f)
         self.write()
 
     def find_instance_by(self, help_tuple):
+        try:
+            selected_item = thirdparty.select_item(self, help_tuple)
+        except:
+            raise ValueError
         found = []
         for inst in self.__getattribute__(help_tuple[0]):
-            if inst.__getattribute__(help_tuple[1]) == help_tuple[2]:
+            if inst.__getattribute__(help_tuple[1]) == selected_item:
                 if help_tuple[0] == 'tasks':
                     found.append(inst)
                 if help_tuple[0] == 'events':
                     found.append(inst)
-        if len(found) == 0:
-            raise ValueError
         return found

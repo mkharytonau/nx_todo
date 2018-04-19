@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
@@ -70,10 +71,13 @@ def print_list(list, args):
         return
     i = 1
     for item in list:
-        if args.full:
-            print(str(i) + '. ' + item.to_full())
+        if args is not None:
+            if args.full:
+                print(str(i) + '. ' + item.to_full())
+            else:
+                print(str(i) + '. ' + item.to_short())
         else:
-            print(str(i) + '. ' + item.to_short())
+            print(str(i) + '. ' + item)
         i = i + 1
 
 
@@ -95,6 +99,23 @@ def print_notifications(arr):
         return
     for n in arr:
         print(n)
+
+def select_item(db, help_tuple):
+    extend_found = []
+    for inst in db.__getattribute__(help_tuple[0]):
+        value = inst.__getattribute__(help_tuple[1])
+        if re.search(help_tuple[2], value) is not None:
+            if not extend_found.__contains__(value):
+                extend_found.append(value)
+    if len(extend_found) == 0:
+        raise ValueError
+    if len(extend_found) > 1:
+        print('Found multiple matches, please select one.')
+        print_list(extend_found, None)
+        choice = int(input('Your choice: '))
+        return extend_found[choice - 1]
+    else:
+        return extend_found[0]
 
 
 
