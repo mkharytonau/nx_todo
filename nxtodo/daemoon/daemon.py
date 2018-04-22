@@ -1,6 +1,6 @@
 import sys, os, time, atexit, signal
 import notify2
-from thirdparty.thirdparty import Styles
+from ..thirdparty import thirdparty
 
 
 class Daemon:
@@ -123,11 +123,18 @@ class Daemon:
 
 
 class MyDaemon(Daemon):
-    def run(self, db, args):
+    def run(self, db, search_info):
         notify2.init('nxtodo')
         while True:
             db.load()
-            notifications = db.check(args, Styles.gui)
+            if search_info.instance == thirdparty.Classes.all:
+                search_info.instance = thirdparty.Classes.task
+                notifications_task = db.check(search_info, thirdparty.Styles.terminal)
+                search_info.instance = thirdparty.Classes.event
+                notifications_event = db.check(search_info, thirdparty.Styles.terminal)
+                notifications = notifications_task + notifications_event
+            else:
+                notifications = db.check(search_info, thirdparty.Styles.terminal)
             for n in notifications:
                 n.show_on_gui()
             time.sleep(10)

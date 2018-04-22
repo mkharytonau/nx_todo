@@ -1,7 +1,7 @@
 import calendar
 from calendar import Calendar
 from colored import fg, attr, bg
-from thirdparty.thirdparty import Colors
+from ..thirdparty.thirdparty import Colors
 
 
 class nxCalendar(Calendar):

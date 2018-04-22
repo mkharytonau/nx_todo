@@ -1,7 +1,7 @@
-from instances import base
+from ..instances import base
 from colored import fg, attr
-from reminding.reminder import Reminder
-from thirdparty.parse_datetime import parse_datetime
+from ..reminding.reminder import Reminder
+from ..thirdparty.parse_datetime import parse_datetime
 
 
 class Task(base.Base):

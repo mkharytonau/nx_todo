@@ -101,12 +101,14 @@ def parse(arguments):
     check_task_group.add_argument('-a', '--all', action='store_true')
     check_task_group.add_argument('-t', '--title')
     check_task_group.add_argument('-c', '--category')
+    parser_check_task.add_argument('-bg', '--background', action='store_true')
 
     parser_check_event = subparsers_for_check.add_parser('event')
     check_event_group = parser_check_event.add_mutually_exclusive_group(required=True)
     check_event_group.add_argument('-a', '--all', action='store_true')
     check_event_group.add_argument('-t', '--title')
     check_event_group.add_argument('-c', '--category')
+    parser_check_event.add_argument('-bg', '--background', action='store_true')
 
     parser_check_all = subparsers_for_check.add_parser('all')
     check_all_group = parser_check_all.add_mutually_exclusive_group(required=True)
@@ -127,5 +129,5 @@ def parse(arguments):
     parser_edit_event = subparsers_for_edit.add_parser('event')
     parser_edit_event.add_argument('title')
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     return args

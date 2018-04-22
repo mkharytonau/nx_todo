@@ -1,10 +1,12 @@
 import re
+import enum
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
 
 
 class Classes():
+    all = 'all'
     task = 'task'
     event = 'event'
 
@@ -81,18 +83,6 @@ def print_list(list, args):
         i = i + 1
 
 
-def get_notifications(arr, style):
-    if not len(arr):
-        print('List is empty.')
-        return
-    notifications = []
-    for obj in arr:
-        notification = obj.reminder.check(style)
-        if notification is not None:
-            notifications.append(notification)
-    return notifications
-
-
 def print_notifications(arr):
     if len(arr) == 0:
         print('List is empty.')
@@ -100,11 +90,12 @@ def print_notifications(arr):
     for n in arr:
         print(n)
 
-def select_item(db, help_tuple):
+def select_item(db, search_info):
     extend_found = []
-    for inst in db.__getattribute__(help_tuple[0]):
-        value = inst.__getattribute__(help_tuple[1])
-        if re.search(help_tuple[2], value) is not None:
+    working_space = db.select_working_space(search_info.instance)
+    for inst in working_space:
+        value = inst.__getattribute__(search_info.attribute)
+        if re.search(search_info.value, value) is not None:
             if not extend_found.__contains__(value):
                 extend_found.append(value)
     if len(extend_found) == 0:
@@ -116,6 +107,15 @@ def select_item(db, help_tuple):
         return extend_found[choice - 1]
     else:
         return extend_found[0]
+
+
+class SearchInfo:
+    def __init__(self, instance, attribute, value, all):
+        self.instance = instance
+        self.attribute = attribute
+        self.value = value
+        self.all = all
+
 
 
 
