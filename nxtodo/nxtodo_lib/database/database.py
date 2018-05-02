@@ -33,6 +33,19 @@ class Database:
         working_space = self.select_working_space(instance)
         working_space.append(obj)
         self.write()
+        
+    def add_task(self, title, description, reminder, category,
+                 owners, deadline, priority, status, subtasks):
+        task = Task(title, description, reminder, category, owners, deadline, 
+                    priority, status, subtasks)
+        self.add(thirdparty.Classes.task, task)
+        
+    def add_event(self, title, description, reminder, category, 
+                 from_datetime, to_datetime, place, participants):
+        event = Event(title, description, reminder, category, from_datetime,
+                      to_datetime, place, participants
+        )
+        self.add(thirdparty.Classes.event, event)
 
     def delete(self, search_info):
         self.del_instance_by(search_info)

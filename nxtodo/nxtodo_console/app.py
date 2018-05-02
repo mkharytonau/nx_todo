@@ -21,6 +21,11 @@ user_choice_command = {
     'check': lambda args: check(args)
 }
 
+user_choice_show = {
+    'all': lambda search_info, calendar, args: show_all(search_info, calendar, args),
+    'task': lambda search_info, calendar, args: show_task(search_info, calendar, args),
+    'event': lambda search_info, calendar, args: show_event(search_info, calendar, args)
+}
 
 user_choice_add = {
     'task': lambda args: add_task(args),
@@ -48,38 +53,7 @@ user_choice_check = {
 def show(args):
     search_info = make_search_info(None, args)
     cal = nxcalendar.nxCalendar(datetime.today())
-    if args.kind == 'task':
-        search_info.instance = thirdparty.Classes.task
-        founded_tasks = db.show(search_info)
-        cal.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
-                                                      task.deadline.day, thirdparty.Colors.taskbg)
-                               for task in founded_tasks]
-        cal.show(3)
-        thirdparty.print_list(founded_tasks, args)
-    if args.kind == 'event':
-        search_info.instance = thirdparty.Classes.event
-        founded_events = db.show(search_info)
-        cal.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-                                                      event.from_datetime.day, thirdparty.Colors.eventbg)
-                               for event in founded_events]
-        cal.show(3)
-        thirdparty.print_list(founded_events, args)
-    if args.kind == 'all':
-        search_info.instance = thirdparty.Classes.task
-        founded_tasks = db.show(search_info)
-        search_info.instance = thirdparty.Classes.event
-        founded_events = db.show(search_info)
-        cal.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
-                                                      task.deadline.day, thirdparty.Colors.taskbg)
-                               for task in founded_tasks]
-        cal.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-                                                      event.from_datetime.day, thirdparty.Colors.eventbg)
-                               for event in founded_events]
-        cal.show(3)
-        print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
-        thirdparty.print_list(founded_tasks, args)
-        print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
-        thirdparty.print_list(founded_events, args)
+    user_choice_show.get(args.kind)(search_info, cal, args)
 
 
 def add(args):
@@ -112,6 +86,44 @@ def check(args):
         daemon.start(db, search_info)
 
 
+def show_task(search_info, calendar, args):
+    search_info.instance = thirdparty.Classes.task
+    founded_tasks = db.show(search_info)
+    calendar.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
+                                                  task.deadline.day, thirdparty.Colors.taskbg)
+                           for task in founded_tasks]
+    calendar.show(3)
+    thirdparty.print_list(founded_tasks, args)
+
+
+def show_event(search_info, calendar, args):
+    search_info.instance = thirdparty.Classes.event
+    founded_events = db.show(search_info)
+    calendar.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                  event.from_datetime.day, thirdparty.Colors.eventbg)
+                           for event in founded_events]
+    calendar.show(3)
+    thirdparty.print_list(founded_events, args)
+
+
+def show_all(search_info, calendar, args):
+    search_info.instance = thirdparty.Classes.task
+    founded_tasks = db.show(search_info)
+    search_info.instance = thirdparty.Classes.event
+    founded_events = db.show(search_info)
+    calendar.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
+                                                  task.deadline.day, thirdparty.Colors.taskbg)
+                           for task in founded_tasks]
+    calendar.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                  event.from_datetime.day, thirdparty.Colors.eventbg)
+                           for event in founded_events]
+    calendar.show(3)
+    print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
+    thirdparty.print_list(founded_tasks, args)
+    print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
+    thirdparty.print_list(founded_events, args)
+
+
 def add_task(args):
     try:
         deadline = parse_datetime.parse_datetime(args.deadline, thirdparty.Formats.ordinary)
@@ -119,18 +131,8 @@ def add_task(args):
         reminder = Reminder.parse_create(args, deadline, parent, thirdparty.Classes.task)
     except ValueError:
         return
-    task = Task(
-        args.title,
-        args.description,
-        reminder,
-        args.category,
-        args.owners,
-        deadline,
-        args.priority,
-        args.status,
-        args.subtasks
-    )
-    db.add(thirdparty.Classes.task, task)
+    db.add_task(args.title, args.description, reminder, args.category, args.owners,
+                deadline, args.priority, args.status, args.subtasks)
 
 
 def add_event(args):
@@ -141,17 +143,8 @@ def add_event(args):
         reminder = Reminder.parse_create(args, from_datetime, parent, thirdparty.Classes.event)
     except ValueError:
         return
-    event = Event(
-        args.title,
-        args.description,
-        reminder,
-        args.category,
-        from_datetime,
-        to_datetime,
-        args.place,
-        args.participants
-    )
-    db.add(thirdparty.Classes.event, event)
+    db.add_event(args.title, args.description, reminder, args.category, from_datetime,
+                 to_datetime, args.place, args.participants)
 
 
 def del_all(args):
