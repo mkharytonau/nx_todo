@@ -13,17 +13,17 @@ class Event(base.Base):
         self.participants = participants
 
     @staticmethod
-    def create_from_dict(dictionary):
+    def create_from_dict(dictionary, config):
         from_datetime_str = dictionary["from_datetime"].split()
         to_datetime_str = dictionary["to_datetime"].split()
-        reminder = Reminder.create_from_dict(dictionary["reminder"])
+        reminder = Reminder.create_from_dict(dictionary["reminder"], config)
         event = Event(
             dictionary["title"],
             dictionary["description"],
             reminder,
             dictionary["category"],
-            parse_datetime(from_datetime_str, 'y/m/d h:m:s'),
-            parse_datetime(to_datetime_str, 'y/m/d h:m:s'),
+            parse_datetime(from_datetime_str, config['date_formats']['ordinary']),
+            parse_datetime(to_datetime_str, config['date_formats']['ordinary']),
             dictionary["place"],
             dictionary["participants"]
         )

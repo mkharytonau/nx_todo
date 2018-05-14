@@ -1,32 +1,30 @@
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
-from ..thirdparty.thirdparty import Formats, Weekdays
+from .enums import Weekdays
 
 
 def parse_datetime(dtlist, format):
-    if format == Formats.ordinary:
+    if format == 'y/m/d h:m:s':
         if dtlist is None:
             return None
         try:
             dt = datetime(*map(int, dtlist[0].split('/')), *map(int, dtlist[1].split(':')))
         except:
-            print('Incorrect data. Please, try again...')
             raise ValueError
         return dt
 
-    if format == Formats.delta:
+    if format == 'w:d:h:m':
         if dtlist is None:
             return None
         try:
             arglist = list(map(int, dtlist.split(':')))
             td = timedelta(weeks=arglist[0], days=arglist[1], hours=arglist[2], minutes=arglist[3])
         except:
-            print('Incorrect data. Please, try again...')
             raise ValueError
         return td
 
-    if format == Formats.ordinary_list:
+    if format == 'y/m/d h:m:s ... y/m/d h:m:s':
         if dtlist is None:
             return None
         try:
@@ -37,23 +35,21 @@ def parse_datetime(dtlist, format):
             raise ValueError
         return list_of_dates
 
-    if format == Formats.weekdays:
+    if format == 'weekdays':
         if dtlist is None:
             return None
         try:
-            weekdays_ints = [getattr(Weekdays, i) for i in dtlist]
+            weekdays_ints = [Weekdays[i].value for i in dtlist]
         except:
-            print('Incorrect data. Please, try again...')
             raise ValueError
         return weekdays_ints
 
-    if format == Formats.date:
+    if format == 'y/m/d':
         if dtlist is None:
             return None
         try:
             dt = date(*map(int, dtlist.split('/')))
         except:
-            print('Incorrect data. Please, try again...')
             raise ValueError
         return dt
 

@@ -1,8 +1,10 @@
 from datetime import datetime
 from datetime import timedelta
 from colored import fg, attr
-from ..reminding.notification import Notification
-from ..thirdparty.thirdparty import Parent, Formats, Classes, Styles
+from ..thirdparty.functions import Parent
+from ..thirdparty.enums import Instances
+from ..thirdparty.enums import Styles
+from .notification import Notification
 from ..thirdparty.parse_datetime import parse_datetime
 
 
@@ -33,25 +35,25 @@ class Reminder:
                 }
 
     @staticmethod
-    def create_from_dict(dictionary):
-        start_remind_from = parse_datetime(dictionary['start_remind_from'].split(), Formats.ordinary) \
+    def create_from_dict(dictionary, config):
+        start_remind_from = parse_datetime(dictionary['start_remind_from'].split(), config['date_formats']['ordinary']) \
             if dictionary['start_remind_from'] is not None else None
-        datetimes = [parse_datetime(s.split(), Formats.ordinary) for s in dictionary['datetimes']] \
+        datetimes = [parse_datetime(s.split(), config['date_formats']['ordinary']) for s in dictionary['datetimes']] \
             if dictionary['datetimes'] is not None else None
-        stop_in_moment = parse_datetime(dictionary['stop_in_moment'].split(), Formats.ordinary) \
+        stop_in_moment = parse_datetime(dictionary['stop_in_moment'].split(), config['date_formats']['ordinary']) \
             if dictionary['stop_in_moment'] is not None else None
         parent = Parent(dictionary['parent']['title'], dictionary['parent']['deadline'],
                         dictionary['parent']['to_datetime']) \
             if 'to_datetime' in dictionary['parent']  \
             else Parent(dictionary['parent']['title'], dictionary['parent']['deadline'])
-        dictionary['flags']['weekdays'] = parse_datetime(dictionary['flags']['weekdays'], Formats.date)
+        dictionary['flags']['weekdays'] = parse_datetime(dictionary['flags']['weekdays'], config['date_formats']['date'])
         reminder = Reminder(
             None,
             start_remind_from,
             stop_in_moment,
-            parse_datetime(dictionary['remind_in'], Formats.delta),
+            parse_datetime(dictionary['remind_in'], config['date_formats']['delta']),
             datetimes,
-            parse_datetime(dictionary['interval'], Formats.delta),
+            parse_datetime(dictionary['interval'], config['date_formats']['delta']),
             dictionary['weekdays'],
             parent,
             dictionary['kind'],
@@ -61,22 +63,22 @@ class Reminder:
 
     @staticmethod
     def parse_create(args, stop_in_moment, parent, kind):
-        start_remind_before = parse_datetime(args.remind_before, Formats.delta)
-        remind_in = parse_datetime(args.remind_in, Formats.delta)
+        start_remind_before = parse_datetime(args.remind_before, config['date_formats']['delta'])
+        remind_in = parse_datetime(args.remind_in, config['date_formats']['delta'])
         if (not start_remind_before is None or not remind_in is None) and stop_in_moment is None:
             print('You can not set -rb and -ri arguments, without -d(deadline)')
             raise ValueError
-        start_remind_from = parse_datetime(args.remind_from, Formats.ordinary)
-        datetimes = parse_datetime(args.datetimes, Formats.ordinary_list)
-        interval = parse_datetime(args.interval, Formats.delta)
-        weekdays = parse_datetime(args.weekdays, Formats.weekdays)
+        start_remind_from = parse_datetime(args.remind_from, config['date_formats']['ordinary'])
+        datetimes = parse_datetime(args.datetimes, config['date_formats']['ordinary_list'])
+        interval = parse_datetime(args.interval, config['date_formats']['delta'])
+        weekdays = parse_datetime(args.weekdays, config['date_formats']['weekdays'])
         reminder = Reminder(start_remind_before, start_remind_from, stop_in_moment, remind_in
                             , datetimes, interval, weekdays, parent, kind)
         return reminder
 
     def check(self, style):
         now = datetime.today()
-        if self.kind == Classes.task:
+        if self.kind == Instances.task:
             if now > self.stop_in_moment:
                 if style == Styles.gui and self.flags['missed']:
                     return None
@@ -87,9 +89,9 @@ class Reminder:
                 self.flags['missed'] = True
                 return Notification(mes, date)
 
-        if self.kind == Classes.event:
+        if self.kind == Instances.event:
             if now > self.stop_in_moment:
-                if now < parse_datetime(self.parent.to_datetime.split(), Formats.ordinary):
+                if now < parse_datetime(self.parent.to_datetime.split(), config['date_formats']['ordinary']):
                     if style == Styles.gui and self.flags['right_now']:
                         return None
                     right_now = '{cs}Right now!{ce}'.format(cs=fg(113), ce=attr('reset')) \
@@ -126,10 +128,10 @@ class Reminder:
                 return None
             rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
                 if style == Styles.terminal else 'Remind!'
-            if self.kind == Classes.task:
+            if self.kind == Instances.task:
                 mes = rem + ' In {time} the deadline for the task {t} : remind_in'\
                     .format(time=self.remind_in, t=self.parent.title)
-            if self.kind == Classes.event:
+            if self.kind == Instances.event:
                 mes = rem + ' In {time} the beginning of the event {t} : remind_in'\
                     .format(time=self.remind_in, t=self.parent.title)
             date = self.stop_in_moment - self.remind_in
@@ -146,10 +148,10 @@ class Reminder:
         if counter > self.flags['datetimes']:
             rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
                 if style == Styles.terminal else 'Remind!'
-            if self.kind == Classes.task:
+            if self.kind == Instances.task:
                 mes = rem + ' {d} the deadline for the task {t} : datetimes'.\
                     format(d=self.parent.deadline, t=self.parent.title)
-            if self.kind == Classes.event:
+            if self.kind == Instances.event:
                 mes = rem + ' {d} the beginning of the event {t} : datetimes'.\
                     format(d=self.stop_in_moment, t=self.parent.title)
             date = self.datetimes[counter - 1]
@@ -163,10 +165,10 @@ class Reminder:
         if counter > self.flags['interval']:
             rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
                 if style == Styles.terminal else 'Remind!'
-            if self.kind == Classes.task:
+            if self.kind == Instances.task:
                 mes = rem + ' {d} the deadline for the task {t} : interval'.\
                     format(d=self.parent.deadline, t=self.parent.title)
-            if self.kind == Classes.event:
+            if self.kind == Instances.event:
                 mes = rem + ' {d} the beginning of the event {t} : interval'.\
                     format(d=self.stop_in_moment, t=self.parent.title)
             date = self.start_remind_from + self.interval * counter
@@ -182,10 +184,10 @@ class Reminder:
             if self.weekdays.__contains__(date_now.weekday()):
                 rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
                     if style == Styles.terminal else 'Remind!'
-                if self.kind == Classes.task:
+                if self.kind == Instances.task:
                     mes = rem + ' {d} the deadline for the task {t} : weekdays'.\
                         format(d=self.parent.deadline, t=self.parent.title)
-                if self.kind == Classes.event:
+                if self.kind == Instances.event:
                     mes = rem + ' {d} the beginning of the event {t} : weekdays'.\
                         format(d=self.stop_in_moment, t=self.parent.title)
                 date = datetime(date_now.year, date_now.month, date_now.day, now.hour, now.minute, now.second)

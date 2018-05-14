@@ -1,15 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.6
 
-import parser
+import sys, os
+sys.path.append(os.path.dirname(__file__))
+
+import getpass
+import configparser
+import nxtodo_console as con
+import nxtodo_lib as lib
 from datetime import datetime
-from nxtodo import Database
-from nxtodo import MyDaemon
-from nxtodo import Reminder
-from nxtodo import thirdparty
-from nxtodo import parse_datetime
-from nxtodo import nxcalendar
-from nxtodo import Task
-from nxtodo import Event
 from colored import bg, fg, attr
 
 
@@ -52,7 +50,7 @@ user_choice_check = {
 
 def show(args):
     search_info = make_search_info(None, args)
-    cal = nxcalendar.nxCalendar(datetime.today())
+    cal = con.nxCalendar(datetime.today())
     user_choice_show.get(args.kind)(search_info, cal, args)
 
 
@@ -68,67 +66,67 @@ def edit(args):
 
 
 def check(args):
-    daemon = MyDaemon('/tmp/nxtodo_daemon.pid')
+    daemon = lib.MyDaemon('/tmp/nxtodo_daemon.pid')
     if args.kind == 'stop':
         daemon.stop()
         return
     search_info = user_choice_check.get(args.kind)(args)
-    if search_info.instance == thirdparty.Classes.all:
-        search_info.instance = thirdparty.Classes.task
-        notifications_task = db.check(search_info, thirdparty.Styles.terminal)
-        search_info.instance = thirdparty.Classes.event
-        notifications_event = db.check(search_info, thirdparty.Styles.terminal)
+    if search_info.instance == lib.enums.Instances.all:
+        search_info.instance = lib.enums.Instances.task
+        notifications_task = db.check(search_info, lib.enums.Styles.terminal)
+        search_info.instance = lib.enums.Instances.event
+        notifications_event = db.check(search_info, lib.enums.Styles.terminal)
         notifications = notifications_task + notifications_event
     else:
-        notifications = db.check(search_info, thirdparty.Styles.terminal)
-    thirdparty.print_notifications(notifications)
+        notifications = db.check(search_info, lib.enums.Styles.terminal)
+        lib.enums.print_notifications(notifications)
     if args.background:
         daemon.start(db, search_info)
 
 
 def show_task(search_info, calendar, args):
-    search_info.instance = thirdparty.Classes.task
+    search_info.instance = lib.enums.Instances.task
     founded_tasks = db.show(search_info)
-    calendar.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
-                                                  task.deadline.day, thirdparty.Colors.taskbg)
+    calendar.linked_objects += [con.ColoredDate(task.deadline.year, task.deadline.month,
+                                                  task.deadline.day, int(config['colors']['taskbg']))
                            for task in founded_tasks]
-    calendar.show(3)
-    thirdparty.print_list(founded_tasks, args)
+    calendar.show(config)
+    lib.functions.print_list(founded_tasks, args)
 
 
 def show_event(search_info, calendar, args):
-    search_info.instance = thirdparty.Classes.event
+    search_info.instance = lib.enums.Instances.event
     founded_events = db.show(search_info)
-    calendar.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-                                                  event.from_datetime.day, thirdparty.Colors.eventbg)
+    calendar.linked_objects += [con.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                  event.from_datetime.day, int(config['colors']['eventbg']))
                            for event in founded_events]
-    calendar.show(3)
-    thirdparty.print_list(founded_events, args)
+    calendar.show(config)
+    lib.functions.print_list(founded_events, args)
 
 
 def show_all(search_info, calendar, args):
-    search_info.instance = thirdparty.Classes.task
+    search_info.instance = lib.enums.Instances.task
     founded_tasks = db.show(search_info)
-    search_info.instance = thirdparty.Classes.event
+    search_info.instance = lib.enums.Instances.event
     founded_events = db.show(search_info)
-    calendar.linked_objects += [nxcalendar.ColoredDate(task.deadline.year, task.deadline.month,
-                                                  task.deadline.day, thirdparty.Colors.taskbg)
+    calendar.linked_objects += [con.ColoredDate(task.deadline.year, task.deadline.month,
+                                                  task.deadline.day, int(config['colors']['taskbg']))
                            for task in founded_tasks]
-    calendar.linked_objects += [nxcalendar.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-                                                  event.from_datetime.day, thirdparty.Colors.eventbg)
+    calendar.linked_objects += [con.ColoredDate(event.from_datetime.year, event.from_datetime.month,
+                                                  event.from_datetime.day, int(config['colors']['eventbg']))
                            for event in founded_events]
-    calendar.show(3)
+    calendar.show(config)
     print('{csbg}{csfg}Tasks:{ce}'.format(csbg=bg('229'), csfg=fg(235), ce=attr('reset')))
-    thirdparty.print_list(founded_tasks, args)
+    lib.functions.print_list(founded_tasks, args)
     print('{csbg}{csfg}Events:{ce}'.format(csbg=bg('indian_red_1a'), csfg=fg(235), ce=attr('reset')))
-    thirdparty.print_list(founded_events, args)
+    lib.functions.print_list(founded_events, args)
 
 
 def add_task(args):
     try:
-        deadline = parse_datetime.parse_datetime(args.deadline, thirdparty.Formats.ordinary)
-        parent = thirdparty.Parent(args.title, deadline)
-        reminder = Reminder.parse_create(args, deadline, parent, thirdparty.Classes.task)
+        deadline = lib.parse_datetime.parse_datetime(args.deadline, config['date_formats']['ordinary'])
+        parent = lib.functions.Parent(args.title, deadline)
+        reminder = lib.Reminder.parse_create(args, deadline, parent, lib.enums.Instances.task)
     except ValueError:
         return
     db.add_task(args.title, args.description, reminder, args.category, args.owners,
@@ -137,10 +135,10 @@ def add_task(args):
 
 def add_event(args):
     try:
-        from_datetime = parse_datetime.parse_datetime(args.fromdt, thirdparty.Formats.ordinary)
-        to_datetime = parse_datetime.parse_datetime(args.todt, thirdparty.Formats.ordinary)
-        parent = thirdparty.Parent(args.title, from_datetime, to_datetime)
-        reminder = Reminder.parse_create(args, from_datetime, parent, thirdparty.Classes.event)
+        from_datetime = lib.parse_datetime.parse_datetime(args.fromdt, config['date_formats']['ordinary'])
+        to_datetime = lib.parse_datetime.parse_datetime(args.todt, config['date_formats']['ordinary'])
+        parent = lib.functions.Parent(args.title, from_datetime, to_datetime)
+        reminder = lib.Reminder.parse_create(args, from_datetime, parent, lib.enums.Instances.event)
     except ValueError:
         return
     db.add_event(args.title, args.description, reminder, args.category, from_datetime,
@@ -153,43 +151,47 @@ def del_all(args):
 
 
 def del_task(args):
-    search_info = make_search_info(thirdparty.Classes.task, args)
+    search_info = make_search_info(lib.enums.Instances.task, args)
     db.delete(search_info)
 
 
 def del_event(args):
-    search_info = make_search_info(thirdparty.Classes.event, args)
+    search_info = make_search_info(lib.enums.Instances.event, args)
     db.delete(search_info)
 
 
 def check_all(args):
-    search_info = make_search_info(thirdparty.Classes.all, args)
+    search_info = make_search_info(lib.enums.Instances.all, args)
     return search_info
 
 
 def check_task(args):
-    search_info = make_search_info(thirdparty.Classes.task, args)
+    search_info = make_search_info(lib.enums.Instances.task, args)
     return search_info
 
 
 def check_event(args):
-    search_info = make_search_info(thirdparty.Classes.event, args)
+    search_info = make_search_info(lib.enums.Instances.event, args)
     return search_info
 
 
 def make_search_info(instance, args):
     if args.all:
-        return thirdparty.SearchInfo(instance, None, None, True)
+        return lib.functions.SearchInfo(instance, None, None, True)
     for attribute in ['title', 'category']:
         if not getattr(args, attribute) is None:
-            return thirdparty.SearchInfo(instance, attribute, getattr(args, attribute))
+            return lib.functions.SearchInfo(instance, attribute, getattr(args, attribute))
     return None
 
 
 def initialize():
+    global config
+    config_path = os.path.join('/', 'home', getpass.getuser(), '.nxtodo', 'config', 'config.ini')
+    config = configparser.ConfigParser()
+    config.read(config_path)
     global db
-    db = Database()
-    db.load()
+    db = lib.Database()
+    db.load(config)
 
 
 def main():
@@ -199,7 +201,7 @@ def main():
     #arguments = 'del event -t testiruEm'.split()
     #arguments = 'add task TESTtask -d 2018/04/22 19:00 -rf 2018/04/05 13:00 -ri 0:0:0:5 -i 0:0:0:2 -wd sun'.split()
     arguments = 'show all -a'.split()
-    args = parser.parse(arguments)
+    args = con.parse(arguments)
     user_choice_command.get(args.command, lambda args: print("No such command."))(args)
 
 

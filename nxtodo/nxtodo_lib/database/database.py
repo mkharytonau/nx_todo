@@ -1,5 +1,7 @@
 import json
-from ..thirdparty import thirdparty
+import os
+from ..thirdparty import enums
+from ..thirdparty import functions
 from ..instances.task import Task
 from ..instances.event import Event
 
@@ -9,21 +11,25 @@ class Database:
         self.tasks = []
         self.events = []
 
-    def load(self):
-        with open('../nxtodo/database/db.json', 'r') as file:
-            data = json.load(file)
-            self.create_from_dict(data)
+    def load(self, config):
+        try:
+            import os
+            with open(os.path.dirname(__file__) + '/db.json', 'r') as file:
+                data = json.load(file)
+                self.create_from_dict(data, config)
+        except IOError as e:
+            raise IOError
 
-    def create_from_dict(self, dictionary):
-        self.tasks = [Task.create_from_dict(task) for task in dictionary["tasks"]]
-        self.events = [Event.create_from_dict(event) for event in dictionary["events"]]
+    def create_from_dict(self, dictionary, config):
+        self.tasks = [Task.create_from_dict(task, config) for task in dictionary["tasks"]]
+        self.events = [Event.create_from_dict(event, config) for event in dictionary["events"]]
 
     def write(self):
         try:
-            with open('../nxtodo/database/db.json', 'w') as file:
-                json.dump(self, file, default=thirdparty.json_serial, indent=2)
+            with open(os.path.dirname(__file__) + '/db.json', 'w') as file:
+                json.dump(self, file, default=functions.json_serial, indent=2)
         except IOError as e:
-            print(e.errno, e.strerror)
+            raise IOError
 
     def show(self, search_info):
         founded = self.find_instance_by(search_info)
@@ -38,14 +44,14 @@ class Database:
                  owners, deadline, priority, status, subtasks):
         task = Task(title, description, reminder, category, owners, deadline, 
                     priority, status, subtasks)
-        self.add(thirdparty.Classes.task, task)
+        self.add(enums.Instances.task, task)
         
     def add_event(self, title, description, reminder, category, 
                  from_datetime, to_datetime, place, participants):
         event = Event(title, description, reminder, category, from_datetime,
                       to_datetime, place, participants
         )
-        self.add(thirdparty.Classes.event, event)
+        self.add(enums.Instances.event, event)
 
     def delete(self, search_info):
         self.del_instance_by(search_info)
@@ -58,9 +64,6 @@ class Database:
         return notifications
 
     def get_notifications(self, arr, style):
-        if not len(arr):
-            print('List is empty.')
-            return
         notifications = []
         for obj in arr:
             notification = obj.reminder.check(style)
@@ -72,8 +75,7 @@ class Database:
         try:
             found = self.find_instance_by(search_info)
         except ValueError:
-            print('There is no event with this attribute. Please, try again...')
-            return
+            raise ValueError
         working_space = self.select_working_space(search_info.instance)
         for f in found:
             working_space.remove(f)
@@ -82,7 +84,7 @@ class Database:
         if search_info.all:
             return self.select_working_space(search_info.instance)
         try:
-            selected_item = thirdparty.select_item(self, search_info)
+            selected_item = functions.select_item(self, search_info)
         except:
             raise ValueError
         found = []
@@ -93,7 +95,7 @@ class Database:
         return found
 
     def select_working_space(self, inst):
-        if inst == thirdparty.Classes.task:
+        if inst == enums.Instances.task:
             return self.tasks
-        if inst == thirdparty.Classes.event:
+        if inst == enums.Instances.event:
             return self.events

@@ -1,7 +1,6 @@
 import calendar
 from calendar import Calendar
 from colored import fg, attr, bg
-from ..thirdparty.thirdparty import Colors
 
 
 class nxCalendar(Calendar):
@@ -27,7 +26,8 @@ class nxCalendar(Calendar):
         self.weeks += next_weeks
         self.top_line += ('{month:^' + str(len(next_weeks) * 3) + '}').format(month=calendar.month_name[next_month])
 
-    def show(self, month_num):
+    def show(self, config):
+        month_num = int(config['nxcalendar']['month_num'])
         self.append_month(self.from_datetime.year, self.from_datetime.month, True)
         if month_num > 1:
             for i in range(1, month_num):
@@ -46,7 +46,7 @@ class nxCalendar(Calendar):
                     if week[line][1] == 'null':
                         symbol = '{num:2}'.format(num=week[line][0])
                     else:
-                        symbol = '{csbg}{csfg}{num:2}{ce}'.format(csbg=bg(week[line][1]), csfg=fg(Colors.foreground),
+                        symbol = '{csbg}{csfg}{num:2}{ce}'.format(csbg=bg(week[line][1]), csfg=fg(int(config['colors']['foreground'])),
                                                               num=week[line][0], ce=attr('reset'))
                 print(symbol, end=' ')
             print()

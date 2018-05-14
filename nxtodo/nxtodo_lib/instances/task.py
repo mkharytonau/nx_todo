@@ -15,10 +15,10 @@ class Task(base.Base):
         self.subtasks = subtasks
 
     @staticmethod
-    def create_from_dict(dictionary):
-        deadline = parse_datetime(dictionary["deadline"].split(), 'y/m/d h:m:s') \
+    def create_from_dict(dictionary, config):
+        deadline = parse_datetime(dictionary["deadline"].split(), config['date_formats']['ordinary']) \
             if not dictionary["deadline"] is None else None
-        reminder = Reminder.create_from_dict(dictionary["reminder"])
+        reminder = Reminder.create_from_dict(dictionary["reminder"], config)
         task = Task(
             dictionary["title"],
             dictionary["description"],
