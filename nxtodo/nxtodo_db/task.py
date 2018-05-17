@@ -27,13 +27,13 @@ class Task(Base):
             return config.colors.red
         return 255
 
-    def to_short(self):
-        colorfg = self.select_color()
+    def to_short(self, config):
+        colorfg = self.select_color(config)
         return '{cs}{title}{ce}'.format(title=self.title, cs=fg(colorfg), ce=attr('reset')) +\
                '           ' + str(self.deadline)
 
-    def to_full(self):
-        colorfg = self.select_color()
+    def to_full(self, config):
+        colorfg = self.select_color(config)
         return '{cs}{title}{ce}   {deadline}\n' \
                'Category: {category}\n' \
                'Owners: {owners}\n' \

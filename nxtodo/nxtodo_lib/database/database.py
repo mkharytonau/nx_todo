@@ -8,8 +8,8 @@ from nxtodo_db.models import Event
 
 
 working_space = {
-    enums.Instances.task: Task,
-    enums.Instances.event: Event
+    enums.Instances.task: 'tasks',
+    enums.Instances.event: 'events'
 }
 
 
@@ -19,46 +19,50 @@ class Database:
         user = User.create(name)
         user.save()
 
-    def show(self, search_info):
-        ws = working_space[search_info.instance]
+    def get_user(self, name):
+        return User.objects.get(name=name)
+
+    def show(self, user, search_info):
+        ws = getattr(user, working_space[search_info.instance])#working_space[search_info.instance]
         if search_info.all:
-            return ws.objects.filter(('status', search_info.status))
-        return ws.objects.filter((search_info.attribute, search_info.value), (('status', search_info.status)))
+            return ws.filter(('status', search_info.status))
+        return ws.filter((search_info.attribute, search_info.value), (('status', search_info.status)))
         
-    def add_task(self, title, description, reminder, category,
-                 deadline, priority, status, subtasks):
+    def add_task(self, user, title, description, reminder, category,
+                 deadline, priority, subtasks):
         task = Task.create(title, description, reminder, category, deadline,
-                    priority, status, subtasks)
+                    priority, enums.Statuses.processing.value, subtasks)
         task.save()
+        user.tasks.add(task)
         
-    def add_event(self, title, description, reminder, category, 
+    def add_event(self, user, title, description, reminder, category,
                  from_datetime, to_datetime, place, participants):
         pass
 
-    def delete(self, search_info):
-        ws = working_space[search_info.instance]
+    def delete(self, user, search_info):
+        ws = getattr(user, working_space[search_info.instance])#working_space[search_info.instance]
         if search_info.all:
-            ws.objects.all().update(status=enums.Statuses.archived.value)
+            ws.all().update(status=enums.Statuses.archived.value)
         else:
-            ws.objects.filter((search_info.attribute, search_info.value)).\
+            ws.filter((search_info.attribute, search_info.value)).\
             update(status=enums.Statuses.archived.value)
 
-    def do(self, search_info):
-        ws = working_space[search_info.instance]
+    def do(self, user, search_info):
+        ws = getattr(user, working_space[search_info.instance])#working_space[search_info.instance]
         if search_info.all:
-            ws.objects.all().update(status=enums.Statuses.fulfilled.value)
+            ws.all().update(status=enums.Statuses.fulfilled.value)
         else:
-            ws.objects.filter((search_info.attribute, search_info.value)).\
+            ws.filter((search_info.attribute, search_info.value)).\
             update(status=enums.Statuses.fulfilled.value)
 
-    def remove(self, search_info):
-        ws = working_space[search_info.instance]
+    def remove(self, user, search_info):
+        ws = getattr(user, working_space[search_info.instance])#working_space[search_info.instance]
         if search_info.all:
-            ws.objects.all().delete()
+            ws.all().delete()
         else:
-            ws.objects.filter((search_info.attribute, search_info.value)).delete()
+            ws.filter((search_info.attribute, search_info.value)).delete()
 
-    def check(self, search_info, style):
+    def check(self, user, search_info, style):
         founded = self.find_instance_by(search_info)
         notifications = self.get_notifications(founded, style)
         self.write()

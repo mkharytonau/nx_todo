@@ -31,7 +31,7 @@ def timedelta_tostr(obj):
     return '{w}:{d}:{h}:{m}'.format(w=weeks, d=days, h=hours, m=minutes)
 
 
-def print_list(list, args):
+def print_list(list, config, args):
     if not len(list):
         print('List is empty.')
         return
@@ -39,9 +39,9 @@ def print_list(list, args):
     for item in list:
         if args is not None:
             if args.full:
-                print(str(i) + '. ' + item.to_full())
+                print(str(i) + '. ' + item.to_full(config))
             else:
-                print(str(i) + '. ' + item.to_short())
+                print(str(i) + '. ' + item.to_short(config))
         else:
             print(str(i) + '. ' + item)
         i = i + 1
