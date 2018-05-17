@@ -5,6 +5,9 @@ def parse(arguments):
     parser = argparse.ArgumentParser(description='nx_todo')
     subparsers_for_command = parser.add_subparsers(dest='command')
 
+    # Parsing the 'adduser' command ------------------------------------------------------------
+    parser_adduser = subparsers_for_command.add_parser('adduser')
+    parser_adduser.add_argument('name')
 
     # Parsing the 'show' command ------------------------------------------------------------
     parser_show = subparsers_for_command.add_parser('show')
@@ -16,6 +19,12 @@ def parse(arguments):
     show_task_group.add_argument('-t', '--title')
     show_task_group.add_argument('-c', '--category')
     parser_show_task.add_argument('-f', '--full', action='store_true')
+    show_task_kind_group = parser_show_task.add_mutually_exclusive_group()
+    show_task_kind_group.add_argument('--processing', action='store_const', dest='status',
+                                       const='processing', default='processing')
+    show_task_kind_group.add_argument('--failed', action='store_const', dest='status', const='failed')
+    show_task_kind_group.add_argument('--fulfilled', action='store_const', dest='status', const='fulfilled')
+    show_task_kind_group.add_argument('--archived', action='store_const', dest='status', const='archived')
 
     parser_show_event = subparsers_for_show.add_parser('event')
     show_event_group = parser_show_event.add_mutually_exclusive_group(required=True)
@@ -23,6 +32,12 @@ def parse(arguments):
     show_event_group.add_argument('-t', '--title')
     show_event_group.add_argument('-c', '--category')
     parser_show_event.add_argument('-f', '--full', action='store_true')
+    show_event_kind_group = parser_show_event.add_mutually_exclusive_group()
+    show_event_kind_group.add_argument('--processing', action='store_const', dest='status',
+                                     const='processing', default='processing')
+    show_event_kind_group.add_argument('--failed', action='store_const', dest='status', const='failed')
+    show_event_kind_group.add_argument('--fulfilled', action='store_const', dest='status', const='fulfilled')
+    show_event_kind_group.add_argument('--archived', action='store_const', dest='status', const='archived')
 
     parser_show_all = subparsers_for_show.add_parser('all')
     show_all_group = parser_show_all.add_mutually_exclusive_group(required=True)
@@ -30,6 +45,12 @@ def parse(arguments):
     show_all_group.add_argument('-t', '--title')
     show_all_group.add_argument('-c', '--category')
     parser_show_all.add_argument('-f', '--full', action='store_true')
+    show_all_kind_group = parser_show_all.add_mutually_exclusive_group()
+    show_all_kind_group.add_argument('--processing', action='store_const', dest='status',
+                                      const='processing', default='processing')
+    show_all_kind_group.add_argument('--failed', action='store_const', dest='status', const='failed')
+    show_all_kind_group.add_argument('--fulfilled', action='store_const', dest='status', const='fulfilled')
+    show_all_kind_group.add_argument('--archived', action='store_const', dest='status', const='archived')
 
 
     # Parsing the 'add' command --------------------------------------------------------------
@@ -76,6 +97,19 @@ def parse(arguments):
     event_reminder_group_kind.add_argument('-i', '--interval')
     event_reminder_group_kind.add_argument('-wd', '--weekdays', nargs='+')
 
+    # Parsing the 'do' command ----------------------------------------------------------------
+    parser_do = subparsers_for_command.add_parser('do')
+    subparsers_for_do = parser_do.add_subparsers(dest='kind')
+
+    parser_do_task = subparsers_for_do.add_parser('task')
+    do_task_group = parser_do_task.add_mutually_exclusive_group(required=True)
+    do_task_group.add_argument('-t', '--title')
+    do_task_group.add_argument('-c', '--category')
+
+    parser_do_event = subparsers_for_do.add_parser('event')
+    do_event_group = parser_do_event.add_mutually_exclusive_group(required=True)
+    do_event_group.add_argument('-t', '--title')
+    do_event_group.add_argument('-c', '--category')
 
 
     # Parsing the 'del' command ----------------------------------------------------------------
@@ -84,13 +118,44 @@ def parse(arguments):
 
     parser_del_task = subparsers_for_del.add_parser('task')
     del_task_group = parser_del_task.add_mutually_exclusive_group(required=True)
+    del_task_group.add_argument('-a', '--all', action='store_true')
     del_task_group.add_argument('-t', '--title')
     del_task_group.add_argument('-c', '--category')
 
     parser_del_event = subparsers_for_del.add_parser('event')
     del_event_group = parser_del_event.add_mutually_exclusive_group(required=True)
+    del_event_group.add_argument('-a', '--all', action='store_true')
     del_event_group.add_argument('-t', '--title')
     del_event_group.add_argument('-c', '--category')
+
+    parser_del_all = subparsers_for_del.add_parser('all')
+    del_all_group = parser_del_all.add_mutually_exclusive_group(required=True)
+    del_all_group.add_argument('-a', '--all', action='store_true')
+    del_all_group.add_argument('-t', '--title')
+    del_all_group.add_argument('-c', '--category')
+
+    # Parsing the 'remove' command ----------------------------------------------------------------
+    parser_remove = subparsers_for_command.add_parser('remove')
+    subparsers_for_remove = parser_remove.add_subparsers(dest='kind')
+
+    parser_remove_task = subparsers_for_remove.add_parser('task')
+    remove_task_group = parser_remove_task.add_mutually_exclusive_group(required=True)
+    remove_task_group.add_argument('--failed', action='store_true')
+    remove_task_group.add_argument('--fulfilled', action='store_true')
+    remove_task_group.add_argument('--archived', action='store_true')
+
+    parser_remove_event = subparsers_for_remove.add_parser('event')
+    remove_event_group = parser_remove_event.add_mutually_exclusive_group(required=True)
+    remove_event_group.add_argument('--failed', action='store_true')
+    remove_event_group.add_argument('--fulfilled', action='store_true')
+    remove_event_group.add_argument('--archived', action='store_true')
+
+    parser_remove_all = subparsers_for_remove.add_parser('all')
+    remove_all_group = parser_remove_all.add_mutually_exclusive_group(required=True)
+    remove_all_group.add_argument('-a', '--all', action='store_true')
+    remove_all_group.add_argument('-t', '--title')
+    remove_all_group.add_argument('-c', '--category')
+
 
     # Parsing for the 'check' command-----------------------------------------------------------------
     parser_check = subparsers_for_command.add_parser('check')

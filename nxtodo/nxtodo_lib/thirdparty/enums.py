@@ -8,6 +8,13 @@ class Instances(Enum):
     team_task = 3
 
 
+class Statuses(Enum):
+    processing = 'processing'
+    failed = 'failed'
+    fulfilled = 'fulfilled'
+    archived = 'archived'
+
+
 class Weekdays(Enum):
     mon = 0
     tue = 1

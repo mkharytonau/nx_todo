@@ -7,14 +7,14 @@ from setuptools import find_packages
 setup(
     name='nxtodo',
     version='1.0',
-    packages=find_packages(exclude=['nxtodo.nxtodo_web']),
+    packages=find_packages(),
     install_requires=[
         'colored',
         'notify2'
     ],
     entry_points={
         'console_scripts': [
-            'nxtodo=nxtodo.run_console:main'
+            'nxtodo=nxtodo.main:main'
         ]
     },
     package_data={

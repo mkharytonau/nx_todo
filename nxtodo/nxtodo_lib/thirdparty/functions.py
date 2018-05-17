@@ -75,8 +75,9 @@ def select_item(db, search_info):
 
 
 class SearchInfo:
-    def __init__(self, instance, attribute, value, all):
+    def __init__(self, instance, status, attribute, value, all):
         self.instance = instance
+        self.status = status
         self.attribute = attribute
         self.value = value
         self.all = all

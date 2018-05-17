@@ -3,6 +3,11 @@
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
+#Django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
 import getpass
 import configparser
 import nxtodo_console as con
@@ -12,9 +17,12 @@ from colored import bg, fg, attr
 
 
 user_choice_command = {
+    'adduser': lambda args: add_user(args),
     'show': lambda args: show(args),
     'add': lambda args: add(args),
     'del': lambda args: delete(args),
+    'do': lambda args: do(args),
+    'remove': lambda args: remove(args),
     'edit': lambda args: edit(args),
     'check': lambda args: check(args)
 }
@@ -36,6 +44,18 @@ user_choice_del = {
     'event': lambda args: del_event(args)
 }
 
+user_choice_do = {
+    'all': lambda args: do_all(args),
+    'task': lambda args: do_task(args),
+    'event': lambda args: do_event(args)
+}
+
+user_choice_remove = {
+    'all': lambda args: remove_all(args),
+    'task': lambda args: remove_task(args),
+    'event': lambda args: remove_event(args)
+}
+
 user_choice_edit = {
     'task': lambda args: edit_task(args),
     'event': lambda args: edit_event(args)
@@ -47,6 +67,8 @@ user_choice_check = {
     'event': lambda args: check_event(args)
 }
 
+def add_user(args):
+    db.add_user(args.name)
 
 def show(args):
     search_info = make_search_info(None, args)
@@ -60,6 +82,15 @@ def add(args):
 
 def delete(args):
     user_choice_del.get(args.kind)(args)
+
+
+def do(args):
+    user_choice_do.get(args.kind)(args)
+
+
+def remove(args):
+    user_choice_remove.get(args.kind)(args)
+
 
 def edit(args):
     user_choice_edit.get(args.kind)(args)
@@ -123,14 +154,14 @@ def show_all(search_info, calendar, args):
 
 
 def add_task(args):
-    try:
-        deadline = lib.parse_datetime.parse_datetime(args.deadline, config['date_formats']['ordinary'])
-        parent = lib.functions.Parent(args.title, deadline)
-        reminder = lib.Reminder.parse_create(args, deadline, parent, lib.enums.Instances.task)
-    except ValueError:
-        return
-    db.add_task(args.title, args.description, reminder, args.category, args.owners,
-                deadline, args.priority, args.status, args.subtasks)
+    #try:
+    #    deadline = lib.parse_datetime.parse_datetime(args.deadline, config['date_formats']['ordinary'])
+    #    parent = lib.functions.Parent(args.title, deadline)
+    #    reminder = lib.Reminder.parse_create(args, deadline, parent, lib.enums.Instances.task)
+    #except ValueError:
+    #    return
+    db.add_task(args.title, args.description, 'will de reminder', args.category,
+                args.deadline, args.priority, args.status, args.subtasks)
 
 
 def add_event(args):
@@ -160,6 +191,36 @@ def del_event(args):
     db.delete(search_info)
 
 
+def do_all(args):
+    do_task(args)
+    do_event(args)
+
+
+def do_task(args):
+    search_info = make_search_info(lib.enums.Instances.task, args)
+    db.do(search_info)
+
+
+def do_event(args):
+    search_info = make_search_info(lib.enums.Instances.event, args)
+    db.do(search_info)
+
+
+def remove_all(args):
+    remove_task(args)
+    remove_event(args)
+
+
+def remove_task(args):
+    search_info = make_search_info(lib.enums.Instances.task, args)
+    db.remove(search_info)
+
+
+def remove_event(args):
+    search_info = make_search_info(lib.enums.Instances.event, args)
+    db.remove(search_info)
+
+
 def check_all(args):
     search_info = make_search_info(lib.enums.Instances.all, args)
     return search_info
@@ -177,21 +238,21 @@ def check_event(args):
 
 def make_search_info(instance, args):
     if args.all:
-        return lib.functions.SearchInfo(instance, None, None, True)
+        return lib.functions.SearchInfo(instance, args.status, None, None, True)
     for attribute in ['title', 'category']:
-        if not getattr(args, attribute) is None:
-            return lib.functions.SearchInfo(instance, attribute, getattr(args, attribute))
+        if getattr(args, attribute) is not None and getattr(args, attribute) != False :
+            return lib.functions.SearchInfo(instance, args.status, attribute, getattr(args, attribute), False)
     return None
 
 
 def initialize():
-    global config
-    config_path = os.path.join('/', 'home', getpass.getuser(), '.nxtodo', 'config', 'config.ini')
-    config = configparser.ConfigParser()
-    config.read(config_path)
+    #global config
+    #config_path = os.path.join('/', 'home', getpass.getuser(), '.nxtodo', 'config', 'config.ini')
+    #config = configparser.ConfigParser()
+    #config.read(config_path)
     global db
     db = lib.Database()
-    db.load(config)
+    #db.load(config)
 
 
 def main():
@@ -200,7 +261,8 @@ def main():
 
     #arguments = 'del event -t testiruEm'.split()
     #arguments = 'add task TESTtask -d 2018/04/22 19:00 -rf 2018/04/05 13:00 -ri 0:0:0:5 -i 0:0:0:2 -wd sun'.split()
-    arguments = 'show all -a'.split()
+    #arguments = 'add task testask -d 2018/01/01 12:00'.split()
+    arguments = 'show all -t t1'.split()
     args = con.parse(arguments)
     user_choice_command.get(args.command, lambda args: print("No such command."))(args)
 
