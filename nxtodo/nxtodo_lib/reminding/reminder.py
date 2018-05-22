@@ -1,11 +1,8 @@
 from datetime import datetime
 from datetime import timedelta
-from colored import fg, attr
 from ..thirdparty.functions import Parent
 from ..thirdparty.enums import Instances
-from ..thirdparty.enums import Styles
 from .notification import Notification
-from ..thirdparty.parse_datetime import parse_datetime
 
 
 class Reminder:
@@ -76,15 +73,10 @@ class Reminder:
                             , datetimes, interval, weekdays, parent, kind)
         return reminder
 
-    def check(self, style):
-        now = datetime.today()
+    def check(self, now): #Убрано поле stop in moment, поэтому нужно будет start_remind_before, start_remind_from посмотреть.
         if self.kind == Instances.task:
             if now > self.stop_in_moment:
-                if style == Styles.gui and self.flags['missed']:
-                    return None
-                mis = '{cs}missed{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                    if style == Styles.terminal else 'missed'
-                mes = 'You ' + mis + ' the deadline for the task {t}'.format(t=self.parent.title)
+                mes = 'You missed the deadline for the task {t}'.format(t=self.parent.title)
                 date = self.parent.deadline
                 self.flags['missed'] = True
                 return Notification(mes, date)
@@ -92,53 +84,41 @@ class Reminder:
         if self.kind == Instances.event:
             if now > self.stop_in_moment:
                 if now < parse_datetime(self.parent.to_datetime.split(), config['date_formats']['ordinary']):
-                    if style == Styles.gui and self.flags['right_now']:
-                        return None
-                    right_now = '{cs}Right now!{ce}'.format(cs=fg(113), ce=attr('reset')) \
-                        if style == Styles.terminal else 'Right now!'
-                    mes = right_now + ' there is an event {e}, it will last up to {to}'.\
+                    mes = 'Right now! there is an event {e}, it will last up to {to}'.\
                         format(e=self.parent.title, to=self.parent.to_datetime)
                     date = now
                     self.flags['right_now'] = True
                     return Notification(mes, date)
-                if style == Styles.gui and self.flags['missed']:
-                    return None
-                mis = '{cs}missed{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                    if style == Styles.terminal else 'missed'
-                mes = 'You ' + mis + ' the event {e}'.format(e=self.parent.title)
+                mes = 'You missed the event {e}'.format(e=self.parent.title)
                 date = self.parent.to_datetime
                 self.flags['missed'] = True
                 return Notification(mes, date)
 
         if self.start_remind_from < now < self.stop_in_moment:
-            notify_remind_in = self.check_remind_in(now, style)
-            notify_datetimes = self.check_datetimes(now, style)
-            notify_interval = self.check_interval(now, style)
-            notify_weekdays = self.check_weekdays(now, style)
+            notify_remind_in = self.check_remind_in(now)
+            notify_datetimes = self.check_datetimes(now)
+            notify_interval = self.check_interval(now)
+            notify_weekdays = self.check_weekdays(now)
             notifications = [notify for notify in [notify_remind_in, notify_datetimes,
                                                    notify_interval, notify_weekdays] if notify is not None]
             notifications.sort(key=lambda obj: obj.date, reverse=True)
             return notifications[0] if len(notifications) > 0 else None
 
-    def check_remind_in(self, now, style):
+    def check_remind_in(self, now):
         if self.remind_in is None:
             return None
         if self.stop_in_moment - self.remind_in < now:
-            if style == Styles.gui and self.flags['remind_in']:
-                return None
-            rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                if style == Styles.terminal else 'Remind!'
             if self.kind == Instances.task:
-                mes = rem + ' In {time} the deadline for the task {t} : remind_in'\
+                mes = 'Remind! In {time} the deadline for the task {t} : remind_in'\
                     .format(time=self.remind_in, t=self.parent.title)
             if self.kind == Instances.event:
-                mes = rem + ' In {time} the beginning of the event {t} : remind_in'\
+                mes = 'Remind! In {time} the beginning of the event {t} : remind_in'\
                     .format(time=self.remind_in, t=self.parent.title)
             date = self.stop_in_moment - self.remind_in
             self.flags['remind_in'] = True
             return Notification(mes, date)
 
-    def check_datetimes(self, now, style):
+    def check_datetimes(self, now):
         if self.datetimes is None:
             return None
         counter = 0
@@ -146,49 +126,43 @@ class Reminder:
             if dt < now:
                 counter += 1
         if counter > self.flags['datetimes']:
-            rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                if style == Styles.terminal else 'Remind!'
             if self.kind == Instances.task:
-                mes = rem + ' {d} the deadline for the task {t} : datetimes'.\
+                mes = 'Remind! {d} the deadline for the task {t} : datetimes'.\
                     format(d=self.parent.deadline, t=self.parent.title)
             if self.kind == Instances.event:
-                mes = rem + ' {d} the beginning of the event {t} : datetimes'.\
+                mes = 'Remind! {d} the beginning of the event {t} : datetimes'.\
                     format(d=self.stop_in_moment, t=self.parent.title)
             date = self.datetimes[counter - 1]
             self.flags['datetimes'] = counter
             return Notification(mes, date)
 
-    def check_interval(self, now, style):
+    def check_interval(self, now):
         if self.interval is None:
             return None
         counter = (now - self.start_remind_from) // self.interval
         if counter > self.flags['interval']:
-            rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                if style == Styles.terminal else 'Remind!'
             if self.kind == Instances.task:
-                mes = rem + ' {d} the deadline for the task {t} : interval'.\
+                mes = 'Reminder! {d} the deadline for the task {t} : interval'.\
                     format(d=self.parent.deadline, t=self.parent.title)
             if self.kind == Instances.event:
-                mes = rem + ' {d} the beginning of the event {t} : interval'.\
+                mes = 'Reminder! {d} the beginning of the event {t} : interval'.\
                     format(d=self.stop_in_moment, t=self.parent.title)
             date = self.start_remind_from + self.interval * counter
             self.flags['interval'] = counter
             return Notification(mes, date)
 
-    def check_weekdays(self, now, style):
+    def check_weekdays(self, now):
         if self.weekdays is None:
             return None
         day = timedelta(days=1)
         date_now = now.date()
         while self.flags['weekdays'] < date_now:
             if self.weekdays.__contains__(date_now.weekday()):
-                rem = '{cs}Remind!{ce}'.format(cs=fg(124), ce=attr('reset')) \
-                    if style == Styles.terminal else 'Remind!'
                 if self.kind == Instances.task:
-                    mes = rem + ' {d} the deadline for the task {t} : weekdays'.\
+                    mes = 'Remind! {d} the deadline for the task {t} : weekdays'.\
                         format(d=self.parent.deadline, t=self.parent.title)
                 if self.kind == Instances.event:
-                    mes = rem + ' {d} the beginning of the event {t} : weekdays'.\
+                    mes = 'Remind! {d} the beginning of the event {t} : weekdays'.\
                         format(d=self.stop_in_moment, t=self.parent.title)
                 date = datetime(date_now.year, date_now.month, date_now.day, now.hour, now.minute, now.second)
                 self.flags['weekdays'] = date_now

@@ -13,18 +13,3 @@ class Statuses(Enum):
     failed = 'failed'
     fulfilled = 'fulfilled'
     archived = 'archived'
-
-
-class Weekdays(Enum):
-    mon = 0
-    tue = 1
-    wed = 2
-    thu = 3
-    fri = 4
-    sat = 5
-    sun = 6
-
-
-class Styles(Enum):
-    terminal = 'terminal'
-    gui = 'gui'

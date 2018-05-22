@@ -5,10 +5,6 @@ def parse(arguments):
     parser = argparse.ArgumentParser(description='nx_todo')
     subparsers_for_command = parser.add_subparsers(dest='command')
 
-    # Parsing the 'adduser' command ------------------------------------------------------------
-    parser_adduser = subparsers_for_command.add_parser('adduser')
-    parser_adduser.add_argument('name')
-
     # Parsing the 'show' command ------------------------------------------------------------
     parser_show = subparsers_for_command.add_parser('show')
     subparsers_for_show = parser_show.add_subparsers(dest='kind')
@@ -57,25 +53,20 @@ def parse(arguments):
     parser_add = subparsers_for_command.add_parser('add')
     subparsers_for_add = parser_add.add_subparsers(dest='kind')
 
+    parser_add_user = subparsers_for_add.add_parser('user')
+    parser_add_user.add_argument('name')
+
     parser_add_task = subparsers_for_add.add_parser('task')
     parser_add_task.add_argument('title')
     parser_add_task.add_argument('-D', '--description')
     parser_add_task.add_argument('-c', '--category')
-    parser_add_task.add_argument('-o', '--owners')
+    parser_add_task.add_argument('-o', '--owners', nargs='+')
     parser_add_task.add_argument('-d', '--deadline', nargs=2)
     parser_add_task.add_argument('-p', '--priority', type=int)
     parser_add_task.add_argument('-s', '--status')
     parser_add_task.add_argument('-S', '--subtasks')
-    task_reminder_group = parser_add_task.add_argument_group('Reminder', 'This group of '
-                                                                         'arguments uses to create a reminder.')
-    task_reminder_group_timestart = task_reminder_group.add_mutually_exclusive_group()
-    task_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs='+')
-    task_reminder_group_timestart.add_argument('-rb', '--remind_before')
-    task_reminder_group_kind = task_reminder_group.add_argument_group()
-    task_reminder_group_kind.add_argument('-ri', '--remind_in')
-    task_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')
-    task_reminder_group_kind.add_argument('-i', '--interval')
-    task_reminder_group_kind.add_argument('-wd', '--weekdays', nargs='+')
+    parser_add_task.add_argument('-u', '--user')
+
 
 
     parser_add_event = subparsers_for_add.add_parser('event')
@@ -85,17 +76,38 @@ def parse(arguments):
     parser_add_event.add_argument('-f', '--fromdt', nargs=2, required=True)
     parser_add_event.add_argument('-t', '--todt', nargs=2, required=True)
     parser_add_event.add_argument('-P', '--place')
-    parser_add_event.add_argument('-p', '--participants')
-    event_reminder_group = parser_add_event.add_argument_group('Reminder', 'This group of '
-                                                                         'arguments uses to create a reminder.')
-    event_reminder_group_timestart = event_reminder_group.add_mutually_exclusive_group()
-    event_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs='+')
-    event_reminder_group_timestart.add_argument('-rb', '--remind_before')
-    event_reminder_group_kind = event_reminder_group.add_argument_group()
-    event_reminder_group_kind.add_argument('-ri', '--remind_in')
-    event_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')
-    event_reminder_group_kind.add_argument('-i', '--interval')
-    event_reminder_group_kind.add_argument('-wd', '--weekdays', nargs='+')
+    parser_add_event.add_argument('-p', '--participants', nargs='+')
+    parser_add_event.add_argument('-u', '--user')
+
+    parser_add_reminder = subparsers_for_add.add_parser('reminder')
+    add_reminder_group_timestart = parser_add_reminder.add_mutually_exclusive_group()
+    add_reminder_group_timestart.add_argument('-rb', '--remind_before')
+    add_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs=2)
+    add_reminder_group_kind = parser_add_reminder.add_argument_group()
+    add_reminder_group_kind.add_argument('-ri', '--remind_in')
+    add_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')
+    add_reminder_group_kind.add_argument('-i', '--interval')
+    add_reminder_group_kind.add_argument('-wd', '--weekdays', nargs='+')
+    parser_add_reminder.add_argument('-u', '--user')
+
+    # Parsing the 'addto' command--------------------------------------------------------------
+    parser_addto = subparsers_for_command.add_parser('addto')
+    subparsers_for_addto = parser_addto.add_subparsers(dest='kind')
+
+    parser_addto_task = subparsers_for_addto.add_parser('task')
+    parser_addto_task.add_argument('id')
+    addto_task_group = parser_addto_task.add_mutually_exclusive_group(required=True)
+    addto_task_group.add_argument('-r', '--reminders', nargs='+')
+    addto_task_group.add_argument('-s', '--subtasks', nargs='+')
+    addto_task_group.add_argument('-o', '--owners', nargs='+')
+    parser_addto_task.add_argument('-u', '--user')
+
+    parser_addto_event = subparsers_for_addto.add_parser('event')
+    parser_addto_event.add_argument('id')
+    addto_event_group = parser_addto_event.add_mutually_exclusive_group(required=True)
+    addto_event_group.add_argument('-r', '--reminders', nargs='+')
+    addto_event_group.add_argument('-p', '--participants', nargs='+')
+    parser_addto_event.add_argument('-u', '--user')
 
     # Parsing the 'do' command ----------------------------------------------------------------
     parser_do = subparsers_for_command.add_parser('do')
@@ -110,7 +122,6 @@ def parse(arguments):
     do_event_group = parser_do_event.add_mutually_exclusive_group(required=True)
     do_event_group.add_argument('-t', '--title')
     do_event_group.add_argument('-c', '--category')
-
 
     # Parsing the 'del' command ----------------------------------------------------------------
     parser_del = subparsers_for_command.add_parser('del')
@@ -155,7 +166,6 @@ def parse(arguments):
     remove_all_group.add_argument('-a', '--all', action='store_true')
     remove_all_group.add_argument('-t', '--title')
     remove_all_group.add_argument('-c', '--category')
-
 
     # Parsing for the 'check' command-----------------------------------------------------------------
     parser_check = subparsers_for_command.add_parser('check')
