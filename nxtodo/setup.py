@@ -16,7 +16,7 @@ class CustomInstallCommand(install):
         #install.run(self)
 
         #sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-        #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo_lib.settings")
+        #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo.settings")
         #from django.core.management import execute_from_command_line
         #execute_from_command_line(['manage.py', 'makemigrations'])
         #execute_from_command_line(['manage.py', 'migrate'])
@@ -25,15 +25,15 @@ class CustomInstallCommand(install):
 
 
 setup(
-    name='nxtodo_lib',
+    name='nxtodo',
     version='1.0',
-    packages=['nxtodo_lib',
-    'nxtodo_lib.daemon',
-    'nxtodo_lib.database',
-    'nxtodo_lib.nxtodo_db',
-    'nxtodo_lib.nxtodo_db.migrations',
-    'nxtodo_lib.reminding',
-    'nxtodo_lib.thirdparty'],
+    packages=['nxtodo',
+    'nxtodo.daemon',
+    'nxtodo.database',
+    'nxtodo.nxtodo_db',
+    'nxtodo.nxtodo_db.migrations',
+    'nxtodo.reminding',
+    'nxtodo.thirdparty'],
     url='',
     license='',
     author='kharivitalij',
