@@ -66,10 +66,11 @@ def add_event(user, title, description, category, from_datetime,
         add_participants_to_event(user, event.id, participants)
 
 
-def add_reminder(user, start_remind_before, start_remind_from, remind_in,
-                 datetimes, interval, weekdays):
-    reminder = Reminder.create(start_remind_before, start_remind_from, remind_in,
-                               datetimes, interval, weekdays)
+def add_reminder(user, start_remind_before, start_remind_from, stop_remind_in,
+                 remind_in, datetimes, interval, weekdays):
+    reminder = Reminder.create(start_remind_before, start_remind_from,
+                               stop_remind_in, remind_in, datetimes, interval,
+                               weekdays)
     reminder.user = get_user(user)
     reminder.save()
 
@@ -154,7 +155,7 @@ def check(self, user, search_info, style):
 def get_notifications(self, arr, style):
     notifications = []
     for obj in arr:
-        notification = obj.reminder.check(style)
+        notification = obj.reminder.notify(style)
         if notification is not None:
             notifications.append(notification)
     return notifications

@@ -37,7 +37,8 @@ def main():
     # arguments = 'add reminder -rf 2018/04/03 12:01:02 -ri 3:2:2:1 -dt 2017/04/03 12:01:02 2016/04/03 19:01:00  -wd mon wed -i 0:0:1:1'.split()
     # arguments = 'addto task 2 -o nikitos123'.split()
     #arguments = 'add task testing -d 2018/04/03 12:00:05'.split()
-    arguments = 'show task'.split()
+    #arguments = "add event testEvent -P lol -f 2018/01/01 12:00:00 -t 2018/01/01 12:30:00 -D 'qgrqgqgqgegeqrgequig;herqg\nerqgberigbeqrgberqgbqegbqerg\nbergbeqrgberqgbqergbeqrgbe'".split()
+    arguments = 'show event -i 2'.split()
     args = parse(arguments)
 
     config = get_config()

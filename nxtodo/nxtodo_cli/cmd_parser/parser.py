@@ -10,7 +10,6 @@ def parse(arguments):
     subparsers_for_show = parser_show.add_subparsers(dest='kind')
 
     parser_show_all = subparsers_for_show.add_parser('all')
-    parser_show_all.add_argument('-i', '--id')
     parser_show_all.add_argument('-t', '--title')
     parser_show_all.add_argument('-c', '--category')
     parser_show_all.add_argument('-p', '--priority')
@@ -31,6 +30,7 @@ def parse(arguments):
     parser_show_event.add_argument('-c', '--category')
     parser_show_event.add_argument('-p', '--priority')
     parser_show_event.add_argument('-s', '--status')
+    parser_show_event.add_argument('-P', '--place')
     parser_show_event.add_argument('-u', '--user')
 
 
@@ -52,8 +52,6 @@ def parse(arguments):
     parser_add_task.add_argument('-S', '--subtasks')
     parser_add_task.add_argument('-u', '--user')
 
-
-
     parser_add_event = subparsers_for_add.add_parser('event')
     parser_add_event.add_argument('title')
     parser_add_event.add_argument('-D', '--description')
@@ -68,6 +66,7 @@ def parse(arguments):
     add_reminder_group_timestart = parser_add_reminder.add_mutually_exclusive_group()
     add_reminder_group_timestart.add_argument('-rb', '--remind_before')
     add_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs=2)
+    parser_add_reminder.add_argument('-si', '--stop_in', nargs=2)
     add_reminder_group_kind = parser_add_reminder.add_argument_group()
     add_reminder_group_kind.add_argument('-ri', '--remind_in')
     add_reminder_group_kind.add_argument('-dt', '--datetimes', nargs='+')

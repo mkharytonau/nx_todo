@@ -1,7 +1,7 @@
 from prettytable import PrettyTable
 from .colorizer import colorize
 
-SPECIAL_FIELDS = ['title', 'reminders', 'owners', 'participants']
+SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners', 'participants']
 
 
 def style_to_int(style):
@@ -24,9 +24,19 @@ def select_priority_color(priority, config):
     return 255
 
 
+def split_str(s, length):
+    if len(s) <= length:
+        return s
+    return s[:length] + '\n' + split_str(s[length:], length)
+
+
 def handle_field(obj, field, config):
     if field == 'title':
-        return colorize(obj.title, foreground=select_priority_color(obj.priority, config))
+        return colorize(obj.title,
+                        foreground=select_priority_color(obj.priority, config))
+    if field == 'description':
+        value = split_str(obj.description, 10) if obj.description else None
+        return value
     if field == 'reminders':
         return [reminder.id for reminder in obj.reminder_set.all()]
     if field == 'owners' or field == 'participants':
@@ -58,4 +68,23 @@ def show_task_table(tasks, config):
                 row.append(getattr(task, field))
         table.add_row(row)
     print(table)
-    print()
+
+
+def show_event_table(events, config):
+    config_dict = config['events_view']
+    fields_to_display = [field for field in config_dict.keys()
+                         if config.getboolean('events_view', field)]
+    table = PrettyTable()
+    configurate_table(table, config)
+    table.title = colorize('Events', background=config['colors']['event_bg'],
+                           foreground=config['colors']['foreground'])
+    table.field_names = fields_to_display
+    for event in events:
+        row = []
+        for field in fields_to_display:
+            if field in SPECIAL_FIELDS:
+                row.append(handle_field(event, field, config))
+            else:
+                row.append(getattr(event, field))
+        table.add_row(row)
+    print(table)

@@ -2,10 +2,9 @@ from enum import Enum
 
 
 class Instances(Enum):
-    task = 0
-    event = 1
-    plan = 2
-    team_task = 3
+    task = 'task'
+    event = 'event'
+    plan = 'plan'
 
 
 class Statuses(Enum):

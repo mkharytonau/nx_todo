@@ -4,6 +4,7 @@ from nxtodo import queries
 from nxtodo_cli import nxCalendar
 from nxtodo_cli import ColoredDate
 from nxtodo_cli import show_task_table
+from nxtodo_cli import show_event_table
 
 
 user_choice_show = {
@@ -18,37 +19,145 @@ def show(args, config):
 
 
 def show_all(args, config):
-    pass
-    #calendar.linked_objects += [con.ColoredDate(task.deadline.year, task.deadline.month,
-    #                                              task.deadline.day, int(config['colors']['taskbg']))
-    #                       for task in founded_tasks]
-    #calendar.linked_objects += [con.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-    #                                              event.from_datetime.day, int(config['colors']['eventbg']))
-    #                       for event in founded_events]
-    #calendar.show(config)
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    tasks_count = True
+    try:
+        tasks = queries.get_tasks(user, args.title, args.category,
+                                  args.priority, args.status)
+    except Exception as e:
+        print(e)
+        tasks_count = False
+
+    try:
+        events = queries.get_events(user, args.title, args.category,
+                                  args.priority, args.status)
+    except Exception as e:
+        print(e)
+        if not tasks_count:
+            return
+
+    calendar = nxCalendar(datetime.today())
+    linked_tasks = []
+    linked_events = []
+    try:
+        for task in tasks:
+            if task.deadline is not None:
+                cdate = ColoredDate(task.deadline.date(),
+                                    int(config['colors']['task_bg']),
+                                    int(config['colors']['foreground']))
+                linked_tasks.append(cdate)
+        for event in events:
+            if event.from_datetime is not None:
+                cdate = ColoredDate(event.from_datetime.date(),
+                                    int(config['colors']['event_bg']),
+                                    int(config['colors']['foreground']))
+                linked_events.append(cdate)
+    except KeyError:
+        print("Your config file is incorrect, please, check 'colors' section.")
+        show_task_table(tasks, config)
+        return
+    calendar.linked_objects += linked_tasks
+    calendar.linked_objects += linked_events
+    try:
+        month_num = int(config['nxcalendar']['month_num'])
+        if not 0 < month_num < 7:
+            raise ValueError('month_num is integer in range(0, 7),'
+                             'please, check your config file.')
+    except ValueError as e:
+        print(e)
+        show_task_table(tasks, config)
+        show_event_table(events, config)
+        return
+    calendar.show(month_num)
+
+    show_task_table(tasks, config)
+    show_event_table(events, config)
 
 
 def show_task(args, config):
-    user = identify_user(args, config)
     try:
-        tasks = queries.get_tasks(user, args.title, args.category, args.priority, args.status)
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+    try:
+        id = int(args.id) if args.id is not None else None
+        tasks = queries.get_tasks(user, args.title, args.category,
+                                  args.priority, args.status, id)
     except Exception as e:
         print(e)
         return
+
     calendar = nxCalendar(datetime.today())
-    linked_objects = [ColoredDate(task.deadline.date(), int(config['colors']['task_bg']),
-                                  int(config['colors']['foreground']))
-                      for task in tasks if task.deadline is not None]
+    linked_objects = []
+    try:
+        for task in tasks:
+            if task.deadline is not None:
+                cdate = ColoredDate(task.deadline.date(),
+                                    int(config['colors']['task_bg']),
+                                    int(config['colors']['foreground']))
+                linked_objects.append(cdate)
+    except KeyError:
+        print("Your config file is incorrect, please, check 'colors' section.")
+        show_task_table(tasks, config)
+        return
     calendar.linked_objects += linked_objects
-    calendar.show(config)
+    try:
+        month_num = int(config['nxcalendar']['month_num'])
+        if not 0 < month_num < 7:
+            raise ValueError('month_num is integer in range(0, 7),'
+                             'please, check your config file.')
+    except ValueError as e:
+        print(e)
+        show_task_table(tasks, config)
+        return
+    calendar.show(month_num)
+
     show_task_table(tasks, config)
 
 
 def show_event(args, config):
-    search_info.instance = lib.enums.Instances.event
-    founded_events = db.show(user, search_info)
-    #calendar.linked_objects += [con.ColoredDate(event.from_datetime.year, event.from_datetime.month,
-    #                                              event.from_datetime.day, int(config['colors']['eventbg']))
-    #                       for event in founded_events]
-    calendar.show(config)
-    lib.functions.print_list(founded_events, config, args)
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+    try:
+        id = int(args.id) if args.id is not None else None
+        events = queries.get_events(user, args.title, args.category,
+                                    args.priority, args.status, args.place, id)
+    except Exception as e:
+        print(e)
+        return
+
+    calendar = nxCalendar(datetime.today())
+    linked_objects = []
+    try:
+        for event in events:
+            if event.from_datetime is not None:
+                cdate = ColoredDate(event.from_datetime.date(),
+                                    int(config['colors']['event_bg']),
+                                    int(config['colors']['foreground']))
+                linked_objects.append(cdate)
+    except KeyError:
+        print("Your config file is incorrect, please, check 'colors' section.")
+        show_event_table(events, config)
+        return
+    calendar.linked_objects += linked_objects
+    try:
+        month_num = int(config['nxcalendar']['month_num'])
+        if not 0 < month_num < 7:
+            raise ValueError('month_num is integer in range(0, 7),'
+                             'please, check your config file.')
+    except ValueError as e:
+        print(e)
+        show_event_table(events, config)
+        return
+    calendar.show(month_num)
+
+    show_event_table(events, config)

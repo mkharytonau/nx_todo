@@ -11,23 +11,28 @@ class nxCalendar(Calendar):
         self.from_datetime = from_datetime
         self.linked_objects = []
 
-    def append_month(self, next_year, next_month, isFirst):
+    def get_pos(self, next_weeks):
+        for week in next_weeks:
+            if self.from_datetime.day in week:
+                return next_weeks.index(week)
+
+    def append_month(self, next_year, next_month, is_first):
         next_weeks = self.monthdayscalendar(next_year, next_month)
-        if isFirst:
-            pos = [next_weeks.index(week) for week in next_weeks if self.from_datetime.day in week][0]
+        if is_first:
+            pos = self.get_pos(next_weeks)
             next_weeks = next_weeks[pos:]
             for day in next_weeks[0]:
                 if day < self.from_datetime.day:
                     next_weeks[0][next_weeks[0].index(day)] = 0
         for week in next_weeks:
             for i in range(0, 7):
-                week[i] = (week[i], 'null', 'null')
+                week[i] = ColoredDate(week[i], None, None)
         self.link_with_objects(next_weeks, next_year, next_month)
         self.weeks += next_weeks
-        self.top_line += ('{month:^' + str(len(next_weeks) * 3) + '}').format(month=calendar.month_name[next_month])
+        self.top_line += ('{month:^' + str(len(next_weeks) * 3) + '}').\
+            format(month=calendar.month_name[next_month])
 
-    def show(self, config):
-        month_num = int(config['nxcalendar']['month_num'])
+    def show(self, month_num):
         self.append_month(self.from_datetime.year, self.from_datetime.month, True)
         if month_num > 1:
             for i in range(1, month_num):
@@ -42,11 +47,12 @@ class nxCalendar(Calendar):
             print(calendar.day_name[line][:3], end=' ')
             for week in self.weeks:
                 symbol = '{sym:2}'.format(sym='  ')
-                if week[line][0] != 0:
-                    if week[line][1] == 'null':
-                        symbol = '{num:2}'.format(num=week[line][0])
+                if week[line].date != 0:
+                    if week[line].bgcolor is None:
+                        symbol = '{num:2}'.format(num=week[line].date)
                     else:
-                        symbol = colorize('{num:2}'.format(num=week[line][0]), week[line][1], week[line][2])
+                        symbol = colorize('{num:2}'.format(num=week[line].date),
+                                          week[line].bgcolor, week[line].fgcolor)
                 print(symbol, end=' ')
             print()
 
@@ -59,8 +65,10 @@ class nxCalendar(Calendar):
             if obj.date.month != month:
                 continue
             for week in weeks:
-                if (obj.date.day, 'null', 'null') in week:
-                    week[week.index((obj.date.day, 'null', 'null'))] = (obj.date.day, obj.bgcolor, obj.fgcolor)
+                for day in week:
+                    if day.date == obj.date.day:
+                        day.bgcolor = obj.bgcolor
+                        day.fgcolor = obj.fgcolor
 
 
 class ColoredDate():
@@ -68,5 +76,4 @@ class ColoredDate():
         self.date = date
         self.bgcolor = bgcolor
         self.fgcolor = fgcolor
-
 

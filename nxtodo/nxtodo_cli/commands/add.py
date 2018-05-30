@@ -23,14 +23,16 @@ def add_user(args, config):
 
 def add_task(args, config):
     try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
         deadline = parse_datetime(args.deadline, Formats.datetime,
                                   config['date_formats'][Formats.datetime.value])
     except ValueError:
         print('Error when parsing, please check the entered data and formats in the config file.')
-        return
-
-    user = identify_user(args, config)
-    if user is None:
         return
 
     try:
@@ -42,16 +44,18 @@ def add_task(args, config):
 
 def add_event(args, config):
     try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
         from_datetime = parse_datetime(args.fromdt, Formats.datetime,
                                        config['date_formats'][Formats.datetime.value])
         to_datetime = parse_datetime(args.todt, Formats.datetime,
                                      config['date_formats'][Formats.datetime.value])
     except ValueError:
         print('Error when parsing, please check the entered data and formats in the config file.')
-        return
-
-    user = identify_user(args, config)
-    if user is None:
         return
 
     try:
@@ -62,12 +66,21 @@ def add_event(args, config):
 
 
 def add_reminder(args, config):
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
     error_message = 'Error when parsing, please check the entered data and formats in the config file.'
     try:
         start_remind_before = parse_datetime(args.remind_before, Formats.timedelta,
                                              config['date_formats'][Formats.timedelta.value])
         start_remind_from = parse_datetime(args.remind_from, Formats.datetime,
                                            config['date_formats'][Formats.datetime.value])
+        stop_remind_in = parse_datetime(args.stop_in, Formats.datetime,
+                                           config['date_formats'][
+                                               Formats.datetime.value])
         remind_in = parse_datetime(args.remind_in, Formats.timedelta,
                                    config['date_formats'][Formats.timedelta.value])
         datetimes = parse_datetime(args.datetimes, Formats.datetime_list,
@@ -83,14 +96,10 @@ def add_reminder(args, config):
         print(error_message)
         return
 
-
-    user = identify_user(args, config)
-    if user is None:
-        return
-
     try:
         queries.add_reminder(user, start_remind_before, start_remind_from,
-                         remind_in, datetimes, interval, weekdays)
+                             stop_remind_in, remind_in, datetimes, interval,
+                             weekdays)
     except ObjectDoesNotExist:
         print('User does not exist, please, create a new or select another one.')
         return
