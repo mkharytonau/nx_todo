@@ -1,5 +1,6 @@
 from django.db import models
 from .base import Base
+from nxtodo.thirdparty import Statuses
 
 
 class Event(Base):
@@ -8,11 +9,20 @@ class Event(Base):
     place = models.CharField(max_length=30)
 
     @classmethod
-    def create(cls, title, description, category, from_datetime,
-               to_datetime, place):
+    def create(cls, title, description, category, priority, status,
+               from_datetime, to_datetime, place):
         event = cls(title=title, description=description, category=category,
-                    from_datetime=from_datetime, to_datetime=to_datetime, place=place)
+                    priority=priority, status=status,
+                    from_datetime=from_datetime, to_datetime=to_datetime,
+                    place=place)
         return event
+
+    def prepare_to_plan(self):
+        self.from_datetime = None
+        self.to_datetime = None
+        self.status = Statuses.planned.value
+        for rem in self.reminder_set.all():
+            rem.prepare_to_plan()
 
     def __str__(self):
         return self.title

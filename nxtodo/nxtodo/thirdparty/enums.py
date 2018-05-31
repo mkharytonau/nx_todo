@@ -12,3 +12,4 @@ class Statuses(Enum):
     failed = 'failed'
     fulfilled = 'fulfilled'
     archived = 'archived'
+    planned = 'planned'

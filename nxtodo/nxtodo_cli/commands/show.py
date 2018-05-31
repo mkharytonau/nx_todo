@@ -1,16 +1,18 @@
 from datetime import datetime
-from .identify_user import identify_user
-from nxtodo import queries
-from nxtodo_cli import nxCalendar
-from nxtodo_cli import ColoredDate
-from nxtodo_cli import show_task_table
-from nxtodo_cli import show_event_table
 
+from nxtodo_cli import ColoredDate
+from nxtodo_cli import nxCalendar
+from nxtodo_cli import show_event_table
+from nxtodo_cli import show_task_table
+
+from nxtodo import queries
+from .identify_user import identify_user
 
 user_choice_show = {
     'all': lambda args, config: show_all(args, config),
     'task': lambda args, config: show_task(args, config),
-    'event': lambda args, config: show_event(args, config)
+    'event': lambda args, config: show_event(args, config),
+    'plan': lambda args, config: show_plan(args, config)
 }
 
 
@@ -35,7 +37,7 @@ def show_all(args, config):
 
     try:
         events = queries.get_events(user, args.title, args.category,
-                                  args.priority, args.status)
+                                    args.priority, args.status)
     except Exception as e:
         print(e)
         if not tasks_count:
@@ -86,9 +88,8 @@ def show_task(args, config):
         print(e)
         return
     try:
-        id = int(args.id) if args.id is not None else None
         tasks = queries.get_tasks(user, args.title, args.category,
-                                  args.priority, args.status, id)
+                                  args.priority, args.status, args.id)
     except Exception as e:
         print(e)
         return
@@ -128,9 +129,9 @@ def show_event(args, config):
         print(e)
         return
     try:
-        id = int(args.id) if args.id is not None else None
         events = queries.get_events(user, args.title, args.category,
-                                    args.priority, args.status, args.place, id)
+                                    args.priority, args.status, args.place,
+                                    args.id)
     except Exception as e:
         print(e)
         return

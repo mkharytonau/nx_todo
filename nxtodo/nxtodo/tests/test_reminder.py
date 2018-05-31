@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timedelta
-from nxtodo.nxtodo_db.models import Reminder, Task, Event
+from nxtodo.nxtodo_db.models import Reminder, Task, Event, Plan
 
 
 class TestReminder(unittest.TestCase):
@@ -212,7 +212,8 @@ class TestReminder(unittest.TestCase):
         notification = reminder.notify(now)
         self.assertEqual(notification, None)
 
-        self.assertEqual(reminder.start_remind_from, datetime(2018, 5, 31, 13, 30))
+        self.assertEqual(reminder.start_remind_from,
+                         datetime(2018, 5, 31, 13, 30))
 
         now = datetime(2018, 5, 31, 13, 31)
         mes = "Remember about 'test' event"
@@ -274,6 +275,60 @@ class TestReminder(unittest.TestCase):
         notification = reminder.notify(now)
         self.assertEqual(notification.message, mes)
         self.assertEqual(notification.date, date, msg=notification.date)
+
+    def test_check_for_plan(self):
+        plan = Plan(title='test')
+        reminder = Reminder.create(None, datetime(2018, 5, 31, 15), None,
+                                   None, [datetime(2018, 6, 1, 19, 25),
+                                          datetime(2018, 6, 2, 9, 7)],
+                                   timedelta(hours=6), [3, 4]
+                                   )
+        plan.save()
+        reminder.plan = plan
+
+        now = datetime(2018, 5, 31, 16)
+        date = datetime(2018, 5, 31, 0)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 5, 31, 16, 5)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, None)
+
+        now = datetime(2018, 6, 1, 2)
+        date = datetime(2018, 6, 1, 0)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 6, 1, 3, 15)
+        date = datetime(2018, 6, 1, 3)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 6, 1, 16, 15)
+        date = datetime(2018, 6, 1, 15)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 6, 1, 18)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, None)
+
+        now = datetime(2018, 6, 1, 20)
+        date = datetime(2018, 6, 1, 19, 25)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 6, 6, 20)
+        date = datetime(2018, 6, 6, 15)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
+        now = datetime(2018, 6, 8, 2, 55, 45)
+        date = datetime(2018, 6, 8, 0)
+        notification = reminder.notify(now)
+        self.assertEqual(notification, date)
+
 
 if __name__ == '__main__':
     unittest.main()

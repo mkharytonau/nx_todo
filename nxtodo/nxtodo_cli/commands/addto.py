@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
-from nxtodo import queries
 
+from nxtodo import queries
+from .identify_user import identify_user
 
 user_choice_addto = {
     'task': lambda args, config: addto_task(args, config),

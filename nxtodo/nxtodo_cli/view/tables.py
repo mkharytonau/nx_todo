@@ -1,7 +1,9 @@
+from datetime import datetime
 from prettytable import PrettyTable
 from .colorizer import colorize
 
-SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners', 'participants']
+SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners',
+                  'participants', 'created_at']
 
 
 def style_to_int(style):
@@ -39,6 +41,8 @@ def handle_field(obj, field, config):
         return value
     if field == 'reminders':
         return [reminder.id for reminder in obj.reminder_set.all()]
+    if field == 'created_at':
+        return datetime.strftime(obj.created_at, '%Y-%m-%d %H:%M:%S')
     if field == 'owners' or field == 'participants':
         return [user.name for user in obj.user_set.all()]
 

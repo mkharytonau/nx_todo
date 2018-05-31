@@ -1,11 +1,12 @@
 import unittest
 from datetime import datetime
 from datetime import timedelta
+
+from nxtodo.reminding import check_datetimes
 from nxtodo.reminding import check_deadline
+from nxtodo.reminding import check_interval
 from nxtodo.reminding import check_range
 from nxtodo.reminding import check_remind_in
-from nxtodo.reminding import check_datetimes
-from nxtodo.reminding import check_interval
 from nxtodo.reminding import check_weekdays
 
 
@@ -88,4 +89,4 @@ class TestCheckTimes(unittest.TestCase):
 
 
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

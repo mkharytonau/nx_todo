@@ -1,4 +1,4 @@
-def create_filters(id, title, category, priority, status, place):
+def create_filters(id, title, category, priority, status, place=None):
     filters = {}
     if id:
         filters['id'] = id

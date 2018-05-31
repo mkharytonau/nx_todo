@@ -89,6 +89,9 @@ class Reminder(models.Model):
         if self.plan:
             return Instances.plan
 
+    def prepare_to_plan(self):
+        self.stop_remind_in = datetime.max
+
     def notify(self, now):
         type = self.select_type()
         if type == Instances.task:
@@ -112,6 +115,8 @@ class Reminder(models.Model):
             notifications = self.check_task(now)
         if type == Instances.event:
             notifications = self.check_event(now)
+        if type == Instances.plan:
+            return self.check_plan(now)
         if not notifications:
             return None
         notifications.sort(key=lambda obj: obj.date, reverse=True)
@@ -185,3 +190,27 @@ class Reminder(models.Model):
                           notify_weekdays, notify_right_now]
                          if notify.date is not None]
         return notifications
+
+    def check_plan(self, now):
+
+        datetimes_dt = ch.check_datetimes(self.datetimes, now)
+
+        interval_dt = ch.check_interval(self.start_remind_from,
+                                        self.interval, now)
+
+        weekdays_dt = ch.check_weekdays(self.start_remind_from,
+                                        self.weekdays, now)
+
+        notifications = [datetime for datetime in
+                         [datetimes_dt, interval_dt, weekdays_dt] if
+                         datetime is not None]
+        if not notifications:
+            return None
+
+        notifications.sort(key=lambda obj: obj, reverse=True)
+        actual_notification = notifications[0]
+        if actual_notification > self.last_check:
+            self.last_check = actual_notification
+            return actual_notification
+        else:
+            return None

@@ -5,7 +5,6 @@ from datetime import timedelta
 
 
 def parse_datetime(dtlist, format, format_string):
-
     if dtlist is None:
         return None
 
@@ -17,11 +16,13 @@ def parse_datetime(dtlist, format, format_string):
         date_list = []
         for i in range(0, len(dtlist), 2):
             date_list.append([dtlist[i], dtlist[i + 1]])
-        return [parse_datetime(date, Formats.datetime, format_string) for date in date_list]
+        return [parse_datetime(date, Formats.datetime, format_string) for date
+                in date_list]
 
     if format == Formats.timedelta:
         arglist = list(map(int, dtlist.split(':')))
-        return timedelta(weeks=arglist[0], days=arglist[1], hours=arglist[2], minutes=arglist[3])
+        return timedelta(weeks=arglist[0], days=arglist[1], hours=arglist[2],
+                         minutes=arglist[3])
 
     if format == Formats.weekdays:
         dtlist = list(set(dtlist))
@@ -39,4 +40,3 @@ def parse_datetime(dtlist, format, format_string):
                     raise ValueError
             return sorted(wdays)
         raise ValueError
-

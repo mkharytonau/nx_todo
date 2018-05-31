@@ -1,5 +1,6 @@
 import calendar
 from calendar import Calendar
+
 from nxtodo_cli import colorize
 
 
@@ -29,14 +30,16 @@ class nxCalendar(Calendar):
                 week[i] = ColoredDate(week[i], None, None)
         self.link_with_objects(next_weeks, next_year, next_month)
         self.weeks += next_weeks
-        self.top_line += ('{month:^' + str(len(next_weeks) * 3) + '}').\
+        self.top_line += ('{month:^' + str(len(next_weeks) * 3) + '}'). \
             format(month=calendar.month_name[next_month])
 
     def show(self, month_num):
-        self.append_month(self.from_datetime.year, self.from_datetime.month, True)
+        self.append_month(self.from_datetime.year, self.from_datetime.month,
+                          True)
         if month_num > 1:
             for i in range(1, month_num):
-                next_year = self.from_datetime.year + (self.from_datetime.month + i) // 12
+                next_year = self.from_datetime.year + (
+                            self.from_datetime.month + i) // 12
                 next_month = (self.from_datetime.month + i) % 12
                 if next_month == 0:
                     next_month = 12
@@ -51,8 +54,9 @@ class nxCalendar(Calendar):
                     if week[line].bgcolor is None:
                         symbol = '{num:2}'.format(num=week[line].date)
                     else:
-                        symbol = colorize('{num:2}'.format(num=week[line].date),
-                                          week[line].bgcolor, week[line].fgcolor)
+                        symbol = colorize(
+                            '{num:2}'.format(num=week[line].date),
+                            week[line].bgcolor, week[line].fgcolor)
                 print(symbol, end=' ')
             print()
 
@@ -76,4 +80,3 @@ class ColoredDate():
         self.date = date
         self.bgcolor = bgcolor
         self.fgcolor = fgcolor
-
