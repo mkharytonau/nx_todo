@@ -1,4 +1,4 @@
-user_choice_check = {
+USER_CHOICE_CHECK = {
     'all': lambda args: check_all(args),
     'task': lambda args: check_task(args),
     'event': lambda args: check_event(args)
@@ -12,9 +12,9 @@ def check(db, args, config):
         return
     search_info = user_choice_check.get(args.kind)(args)
     if search_info.instance == lib.enums.Instances.all:
-        search_info.instance = lib.enums.Instances.task
+        search_info.instance = lib.enums.Instances.TASK
         notifications_task = db.check(search_info, lib.enums.Styles.terminal)
-        search_info.instance = lib.enums.Instances.event
+        search_info.instance = lib.enums.Instances.EVENT
         notifications_event = db.check(search_info, lib.enums.Styles.terminal)
         notifications = notifications_task + notifications_event
     else:
@@ -30,10 +30,10 @@ def check_all(db, args, config):
 
 
 def check_task(db, args, config):
-    search_info = make_search_info(lib.enums.Instances.task, args)
+    search_info = make_search_info(lib.enums.Instances.TASK, args)
     return search_info
 
 
 def check_event(db, args, config):
-    search_info = make_search_info(lib.enums.Instances.event, args)
+    search_info = make_search_info(lib.enums.Instances.EVENT, args)
     return search_info

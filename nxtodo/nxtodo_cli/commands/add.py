@@ -5,7 +5,7 @@ from nxtodo_cli import parse_datetime
 from nxtodo import queries
 from .identify_user import identify_user
 
-user_choice_add = {
+USER_CHOICE_ADD = {
     'user': lambda args, config: add_user(args, config),
     'task': lambda args, config: add_task(args, config),
     'event': lambda args, config: add_event(args, config),
@@ -15,7 +15,7 @@ user_choice_add = {
 
 
 def add(args, config):
-    user_choice_add.get(args.kind)(args, config)
+    USER_CHOICE_ADD.get(args.kind)(args, config)
 
 
 def add_user(args, config):

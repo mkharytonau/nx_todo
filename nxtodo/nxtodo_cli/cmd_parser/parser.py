@@ -211,5 +211,5 @@ def parse(arguments):
     parser_edit_event = subparsers_for_edit.add_parser('event')
     parser_edit_event.add_argument('title')
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     return args

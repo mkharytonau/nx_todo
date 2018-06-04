@@ -15,7 +15,7 @@ class Task(Base):
 
     def prepare_to_plan(self):
         self.deadline = None
-        self.status = Statuses.planned.value
+        self.status = Statuses.PLANNED.value
         for rem in self.reminder_set.all():
             rem.prepare_to_plan()
 

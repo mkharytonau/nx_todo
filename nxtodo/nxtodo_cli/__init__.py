@@ -1,7 +1,4 @@
-from .datetime_parser import parse_datetime
-from .datetime_parser import Formats
-from .view import show_task_table
-from .view import show_event_table
-from .view import colorize
-from .nxcalendar import nxCalendar
-from .nxcalendar import ColoredDate
+from .datetime_parser import Formats, parse_datetime
+from .view import colorize, show_event_table, show_task_table
+from .nxcalendar import nxCalendar, ColoredDate
+

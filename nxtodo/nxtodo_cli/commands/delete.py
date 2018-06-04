@@ -1,4 +1,4 @@
-user_choice_delete = {
+USER_CHOICE_DELETE = {
     'all': lambda args, config: del_all(args, config),
     'task': lambda args, config: del_task(args, config),
     'event': lambda args, config: del_event(args, config)
@@ -6,7 +6,7 @@ user_choice_delete = {
 
 
 def delete(args, config):
-    user_choice_delete.get(args.kind)(args, config)
+    USER_CHOICE_DELETE.get(args.kind)(args, config)
 
 
 def del_all(db, args, config):

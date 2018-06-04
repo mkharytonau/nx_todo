@@ -1,6 +1,10 @@
 import unittest
 from datetime import datetime, timedelta
-from nxtodo.nxtodo_db.models import Reminder, Task, Event, Plan
+
+from nxtodo.nxtodo_db.models import (Reminder,
+                                     Task,
+                                     Event,
+                                     Plan)
 
 
 class TestReminder(unittest.TestCase):
@@ -74,6 +78,8 @@ class TestReminder(unittest.TestCase):
         self.assertEqual(notification.message, mes)
         self.assertEqual(notification.date, date)
 
+        task.delete()
+
     def test_check_for_task_without_deadline(self):
         task = Task(title='test', deadline=None)
         reminder = Reminder.create(None, datetime(2018, 5, 30, 1, 30), None,
@@ -117,6 +123,8 @@ class TestReminder(unittest.TestCase):
         notification = reminder.notify(now)
         self.assertEqual(notification, None)
 
+        task.delete()
+
     def test_check_for_reminders_borders(self):
         task = Task(title='test', deadline=datetime(2018, 6, 7, 13, 30))
         reminder = Reminder.create(timedelta(weeks=1), None,
@@ -158,6 +166,8 @@ class TestReminder(unittest.TestCase):
         notification = reminder.notify(now)
         self.assertEqual(notification, None)
 
+        task.delete()
+
     def test_check_for_unusual_borders(self):
         event = Event(title='test', from_datetime=datetime(2018, 6, 4, 13, 30),
                       to_datetime=datetime(2018, 6, 4, 15, 50))
@@ -197,6 +207,8 @@ class TestReminder(unittest.TestCase):
         now = datetime(2018, 6, 13, 13)
         notification = reminder.notify(now)
         self.assertEqual(notification, None)
+
+        event.delete()
 
     def test_check_for_event(self):
         event = Event(title='test', from_datetime=datetime(2018, 6, 4, 13, 30),
@@ -276,6 +288,8 @@ class TestReminder(unittest.TestCase):
         self.assertEqual(notification.message, mes)
         self.assertEqual(notification.date, date, msg=notification.date)
 
+        event.delete()
+
     def test_check_for_plan(self):
         plan = Plan(title='test')
         reminder = Reminder.create(None, datetime(2018, 5, 31, 15), None,
@@ -328,6 +342,8 @@ class TestReminder(unittest.TestCase):
         date = datetime(2018, 6, 8, 0)
         notification = reminder.notify(now)
         self.assertEqual(notification, date)
+
+        plan.delete()
 
 
 if __name__ == '__main__':

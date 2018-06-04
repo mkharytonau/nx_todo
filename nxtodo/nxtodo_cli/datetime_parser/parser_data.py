@@ -2,13 +2,13 @@ import enum
 
 
 class Formats(enum.Enum):
-    datetime = 'datetime'
-    datetime_list = 'datetime_list'
-    timedelta = 'timedelta'
-    weekdays = 'weekdays'
+    DATETIME = 'datetime'
+    DATETIME_LIST = 'datetime_list'
+    TIMEDELTA = 'timedelta'
+    WEEKDAYS = 'weekdays'
 
 
-weekdays = {
+WEEKDAYS = {
     'mon': 0,
     'tue': 1,
     'wed': 2,

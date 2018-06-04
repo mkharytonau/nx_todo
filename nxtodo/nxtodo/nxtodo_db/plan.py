@@ -1,9 +1,10 @@
-from datetime import datetime
 from django.db import models
+
+import nxtodo
+from nxtodo import Statuses
 from .base import Base
-from .task import Task
 from .event import Event
-from nxtodo.thirdparty import Statuses
+from .task import Task
 
 
 class Plan(Base):
@@ -40,13 +41,11 @@ class Plan(Base):
     def duplicate_task(user, task, created_at):
         new_task = Task.create(task.title, task.description, task.category,
                                task.deadline, task.priority,
-                               Statuses.planned.value)
+                               Statuses.PROCESSING.value)
         new_task.save()
 
-        from nxtodo import queries
-
-        queries.add_owners_to_task(new_task.id, [user])
-        queries.add_reminders_to_task(user, new_task.id,
+        nxtodo.queries.add_owners_to_task(new_task.id, [user])
+        nxtodo.queries.add_reminders_to_task(user, new_task.id,
                                       [rem.id for rem in
                                        task.reminder_set.all()])
 
@@ -54,14 +53,12 @@ class Plan(Base):
     def duplicate_event(user, event):
         new_event = Event.create(event.title, event.description,
                                  event.category, event.priority,
-                                 Statuses.planned.value, event.from_datetime,
+                                 Statuses.PROCESSING.value, event.from_datetime,
                                  event.to_datetime, event.place)
         new_event.save()
 
-        from nxtodo import queries
-
-        queries.add_owners_to_event(new_event.id, [user])
-        queries.add_reminders_to_event(user, new_event.id,
+        nxtodo.queries.add_participants_to_event(new_event.id, [user])
+        nxtodo.queries.add_reminders_to_event(user, new_event.id,
                                       [rem.id for rem in
                                        event.reminder_set.all()])
 

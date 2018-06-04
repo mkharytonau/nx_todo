@@ -83,22 +83,22 @@ class Reminder(models.Model):
 
     def select_type(self):
         if self.task:
-            return Instances.task
+            return Instances.TASK
         if self.event:
-            return Instances.event
+            return Instances.EVENT
         if self.plan:
-            return Instances.plan
+            return Instances.PLAN
 
     def prepare_to_plan(self):
         self.stop_remind_in = datetime.max
 
     def notify(self, now):
         type = self.select_type()
-        if type == Instances.task:
+        if type == Instances.TASK:
             deadline = self.task.deadline
             if deadline and self.start_remind_before:
                 self.start_remind_from = deadline - self.start_remind_before
-        if type == Instances.event and self.start_remind_before:
+        if type == Instances.EVENT and self.start_remind_before:
             self.start_remind_from = self.event.from_datetime \
                                      - self.start_remind_before
         if now < self.start_remind_from:
@@ -111,11 +111,11 @@ class Reminder(models.Model):
 
     def check_all_kinds(self, type, now):
         notifications = None
-        if type == Instances.task:
+        if type == Instances.TASK:
             notifications = self.check_task(now)
-        if type == Instances.event:
+        if type == Instances.EVENT:
             notifications = self.check_event(now)
-        if type == Instances.plan:
+        if type == Instances.PLAN:
             return self.check_plan(now)
         if not notifications:
             return None

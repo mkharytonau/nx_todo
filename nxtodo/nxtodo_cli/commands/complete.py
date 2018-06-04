@@ -1,4 +1,4 @@
-user_choice_complete = {
+USER_CHOICE_COMPLETE = {
     'all': lambda args, config: complete_all(args, config),
     'task': lambda args, config: complete_task(args, config),
     'event': lambda args, config: complete_event(args, config)
@@ -6,7 +6,7 @@ user_choice_complete = {
 
 
 def complete(args, config):
-    user_choice_complete.get(args.kind)(args, config)
+    USER_CHOICE_COMPLETE.get(args.kind)(args, config)
 
 
 def complete_all(args, config):

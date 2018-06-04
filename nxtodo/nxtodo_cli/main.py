@@ -2,11 +2,20 @@
 
 import configparser
 
-from nxtodo_cli.cmd_parser import parse
-from nxtodo_cli.commands import (add, addto, check, complete, delete, edit,
-                                 remove, show)
+import nxtodo
+nxtodo.configurate()
 
-user_choice_command = {
+from nxtodo_cli.cmd_parser import parse
+from nxtodo_cli.commands import (add,
+                       addto,
+                       check,
+                       complete,
+                       delete,
+                       edit,
+                       remove,
+                       show)
+
+USER_CHOICE_COMMAND = {
     'show': lambda args, config: show(args, config),
     'add': lambda args, config: add(args, config),
     'addto': lambda args, config: addto(args, config),
@@ -19,20 +28,25 @@ user_choice_command = {
 
 
 def get_config():
-    config_path = '/home/kharivitalij/nxtodo-project/config.ini'
     config = configparser.ConfigParser()
-    config.read(config_path)
+    try:
+        config_path = '/home/kharivitalij/nxtodo-project/config.ini'
+        config.read(config_path)
+        if not config.sections():
+            raise FileNotFoundError
+    except FileNotFoundError:
+        config_path = 'default_config.ini'
+        config.read(config_path)
     return config
 
 
 def main():
-    arguments = 'add plan usual_plan -D planplan -r 12 34 122 -t 12 4'.split()
+    arguments = 'add plan votetoplan -D planplan'.split()
     args = parse(arguments)
 
     config = get_config()
 
-    user_choice_command.get(args.command, lambda: print("No such command."))(
-        args, config)
+    USER_CHOICE_COMMAND.get(args.command)(args, config)
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ class Event(Base):
     def prepare_to_plan(self):
         self.from_datetime = None
         self.to_datetime = None
-        self.status = Statuses.planned.value
+        self.status = Statuses.PLANNED.value
         for rem in self.reminder_set.all():
             rem.prepare_to_plan()
 

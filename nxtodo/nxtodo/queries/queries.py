@@ -78,8 +78,8 @@ def add_user(name):
     user.save()
 
 
-def add_task(user, title, description, category, deadline,
-             priority, status, owners):
+def add_task(user, title, description=None, category=None, deadline=None,
+             priority=None, status=None, owners=None):
     u = get_user(user)
     task = Task.create(title, description, category, deadline,
                        priority, status)
@@ -89,8 +89,9 @@ def add_task(user, title, description, category, deadline,
         add_owners_to_task(task.id, owners)
 
 
-def add_event(user, title, description, category, priority, status,
-              from_datetime, to_datetime, place, participants):
+def add_event(user, title, from_datetime, to_datetime, description=None,
+              category=None, priority=None, status=None, place=None,
+              participants=None):
     u = get_user(user)
     event = Event.create(title, description, category, priority, status,
                          from_datetime, to_datetime, place)
@@ -100,8 +101,8 @@ def add_event(user, title, description, category, priority, status,
         add_participants_to_event(event.id, participants)
 
 
-def add_plan(user, title, description, category, priority, status, tasks=None,
-             events=None, reminders=None):
+def add_plan(user, title, description=None, category=None, priority=None,
+             status=None, tasks=None, events=None, reminders=None):
     u = get_user(user)
     plan = Plan.create(title, description, category, priority, status)
     plan.save()
@@ -114,8 +115,9 @@ def add_plan(user, title, description, category, priority, status, tasks=None,
         add_reminders_to_plan(user, plan.id, reminders)
 
 
-def add_reminder(user, start_remind_before, start_remind_from, stop_remind_in,
-                 remind_in, datetimes, interval, weekdays):
+def add_reminder(user, start_remind_before=None, start_remind_from=None,
+                 stop_remind_in=None, remind_in=None, datetimes=None,
+                 interval=None, weekdays=None):
     reminder = Reminder.create(start_remind_before, start_remind_from,
                                stop_remind_in, remind_in, datetimes, interval,
                                weekdays)
@@ -205,24 +207,36 @@ def add_reminders_to_plan(user, plan_id, reminders_ids):
             rem.save()
 
 
+def remove_user(name):
+    get_user(name).delete()
+
+
+def remove_plan(plan_id):
+    get_plan(plan_id).delete()
+
+
+def remove_plans(user, title):
+    get_plans(user, title=title).delete()
+
+
 def delete(self, user, search_info):
     ws = getattr(user, working_space[
         search_info.instance])  # working_space[search_info.instance]
     if search_info.all:
-        ws.all().update(status=enums.Statuses.archived.value)
+        ws.all().update(status=enums.Statuses.ARCHIVED.value)
     else:
         ws.filter((search_info.attribute, search_info.value)). \
-            update(status=enums.Statuses.archived.value)
+            update(status=enums.Statuses.ARCHIVED.value)
 
 
 def do(self, user, search_info):
     ws = getattr(user, working_space[
         search_info.instance])  # working_space[search_info.instance]
     if search_info.all:
-        ws.all().update(status=enums.Statuses.fulfilled.value)
+        ws.all().update(status=enums.Statuses.FULFILLED.value)
     else:
         ws.filter((search_info.attribute, search_info.value)). \
-            update(status=enums.Statuses.fulfilled.value)
+            update(status=enums.Statuses.FULFILLED.value)
 
 
 def remove(self, user, search_info):

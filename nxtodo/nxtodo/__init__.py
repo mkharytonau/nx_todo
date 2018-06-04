@@ -8,11 +8,11 @@ import os
 
 
 #Django configuration
-from django.core.wsgi import get_wsgi_application
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo.settings")
-application = get_wsgi_application()
+#from django.core.wsgi import get_wsgi_application
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo.settings")
+#application = get_wsgi_application()
 
-
-#from .thirdparty import Statuses
+from .configuration import initialize, configurate
+from .thirdparty import Statuses
 #from .thirdparty import functions
-from .queries import queries
+#from .queries import queries

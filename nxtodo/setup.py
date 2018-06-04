@@ -5,31 +5,23 @@ from setuptools.command.install import install
 
 class CustomInstallCommand(install):
     def run(self):
-        if os.system('which psql'):
-            str = 'not installed'
-        else:
-            str = 'installed'
-        os.system("notify-send '" + str + "'")
-        os.system(
-            "sudo -u postgres psql -c \"create user nxtodo_install password 'todoinstall'\"")
-        os.system(
-            "sudo -u postgres psql -c 'create database nxtodo_test_install owner nxtodo_install'")
+        #os.system(
+        #    "sudo -u postgres psql -c \"create user nxtodo_install password 'todoinstall'\"")
+        #os.system(
+        #    "sudo -u postgres psql -c 'create database nxtodo_test_install owner nxtodo_install'")
         install.run(self)
-
         sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo.settings")
-        from django.core.management import execute_from_command_line
-        execute_from_command_line(['manage.py', 'makemigrations'])
-        execute_from_command_line(['manage.py', 'migrate'])
-
+        from nxtodo import initialize
+        initialize()
 
 setup(
     name='nxtodo',
     version='1.0',
     packages=['nxtodo',
-              'nxtodo.database',
+              'nxtodo.configuration',
               'nxtodo.nxtodo_db',
               'nxtodo.nxtodo_db.migrations',
+              'nxtodo.queries',
               'nxtodo.reminding',
               'nxtodo.thirdparty'],
     url='',
@@ -39,9 +31,8 @@ setup(
     cmdclass={
         'install': CustomInstallCommand,
     },
-    # install_requires=[
-    #    'notify2',
-    #    'psycopg2',
-    #    'django==1.11'
-    # ]
+    install_requires=[
+        'psycopg2==2.7.4',
+        'django==1.11'
+    ]
 )

@@ -1,14 +1,14 @@
 from datetime import datetime
 
-from nxtodo_cli import ColoredDate
-from nxtodo_cli import nxCalendar
-from nxtodo_cli import show_event_table
-from nxtodo_cli import show_task_table
+from nxtodo_cli import (ColoredDate,
+                        nxCalendar,
+                        show_event_table,
+                        show_task_table)
 
 from nxtodo import queries
 from .identify_user import identify_user
 
-user_choice_show = {
+USER_CHOICE_SHOW = {
     'all': lambda args, config: show_all(args, config),
     'task': lambda args, config: show_task(args, config),
     'event': lambda args, config: show_event(args, config),
@@ -17,7 +17,7 @@ user_choice_show = {
 
 
 def show(args, config):
-    user_choice_show.get(args.kind)(args, config)
+    USER_CHOICE_SHOW.get(args.kind)(args, config)
 
 
 def show_all(args, config):

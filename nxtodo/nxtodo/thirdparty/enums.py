@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class Instances(Enum):
-    task = 'task'
-    event = 'event'
-    plan = 'plan'
+    TASK = 0
+    EVENT = 1
+    PLAN = 2
 
 
 class Statuses(Enum):
-    processing = 'processing'
-    failed = 'failed'
-    fulfilled = 'fulfilled'
-    archived = 'archived'
-    planned = 'planned'
+    PROCESSING = 'processing'
+    FAILED = 'failed'
+    FULFILLED = 'fulfilled'
+    ARCHIVED = 'archived'
+    PLANNED = 'planned'
