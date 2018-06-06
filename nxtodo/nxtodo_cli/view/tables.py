@@ -1,9 +1,11 @@
 from datetime import datetime
+
 from prettytable import PrettyTable
+
 from .colorizer import colorize
 
 SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners',
-                  'participants', 'created_at']
+                  'participants', 'created_at', 'tasks', 'events']
 
 
 def style_to_int(style):
@@ -45,6 +47,10 @@ def handle_field(obj, field, config):
         return datetime.strftime(obj.created_at, '%Y-%m-%d %H:%M:%S')
     if field == 'owners' or field == 'participants':
         return [user.name for user in obj.user_set.all()]
+    if field == 'tasks':
+        return [task.id for task in obj.tasks.all()]
+    if field == 'events':
+        return [event.id for event in obj.events.all()]
 
 
 def configurate_table(table, config):
@@ -90,5 +96,65 @@ def show_event_table(events, config):
                 row.append(handle_field(event, field, config))
             else:
                 row.append(getattr(event, field))
+        table.add_row(row)
+    print(table)
+
+
+def show_plan_table(plans, config):
+    config_dict = config['plans_view']
+    fields_to_display = [field for field in config_dict.keys()
+                         if config.getboolean('plans_view', field)]
+    table = PrettyTable()
+    configurate_table(table, config)
+    table.title = colorize('Plans',
+                           background=config['colors']['plan_bg'],
+                           foreground=config['colors']['foreground'])
+    table.field_names = fields_to_display
+    for plan in plans:
+        row = []
+        for field in fields_to_display:
+            if field in SPECIAL_FIELDS:
+                row.append(handle_field(plan, field, config))
+            else:
+                row.append(getattr(plan, field))
+        table.add_row(row)
+    print(table)
+
+
+def show_notification_table(notifications, config):
+    config_dict = config['notifications_view']
+    fields_to_display = [field for field in config_dict.keys()
+                         if config.getboolean('notifications_view', field)]
+    table = PrettyTable()
+    configurate_table(table, config)
+    table.title = colorize('Notifications',
+                           background=config['colors']['notification_bg'],
+                           foreground=config['colors']['foreground'])
+    table.field_names = fields_to_display
+    for notification in notifications:
+        row = []
+        for field in fields_to_display:
+            row.append(getattr(notification, field))
+        table.add_row(row)
+    print(table)
+
+
+def show_reminder_table(reminders, config):
+    config_dict = config['reminders_view']
+    fields_to_display = [field for field in config_dict.keys()
+                         if config.getboolean('reminders_view', field)]
+    table = PrettyTable()
+    configurate_table(table, config)
+    table.title = colorize('Reminders',
+                           background=config['colors']['reminder_bg'],
+                           foreground=config['colors']['foreground'])
+    table.field_names = fields_to_display
+    for reminder in reminders:
+        row = []
+        for field in fields_to_display:
+            if field in SPECIAL_FIELDS:
+                row.append(handle_field(reminder, field, config))
+            else:
+                row.append(getattr(reminder, field))
         table.add_row(row)
     print(table)

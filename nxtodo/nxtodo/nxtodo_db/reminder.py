@@ -1,17 +1,20 @@
 from datetime import datetime
+
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
-from django.contrib.postgres.fields import ArrayField
-from .task import Task
-from .event import Event
-from .plan import Plan
-from .user import User
-from nxtodo.thirdparty import Instances
 from nxtodo.reminding import Notification
 from nxtodo.reminding import check_times as ch
+from nxtodo.thirdparty import Instances
+
+from .event import Event
+from .plan import Plan
+from .task import Task
+from .user import User
 
 
 class Reminder(models.Model):
+    description = models.TextField(null=True)
     start_remind_before = models.DurationField(null=True)
     start_remind_from = models.DateTimeField(default=timezone.now)
     stop_remind_in = models.DateTimeField(default=datetime.max)
@@ -34,13 +37,14 @@ class Reminder(models.Model):
     check_later = models.BooleanField(default=False)
 
     @classmethod
-    def create(cls, start_remind_before, start_remind_from, stop_remind_in,
-               remind_in, datetimes, interval, weekdays):
+    def create(cls, description, start_remind_before, start_remind_from,
+               stop_remind_in, remind_in, datetimes, interval, weekdays):
         if not start_remind_from:
             start_remind_from = datetime.now()
         if not stop_remind_in:
             stop_remind_in = datetime.max
         reminder = cls(
+            description=description,
             start_remind_before=start_remind_before,
             start_remind_from=start_remind_from,
             stop_remind_in=stop_remind_in,
@@ -53,33 +57,33 @@ class Reminder(models.Model):
 
     @staticmethod
     def mes_miss_task(task):
-        return "You missed the deadline for the '{}' task".format(task.title)
+        return "You missed the deadline for the '{}' task.".format(task.title)
 
     @staticmethod
     def mes_miss_event(event):
-        return "You missed the '{}' event".format(event.title)
+        return "You missed the '{}' event.".format(event.title)
 
     @staticmethod
     def mes_now_event(event):
-        return "Right now! there is an '{}' event".format(event.title)
+        return "Right now! there is an '{}' event.".format(event.title)
 
     @staticmethod
     def mes_rem_task(interval, task):
-        return "Remember, in a {} deadline for the '{}' task". \
+        return "Remember, in a {} deadline for the '{}' task.". \
             format(interval, task.title)
 
     @staticmethod
     def mes_rem_event(interval, event):
-        return "Remember, in a {} start for the '{}' event". \
+        return "Remember, in a {} start for the '{}' event.". \
             format(interval, event.title)
 
     @staticmethod
     def mes_about_task(task):
-        return "Remember about '{}' task".format(task.title)
+        return "Remember about '{}' task.".format(task.title)
 
     @staticmethod
     def mes_about_event(event):
-        return "Remember about '{}' event".format(event.title)
+        return "Remember about '{}' event.".format(event.title)
 
     def select_type(self):
         if self.task:
@@ -91,6 +95,7 @@ class Reminder(models.Model):
 
     def prepare_to_plan(self):
         self.stop_remind_in = datetime.max
+        self.save()
 
     def notify(self, now):
         type = self.select_type()
@@ -98,15 +103,17 @@ class Reminder(models.Model):
             deadline = self.task.deadline
             if deadline and self.start_remind_before:
                 self.start_remind_from = deadline - self.start_remind_before
-        if type == Instances.EVENT and self.start_remind_before:
-            self.start_remind_from = self.event.from_datetime \
-                                     - self.start_remind_before
+        if type == Instances.EVENT:
+            deadline = self.event.from_datetime
+            if deadline and self.start_remind_before:
+                self.start_remind_from = deadline - self.start_remind_before
         if now < self.start_remind_from:
             return None
         if self.start_remind_from <= now <= self.stop_remind_in:
             return self.check_all_kinds(type, now)
         if self.stop_remind_in < now and not self.check_later:
             self.check_later = True
+            self.save()
             return self.check_all_kinds(type, self.stop_remind_in)
 
     def check_all_kinds(self, type, now):
@@ -123,6 +130,7 @@ class Reminder(models.Model):
         actual_notification = notifications[0]
         if actual_notification.date > self.last_check:
             self.last_check = actual_notification.date
+            self.save()
             return actual_notification
         else:
             return None
@@ -211,6 +219,7 @@ class Reminder(models.Model):
         actual_notification = notifications[0]
         if actual_notification > self.last_check:
             self.last_check = actual_notification
+            self.save()
             return actual_notification
         else:
             return None

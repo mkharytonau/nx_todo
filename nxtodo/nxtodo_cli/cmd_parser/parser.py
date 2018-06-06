@@ -9,13 +9,6 @@ def parse(arguments):
     parser_show = subparsers_for_command.add_parser('show')
     subparsers_for_show = parser_show.add_subparsers(dest='kind')
 
-    parser_show_all = subparsers_for_show.add_parser('all')
-    parser_show_all.add_argument('-t', '--title')
-    parser_show_all.add_argument('-c', '--category')
-    parser_show_all.add_argument('-p', '--priority')
-    parser_show_all.add_argument('-s', '--status')
-    parser_show_all.add_argument('-u', '--user')
-
     parser_show_task = subparsers_for_show.add_parser('task')
     parser_show_task.add_argument('-i', '--id')
     parser_show_task.add_argument('-t', '--title')
@@ -32,6 +25,19 @@ def parse(arguments):
     parser_show_event.add_argument('-s', '--status')
     parser_show_event.add_argument('-P', '--place')
     parser_show_event.add_argument('-u', '--user')
+
+    parser_show_plan = subparsers_for_show.add_parser('plan')
+    parser_show_plan.add_argument('-i', '--id')
+    parser_show_plan.add_argument('-t', '--title')
+    parser_show_plan.add_argument('-c', '--category')
+    parser_show_plan.add_argument('-p', '--priority')
+    parser_show_plan.add_argument('-s', '--status')
+    parser_show_plan.add_argument('-u', '--user')
+
+    parser_show_reminder = subparsers_for_show.add_parser('reminder')
+    parser_show_reminder.add_argument('-i', '--id')
+    parser_show_reminder.add_argument('-D', '--description')
+    parser_show_reminder.add_argument('-u', '--user')
 
     # Parsing the 'add' command ----------------------------------------------
     parser_add = subparsers_for_command.add_parser('add')
@@ -75,6 +81,7 @@ def parse(arguments):
     parser_add_plan.add_argument('-u', '--user')
 
     parser_add_reminder = subparsers_for_add.add_parser('reminder')
+    parser_add_reminder.add_argument('-D', '--description')
     add_reminder_group_timestart = parser_add_reminder.add_mutually_exclusive_group()
     add_reminder_group_timestart.add_argument('-rb', '--remind_before')
     add_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs=2)
@@ -176,30 +183,23 @@ def parse(arguments):
     subparsers_for_check = parser_check.add_subparsers(dest='kind')
 
     parser_check_task = subparsers_for_check.add_parser('task')
-    check_task_group = parser_check_task.add_mutually_exclusive_group(
-        required=True)
-    check_task_group.add_argument('-a', '--all', action='store_true')
-    check_task_group.add_argument('-t', '--title')
-    check_task_group.add_argument('-c', '--category')
-    parser_check_task.add_argument('-bg', '--background', action='store_true')
+    parser_check_task.add_argument('-i', '--id')
+    parser_check_task.add_argument('-t', '--title')
+    parser_check_task.add_argument('-c', '--category')
+    parser_check_task.add_argument('-p', '--priority')
+    parser_check_task.add_argument('-s', '--status')
+    parser_check_task.add_argument('-u', '--user')
 
     parser_check_event = subparsers_for_check.add_parser('event')
-    check_event_group = parser_check_event.add_mutually_exclusive_group(
-        required=True)
-    check_event_group.add_argument('-a', '--all', action='store_true')
-    check_event_group.add_argument('-t', '--title')
-    check_event_group.add_argument('-c', '--category')
-    parser_check_event.add_argument('-bg', '--background', action='store_true')
+    parser_check_event.add_argument('-i', '--id')
+    parser_check_event.add_argument('-t', '--title')
+    parser_check_event.add_argument('-c', '--category')
+    parser_check_event.add_argument('-p', '--priority')
+    parser_check_event.add_argument('-s', '--status')
+    parser_check_event.add_argument('-P', '--place')
+    parser_check_event.add_argument('-u', '--user')
 
-    parser_check_all = subparsers_for_check.add_parser('all')
-    check_all_group = parser_check_all.add_mutually_exclusive_group(
-        required=True)
-    check_all_group.add_argument('-a', '--all', action='store_true')
-    check_all_group.add_argument('-t', '--title')
-    check_all_group.add_argument('-c', '--category')
-    parser_check_all.add_argument('-bg', '--background', action='store_true')
 
-    parser_stop = subparsers_for_check.add_parser('stop')
 
     # Parsing for the 'edit' command------------------------------------------
     parser_edit = subparsers_for_command.add_parser('edit')
@@ -211,5 +211,5 @@ def parse(arguments):
     parser_edit_event = subparsers_for_edit.add_parser('event')
     parser_edit_event.add_argument('title')
 
-    args = parser.parse_args(arguments)
+    args = parser.parse_args()
     return args

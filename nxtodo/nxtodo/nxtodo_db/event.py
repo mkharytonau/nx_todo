@@ -21,8 +21,6 @@ class Event(Base):
         self.from_datetime = None
         self.to_datetime = None
         self.status = Statuses.PLANNED.value
+        self.save()
         for rem in self.reminder_set.all():
             rem.prepare_to_plan()
-
-    def __str__(self):
-        return self.title

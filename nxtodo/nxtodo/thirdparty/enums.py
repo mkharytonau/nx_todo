@@ -8,7 +8,7 @@ class Instances(Enum):
 
 
 class Statuses(Enum):
-    PROCESSING = 'processing'
+    INPROCESS = 'inprocess'
     FAILED = 'failed'
     FULFILLED = 'fulfilled'
     ARCHIVED = 'archived'

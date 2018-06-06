@@ -1,8 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
+from nxtodo.queries import queries
 from nxtodo_cli import Formats
 from nxtodo_cli import parse_datetime
 
-from nxtodo import queries
 from .identify_user import identify_user
 
 USER_CHOICE_ADD = {
@@ -30,9 +30,9 @@ def add_task(args, config):
         return
 
     try:
-        deadline = parse_datetime(args.deadline, Formats.datetime,
+        deadline = parse_datetime(args.deadline, Formats.DATETIME,
                                   config['date_formats'][
-                                      Formats.datetime.value])
+                                      Formats.DATETIME.value])
     except ValueError:
         print('Error when parsing, please check the entered data and formats '
               'in the config file.')
@@ -40,8 +40,7 @@ def add_task(args, config):
 
     try:
         queries.add_task(user, args.title, args.description, args.category,
-                         deadline,
-                         args.priority, args.status, args.owners)
+                         deadline, args.priority, args.status, args.owners)
     except ObjectDoesNotExist as e:
         print(e)
 
@@ -54,12 +53,12 @@ def add_event(args, config):
         return
 
     try:
-        from_datetime = parse_datetime(args.fromdt, Formats.datetime,
+        from_datetime = parse_datetime(args.fromdt, Formats.DATETIME,
                                        config['date_formats'][
-                                           Formats.datetime.value])
-        to_datetime = parse_datetime(args.todt, Formats.datetime,
+                                           Formats.DATETIME.value])
+        to_datetime = parse_datetime(args.todt, Formats.DATETIME,
                                      config['date_formats'][
-                                         Formats.datetime.value])
+                                         Formats.DATETIME.value])
     except ValueError:
         print('Error when parsing, please check the entered data and formats '
               'in the config file.')
@@ -99,27 +98,27 @@ def add_reminder(args, config):
                     'formats in the config file.'
     try:
         start_remind_before = parse_datetime(args.remind_before,
-                                             Formats.timedelta,
+                                             Formats.TIMEDELTA,
                                              config['date_formats'][
-                                                 Formats.timedelta.value])
-        start_remind_from = parse_datetime(args.remind_from, Formats.datetime,
+                                                 Formats.TIMEDELTA.value])
+        start_remind_from = parse_datetime(args.remind_from, Formats.DATETIME,
                                            config['date_formats'][
-                                               Formats.datetime.value])
-        stop_remind_in = parse_datetime(args.stop_in, Formats.datetime,
+                                               Formats.DATETIME.value])
+        stop_remind_in = parse_datetime(args.stop_in, Formats.DATETIME,
                                         config['date_formats'][
-                                            Formats.datetime.value])
-        remind_in = parse_datetime(args.remind_in, Formats.timedelta,
+                                            Formats.DATETIME.value])
+        remind_in = parse_datetime(args.remind_in, Formats.TIMEDELTA,
                                    config['date_formats'][
-                                       Formats.timedelta.value])
-        datetimes = parse_datetime(args.datetimes, Formats.datetime_list,
+                                       Formats.TIMEDELTA.value])
+        datetimes = parse_datetime(args.datetimes, Formats.DATETIME_LIST,
                                    config['date_formats'][
-                                       Formats.datetime_list.value])
-        interval = parse_datetime(args.interval, Formats.timedelta,
+                                       Formats.DATETIME_LIST.value])
+        interval = parse_datetime(args.interval, Formats.TIMEDELTA,
                                   config['date_formats'][
-                                      Formats.timedelta.value])
-        weekdays = parse_datetime(args.weekdays, Formats.weekdays,
+                                      Formats.TIMEDELTA.value])
+        weekdays = parse_datetime(args.weekdays, Formats.WEEKDAYS,
                                   config['date_formats'][
-                                      Formats.weekdays.value])
+                                      Formats.WEEKDAYS.value])
     except ValueError:
         print(error_message)
         return
@@ -128,9 +127,9 @@ def add_reminder(args, config):
         return
 
     try:
-        queries.add_reminder(user, start_remind_before, start_remind_from,
-                             stop_remind_in, remind_in, datetimes, interval,
-                             weekdays)
+        queries.add_reminder(user, args.description, start_remind_before,
+                             start_remind_from, stop_remind_in, remind_in,
+                             datetimes, interval, weekdays)
     except ObjectDoesNotExist:
         print(
             'User does not exist, please, create a new or select another one.')

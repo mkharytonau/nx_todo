@@ -13,3 +13,6 @@ class User(models.Model):
     @classmethod
     def create(cls, name):
         return cls(name=name)
+
+    def __str__(self):
+        return self.name

@@ -3,17 +3,18 @@
 import configparser
 
 import nxtodo
-nxtodo.configurate()
+
+nxtodo.configurate('nxtodo.configuration.settings_for_tests')
 
 from nxtodo_cli.cmd_parser import parse
 from nxtodo_cli.commands import (add,
-                       addto,
-                       check,
-                       complete,
-                       delete,
-                       edit,
-                       remove,
-                       show)
+                                 addto,
+                                 check,
+                                 complete,
+                                 delete,
+                                 edit,
+                                 remove,
+                                 show)
 
 USER_CHOICE_COMMAND = {
     'show': lambda args, config: show(args, config),
@@ -41,7 +42,7 @@ def get_config():
 
 
 def main():
-    arguments = 'add plan votetoplan -D planplan'.split()
+    arguments = 'check task'.split()
     args = parse(arguments)
 
     config = get_config()

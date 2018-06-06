@@ -1,4 +1,5 @@
-def create_filters(id, title, category, priority, status, place=None):
+def create_filters(id=None, title=None, category=None, priority=None,
+                   status=None, place=None, description=None):
     filters = {}
     if id:
         filters['id'] = id
@@ -12,5 +13,7 @@ def create_filters(id, title, category, priority, status, place=None):
         filters['status'] = status
     if place:
         filters['place'] = place
+    if description:
+        filters['description'] = description
     return filters
 

@@ -16,8 +16,6 @@ class Task(Base):
     def prepare_to_plan(self):
         self.deadline = None
         self.status = Statuses.PLANNED.value
+        self.save()
         for rem in self.reminder_set.all():
             rem.prepare_to_plan()
-
-    def __str__(self):
-        return self.title

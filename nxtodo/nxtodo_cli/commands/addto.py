@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
+from nxtodo.queries import queries
 
-from nxtodo import queries
 from .identify_user import identify_user
 
 USER_CHOICE_ADDTO = {
@@ -37,9 +37,12 @@ def addto_event(args, config):
 
 
 def addto_task_reminders(args, config):
-    user = identify_user(args, config)
-    if user is None:
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
         return
+
     try:
         queries.add_reminders_to_task(user, args.id, args.reminders)
     except ObjectDoesNotExist as e:
@@ -51,19 +54,19 @@ def addto_task_subtasks(args, config):
 
 
 def addto_task_owners(args, config):
-    user = identify_user(args, config)
-    if user is None:
-        return
     try:
-        queries.add_owners_to_task(user, args.id, args.owners)
+        queries.add_owners_to_task(args.id, args.owners)
     except ObjectDoesNotExist as e:
         print(e)
 
 
 def addto_event_reminders(args, config):
-    user = identify_user(args, config)
-    if user is None:
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
         return
+
     try:
         queries.add_reminders_to_event(user, args.id, args.reminders)
     except ObjectDoesNotExist as e:
@@ -71,4 +74,7 @@ def addto_event_reminders(args, config):
 
 
 def addto_event_participants(args, config):
-    pass
+    try:
+        queries.add_participants_to_event(args.id, args.participants)
+    except ObjectDoesNotExist as e:
+        print(e)
