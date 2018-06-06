@@ -39,6 +39,11 @@ def get_task(task_id):
             'There is no task with id={}'.format(task_id))
 
 
+def edit_task(user, task_id, title=None, description=None, category=None,
+              deadline=None, priority=None, status=None):
+    pass
+
+
 def get_tasks(user, title=None, category=None, priority=None, status=None,
               id=None):
     user = get_user(user)

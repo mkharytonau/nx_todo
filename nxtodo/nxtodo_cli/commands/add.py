@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from nxtodo.queries import queries
-from nxtodo_cli import Formats
-from nxtodo_cli import parse_datetime
+from nxtodo_cli import (Formats,
+                        parse_datetime)
 
 from .identify_user import identify_user
 

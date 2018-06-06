@@ -82,9 +82,9 @@ def parse(arguments):
 
     parser_add_reminder = subparsers_for_add.add_parser('reminder')
     parser_add_reminder.add_argument('-D', '--description')
-    add_reminder_group_timestart = parser_add_reminder.add_mutually_exclusive_group()
-    add_reminder_group_timestart.add_argument('-rb', '--remind_before')
-    add_reminder_group_timestart.add_argument('-rf', '--remind_from', nargs=2)
+    reminder_group_tstart = parser_add_reminder.add_mutually_exclusive_group()
+    reminder_group_tstart.add_argument('-rb', '--remind_before')
+    reminder_group_tstart.add_argument('-rf', '--remind_from', nargs=2)
     parser_add_reminder.add_argument('-si', '--stop_in', nargs=2)
     add_reminder_group_kind = parser_add_reminder.add_argument_group()
     add_reminder_group_kind.add_argument('-ri', '--remind_in')
@@ -199,17 +199,20 @@ def parse(arguments):
     parser_check_event.add_argument('-P', '--place')
     parser_check_event.add_argument('-u', '--user')
 
-
-
     # Parsing for the 'edit' command------------------------------------------
     parser_edit = subparsers_for_command.add_parser('edit')
     subparsers_for_edit = parser_edit.add_subparsers(dest='kind')
 
     parser_edit_task = subparsers_for_edit.add_parser('task')
-    parser_edit_task.add_argument('title')
+    parser_edit_task.add_argument('id')
+    parser_edit_task.add_argument('-t', '--title')
+    parser_edit_task.add_argument('-D', '--description')
+    parser_edit_task.add_argument('-c', '--category')
+    parser_edit_task.add_argument('-d', '--deadline', nargs=2)
+    parser_edit_task.add_argument('-p', '--priority', type=int)
+    parser_edit_task.add_argument('-s', '--status')
+    parser_edit_task.add_argument('-u', '--user')
 
-    parser_edit_event = subparsers_for_edit.add_parser('event')
-    parser_edit_event.add_argument('title')
 
     args = parser.parse_args()
     return args
