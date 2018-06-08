@@ -1,9 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
-from nxtodo.queries import queries
-from nxtodo_cli import (Formats,
-                        parse_datetime)
+from nxtodo import queries
 
-from .identify_user import identify_user
+from .common import identify_user
 
 USER_CHOICE_EDIT = {
     'task': lambda args, config: edit_task(args, config),
@@ -25,18 +23,61 @@ def edit_task(args, config):
         return
 
     try:
-        deadline = parse_datetime(
-            args.deadline,
-            Formats.DATETIME,
-            config['date_formats'][Formats.DATETIME.value]
-        )
-    except ValueError:
-        print('Error when parsing, please check the entered data and formats '
-              'in the config file.')
+        queries.edit_task(user, args.id, args.title, args.description,
+                          args.category, args.deadline, args.priority)
+    except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
+        print(e)
+
+
+def edit_event(args, config):
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
         return
 
     try:
-        queries.add_task(user, args.title, args.description, args.category,
-                         deadline, args.priority, args.status, args.owners)
+        queries.edit_event(user, args.id, args.title, args.description,
+                           args.category, args.priority, args.fromdt,
+                           args.todt, args.place)
     except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
+        print(e)
+
+
+def edit_plan(args, config):
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
+        queries.edit_plan(user, args.id, args.title, args.description,
+                          args.category, args.priority)
+    except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
+        print(e)
+
+
+def edit_reminder(args, config):
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
+        queries.edit_plan(
+            user, args.id, args.description, args.start_remind_before,
+            args.start_remind_from, args.stop_remind_in, args.remind_in,
+            args.datetimes, args.interval, args.weekdays
+        )
+    except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
         print(e)

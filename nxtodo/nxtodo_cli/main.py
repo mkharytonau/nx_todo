@@ -1,26 +1,25 @@
 #!/usr/bin/python3.6
 
-import configparser
-
 import nxtodo
 
-nxtodo.configurate('nxtodo.configuration.settings_for_tests')
+nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
 from nxtodo_cli.cmd_parser import parse
-from nxtodo_cli.commands import (add,
-                                 addto,
-                                 check,
-                                 complete,
-                                 delete,
-                                 edit,
-                                 remove,
-                                 show)
+from nxtodo_cli.commands import (
+    add,
+    addto,
+    check,
+    complete,
+    edit,
+    remove,
+    show,
+    get_config
+)
 
 USER_CHOICE_COMMAND = {
     'show': lambda args, config: show(args, config),
     'add': lambda args, config: add(args, config),
     'addto': lambda args, config: addto(args, config),
-    'delete': lambda args, config: delete(args, config),
     'complete': lambda args, config: complete(args, config),
     'remove': lambda args, config: remove(args, config),
     'edit': lambda args, config: edit(args, config),
@@ -28,21 +27,8 @@ USER_CHOICE_COMMAND = {
 }
 
 
-def get_config():
-    config = configparser.ConfigParser()
-    try:
-        config_path = '/home/kharivitalij/nxtodo-project/config.ini'
-        config.read(config_path)
-        if not config.sections():
-            raise FileNotFoundError
-    except FileNotFoundError:
-        config_path = 'default_config.ini'
-        config.read(config_path)
-    return config
-
-
 def main():
-    arguments = 'check task'.split()
+    arguments = 'edit task 4 -p 1'.split()
     args = parse(arguments)
 
     config = get_config()

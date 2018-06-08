@@ -1,1 +1,2 @@
-from .configuration import initialize, configurate
+from .configuration import (initialize,
+                            configure)

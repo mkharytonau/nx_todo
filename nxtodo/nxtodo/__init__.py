@@ -12,7 +12,7 @@ import os
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nxtodo.settings")
 #application = get_wsgi_application()
 
-from .configuration import initialize, configurate
-from .thirdparty import Statuses
-#from .thirdparty import functions
+from .configuration import (initialize,
+                            configure)
+#from .thirdparty import common_functions
 #from .queries import queries

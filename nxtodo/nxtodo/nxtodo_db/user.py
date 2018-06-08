@@ -6,9 +6,9 @@ from .plan import Plan
 
 class User(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
-    tasks = models.ManyToManyField(Task)
-    events = models.ManyToManyField(Event)
-    plans = models.ManyToManyField(Plan)
+    tasks = models.ManyToManyField(Task, through='UserTasks')
+    events = models.ManyToManyField(Event, through='UserEvents')
+    plans = models.ManyToManyField(Plan, through='UserPlans')
 
     @classmethod
     def create(cls, name):

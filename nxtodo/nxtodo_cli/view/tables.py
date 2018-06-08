@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 from .colorizer import colorize
 
 SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners',
-                  'participants', 'created_at', 'tasks', 'events']
+                  'participants', 'created_at', 'date', 'tasks', 'events']
 
 
 def style_to_int(style):
@@ -45,6 +45,8 @@ def handle_field(obj, field, config):
         return [reminder.id for reminder in obj.reminder_set.all()]
     if field == 'created_at':
         return datetime.strftime(obj.created_at, '%Y-%m-%d %H:%M:%S')
+    if field == 'date':
+        return datetime.strftime(obj.date, '%Y-%m-%d %H:%M:%S')
     if field == 'owners' or field == 'participants':
         return [user.name for user in obj.user_set.all()]
     if field == 'tasks':
@@ -58,6 +60,8 @@ def configurate_table(table, config):
     table.junction_char = config['table_styles']['junction_char']
     table.vertical_char = config['table_styles']['vertical_char']
     table.horizontal_char = config['table_styles']['horizontal_char']
+    table.left_padding_width = int(config['table_styles']['left_padding'])
+    table.right_padding_width = int(config['table_styles']['right_padding'])
 
 
 def show_task_table(tasks, config):
@@ -134,7 +138,10 @@ def show_notification_table(notifications, config):
     for notification in notifications:
         row = []
         for field in fields_to_display:
-            row.append(getattr(notification, field))
+            if field in SPECIAL_FIELDS:
+                row.append(handle_field(notification, field, config))
+            else:
+                row.append(getattr(notification, field))
         table.add_row(row)
     print(table)
 

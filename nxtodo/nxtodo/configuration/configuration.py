@@ -1,6 +1,8 @@
 import os
 from django.core.wsgi import get_wsgi_application
 
+# nxtodo.initialize('nxtodo', 'todotodo', 'nxtodo_test', 'nxtodo.configuration.settings_for_tests')
+
 
 def initialize(psql_user="nxtodo", psql_password="todotodo",
                psql_db_name="nxtodo_db", settings_module="nxtodo.configuration.settings"):
@@ -18,7 +20,7 @@ def initialize(psql_user="nxtodo", psql_password="todotodo",
     execute_from_command_line(['manage.py', 'migrate'])
 
 
-def configurate(settings_module="nxtodo.configuration.settings"):
+def configure(settings_module="nxtodo.configuration.settings"):
     # Django configuration
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     get_wsgi_application()

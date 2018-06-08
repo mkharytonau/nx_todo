@@ -1,9 +1,11 @@
 from collections import namedtuple
+
 from django.db import models
+from nxtodo.thirdparty import Statuses
 
 from .base import Base
-from .task import Task
 from .event import Event
+from .task import Task
 
 
 class Plan(Base):
@@ -11,9 +13,14 @@ class Plan(Base):
     events = models.ManyToManyField(Event)
 
     @classmethod
-    def create(cls, title, description, category, priority, status):
-        plan = cls(title=title, description=description, category=category,
-                   priority=priority, status=status)
+    def create(cls, title, description, category, priority):
+        plan = cls(
+            title=title,
+            description=description,
+            category=category,
+            priority=priority,
+            status=Statuses.INPROCESS.value
+        )
         return plan
 
     def notify(self, now):

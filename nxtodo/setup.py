@@ -32,7 +32,7 @@ setup(
         'install': CustomInstallCommand,
     },
     install_requires=[
-        'psycopg2==2.7.4',
+        'psycopg2-binary==2.7.4',
         'django==1.11'
     ]
 )

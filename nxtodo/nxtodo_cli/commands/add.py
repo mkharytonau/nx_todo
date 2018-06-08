@@ -1,9 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
-from nxtodo.queries import queries
-from nxtodo_cli import (Formats,
-                        parse_datetime)
+from nxtodo import queries
 
-from .identify_user import identify_user
+from .common import identify_user
 
 USER_CHOICE_ADD = {
     'user': lambda args, config: add_user(args, config),
@@ -30,17 +28,10 @@ def add_task(args, config):
         return
 
     try:
-        deadline = parse_datetime(args.deadline, Formats.DATETIME,
-                                  config['date_formats'][
-                                      Formats.DATETIME.value])
-    except ValueError:
-        print('Error when parsing, please check the entered data and formats '
-              'in the config file.')
-        return
-
-    try:
-        queries.add_task(user, args.title, args.description, args.category,
-                         deadline, args.priority, args.status, args.owners)
+        queries.add_task(
+            user, args.title, args.description, args.category,
+            args.deadline, args.priority, args.owners
+        )
     except ObjectDoesNotExist as e:
         print(e)
 
@@ -53,21 +44,11 @@ def add_event(args, config):
         return
 
     try:
-        from_datetime = parse_datetime(args.fromdt, Formats.DATETIME,
-                                       config['date_formats'][
-                                           Formats.DATETIME.value])
-        to_datetime = parse_datetime(args.todt, Formats.DATETIME,
-                                     config['date_formats'][
-                                         Formats.DATETIME.value])
-    except ValueError:
-        print('Error when parsing, please check the entered data and formats '
-              'in the config file.')
-        return
-
-    try:
-        queries.add_event(user, args.title, args.description, args.category,
-                          args.priority, args.status, from_datetime,
-                          to_datetime, args.place, args.participants)
+        queries.add_event(
+            user, args.title, args.fromdt, args.todt,
+            args.description, args.category, args.priority,
+            args.place, args.participants
+        )
     except ObjectDoesNotExist as e:
         print(e)
 
@@ -80,9 +61,10 @@ def add_plan(args, config):
         return
 
     try:
-        queries.add_plan(user, args.title, args.description, args.category,
-                         args.priority, args.status, args.tasks, args.events,
-                         args.reminders)
+        queries.add_plan(
+            user, args.title, args.description, args.category, args.priority,
+            args.tasks, args.events, args.reminders
+        )
     except ObjectDoesNotExist as e:
         print(e)
 
@@ -94,43 +76,11 @@ def add_reminder(args, config):
         print(e)
         return
 
-    error_message = 'Error when parsing, please check the entered data and ' \
-                    'formats in the config file.'
     try:
-        start_remind_before = parse_datetime(args.remind_before,
-                                             Formats.TIMEDELTA,
-                                             config['date_formats'][
-                                                 Formats.TIMEDELTA.value])
-        start_remind_from = parse_datetime(args.remind_from, Formats.DATETIME,
-                                           config['date_formats'][
-                                               Formats.DATETIME.value])
-        stop_remind_in = parse_datetime(args.stop_in, Formats.DATETIME,
-                                        config['date_formats'][
-                                            Formats.DATETIME.value])
-        remind_in = parse_datetime(args.remind_in, Formats.TIMEDELTA,
-                                   config['date_formats'][
-                                       Formats.TIMEDELTA.value])
-        datetimes = parse_datetime(args.datetimes, Formats.DATETIME_LIST,
-                                   config['date_formats'][
-                                       Formats.DATETIME_LIST.value])
-        interval = parse_datetime(args.interval, Formats.TIMEDELTA,
-                                  config['date_formats'][
-                                      Formats.TIMEDELTA.value])
-        weekdays = parse_datetime(args.weekdays, Formats.WEEKDAYS,
-                                  config['date_formats'][
-                                      Formats.WEEKDAYS.value])
-    except ValueError:
-        print(error_message)
-        return
-    except IndexError:
-        print(error_message)
-        return
-
-    try:
-        queries.add_reminder(user, args.description, start_remind_before,
-                             start_remind_from, stop_remind_in, remind_in,
-                             datetimes, interval, weekdays)
-    except ObjectDoesNotExist:
-        print(
-            'User does not exist, please, create a new or select another one.')
-        return
+        queries.add_reminder(
+            user, args.description, args.remind_before,
+            args.remind_from, args.stop_in, args.remind_in,
+            args.datetimes, args.interval, args.weekdays
+        )
+    except ObjectDoesNotExist as e:
+        print(e)

@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
-from nxtodo.queries import queries
+from nxtodo import queries
 
-from .identify_user import identify_user
+from .common import identify_user
 
 USER_CHOICE_ADDTO = {
     'task': lambda args, config: addto_task(args, config),
@@ -47,6 +47,8 @@ def addto_task_reminders(args, config):
         queries.add_reminders_to_task(user, args.id, args.reminders)
     except ObjectDoesNotExist as e:
         print(e)
+    except PermissionError as e:
+        print(e)
 
 
 def addto_task_subtasks(args, config):
@@ -55,8 +57,16 @@ def addto_task_subtasks(args, config):
 
 def addto_task_owners(args, config):
     try:
-        queries.add_owners_to_task(args.id, args.owners)
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
+        queries.add_owners_to_task(user, args.id, args.owners)
     except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
         print(e)
 
 
@@ -71,10 +81,20 @@ def addto_event_reminders(args, config):
         queries.add_reminders_to_event(user, args.id, args.reminders)
     except ObjectDoesNotExist as e:
         print(e)
+    except PermissionError as e:
+        print(e)
 
 
 def addto_event_participants(args, config):
     try:
-        queries.add_participants_to_event(args.id, args.participants)
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
+        queries.add_participants_to_event(user, args.id, args.participants)
     except ObjectDoesNotExist as e:
+        print(e)
+    except PermissionError as e:
         print(e)

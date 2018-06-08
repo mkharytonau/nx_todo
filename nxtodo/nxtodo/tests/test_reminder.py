@@ -4,7 +4,7 @@ from datetime import (datetime,
 
 import nxtodo
 
-nxtodo.configurate('nxtodo.configuration.settings_for_tests')
+nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
 from nxtodo.nxtodo_db.models import (Reminder,
                                      Task,

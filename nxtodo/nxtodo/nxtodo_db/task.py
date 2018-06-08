@@ -7,10 +7,15 @@ class Task(Base):
     deadline = models.DateTimeField(null=True)
 
     @classmethod
-    def create(cls, title, description, category,
-               deadline, priority, status):
-        task = cls(title=title, description=description, category=category,
-                   deadline=deadline, priority=priority, status=status)
+    def create(cls, title, description, category, deadline, priority):
+        task = cls(
+            title=title,
+            description=description,
+            category=category,
+            deadline=deadline,
+            priority=priority,
+            status=Statuses.INPROCESS.value
+        )
         return task
 
     def prepare_to_plan(self):

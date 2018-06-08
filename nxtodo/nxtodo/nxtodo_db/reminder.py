@@ -5,7 +5,8 @@ from django.db import models
 from django.utils import timezone
 from nxtodo.reminding import Notification
 from nxtodo.reminding import check_times as ch
-from nxtodo.thirdparty import Instances
+from nxtodo.thirdparty import Entities
+
 
 from .event import Event
 from .plan import Plan
@@ -87,11 +88,11 @@ class Reminder(models.Model):
 
     def select_type(self):
         if self.task:
-            return Instances.TASK
+            return Entities.TASK
         if self.event:
-            return Instances.EVENT
+            return Entities.EVENT
         if self.plan:
-            return Instances.PLAN
+            return Entities.PLAN
 
     def prepare_to_plan(self):
         self.stop_remind_in = datetime.max
@@ -99,11 +100,11 @@ class Reminder(models.Model):
 
     def notify(self, now):
         type = self.select_type()
-        if type == Instances.TASK:
+        if type == Entities.TASK:
             deadline = self.task.deadline
             if deadline and self.start_remind_before:
                 self.start_remind_from = deadline - self.start_remind_before
-        if type == Instances.EVENT:
+        if type == Entities.EVENT:
             deadline = self.event.from_datetime
             if deadline and self.start_remind_before:
                 self.start_remind_from = deadline - self.start_remind_before
@@ -118,11 +119,11 @@ class Reminder(models.Model):
 
     def check_all_kinds(self, type, now):
         notifications = None
-        if type == Instances.TASK:
+        if type == Entities.TASK:
             notifications = self.check_task(now)
-        if type == Instances.EVENT:
+        if type == Entities.EVENT:
             notifications = self.check_event(now)
-        if type == Instances.PLAN:
+        if type == Entities.PLAN:
             return self.check_plan(now)
         if not notifications:
             return None

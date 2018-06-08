@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from nxtodo.queries import queries
+from nxtodo import queries
 from nxtodo_cli import (ColoredDate,
                         nxCalendar,
                         show_event_table,
@@ -8,7 +8,7 @@ from nxtodo_cli import (ColoredDate,
                         show_plan_table,
                         show_reminder_table)
 
-from .identify_user import identify_user
+from .common import identify_user
 
 USER_CHOICE_SHOW = {
     'task': lambda args, config: show_task(args, config),

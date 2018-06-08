@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import nxtodo
 from django.core.exceptions import ObjectDoesNotExist
 
-nxtodo.configurate('nxtodo.configuration.settings_for_tests')
+nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
 from nxtodo.queries import queries
 

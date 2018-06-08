@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from nxtodo.queries import queries
-from .identify_user import identify_user
+from nxtodo import queries
+from .common import identify_user
 from nxtodo_cli import show_notification_table
 
 

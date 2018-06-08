@@ -1,3 +1,6 @@
-from .enums import Instances
-from .enums import Statuses
-from . import functions
+from . import common_functions
+from .common_data import (
+    Entities,
+    Statuses,
+    AccessLevels
+)
