@@ -5,7 +5,10 @@ from prettytable import PrettyTable
 from .colorizer import colorize
 
 SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners',
-                  'participants', 'created_at', 'date', 'tasks', 'events']
+                  'subtasks', 'participants', 'created_at', 'date',
+                  'tasks', 'events', 'plans']
+NEW_LINE = '\n'
+COMMA = ','
 
 
 def style_to_int(style):
@@ -42,17 +45,36 @@ def handle_field(obj, field, config):
         value = split_str(obj.description, 10) if obj.description else None
         return value
     if field == 'reminders':
-        return [reminder.id for reminder in obj.reminder_set.all()]
+        reminders = [reminder.id for reminder in obj.reminder_set.all()]
+        return handle_list_field(reminders, COMMA)
     if field == 'created_at':
         return datetime.strftime(obj.created_at, '%Y-%m-%d %H:%M:%S')
     if field == 'date':
         return datetime.strftime(obj.date, '%Y-%m-%d %H:%M:%S')
     if field == 'owners' or field == 'participants':
-        return [user.name for user in obj.user_set.all()]
+        owners = [user.name for user in obj.user_set.all()]
+        return handle_list_field(owners, NEW_LINE)
+    if field == 'subtasks':
+        subtasks = [task.id for task in obj.subtasks.all()]
+        return handle_list_field(subtasks, COMMA)
     if field == 'tasks':
-        return [task.id for task in obj.tasks.all()]
+        tasks = [task.id for task in obj.tasks.all()]
+        return handle_list_field(tasks, COMMA)
     if field == 'events':
-        return [event.id for event in obj.events.all()]
+        events = [event.id for event in obj.events.all()]
+        return handle_list_field(events, COMMA)
+    if field == 'plans':
+        plans = [plan.id for plan in obj.plans.all()]
+        return handle_list_field(plans, COMMA)
+
+
+def handle_list_field(row_list, separator):
+    if not len(row_list):
+        return 'None'
+    field_value = ''
+    for item in row_list:
+        field_value += str(item) + separator
+    return field_value[:-1]
 
 
 def configurate_table(table, config):
@@ -163,5 +185,26 @@ def show_reminder_table(reminders, config):
                 row.append(handle_field(reminder, field, config))
             else:
                 row.append(getattr(reminder, field))
+        table.add_row(row)
+    print(table)
+
+
+def show_user_table(users, config):
+    config_dict = config['users_view']
+    fields_to_display = [field for field in config_dict.keys()
+                         if config.getboolean('users_view', field)]
+    table = PrettyTable()
+    configurate_table(table, config)
+    table.title = colorize('Users',
+                           background=config['colors']['user_bg'],
+                           foreground=config['colors']['foreground'])
+    table.field_names = fields_to_display
+    for user in users:
+        row = []
+        for field in fields_to_display:
+            if field in SPECIAL_FIELDS:
+                row.append(handle_field(user, field, config))
+            else:
+                row.append(getattr(user, field))
         table.add_row(row)
     print(table)

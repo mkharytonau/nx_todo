@@ -28,7 +28,7 @@ USER_CHOICE_COMMAND = {
 
 
 def main():
-    arguments = 'edit task 4 -p 1'.split()
+    arguments = 'complete task 24 -u milana'.split()
     args = parse(arguments)
 
     config = get_config()

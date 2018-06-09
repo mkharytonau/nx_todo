@@ -2,6 +2,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .common import identify_user
 from nxtodo import queries
+from nxtodo.thirdparty import (
+    CompletionError
+)
 
 
 USER_CHOICE_COMPLETE = {
@@ -24,6 +27,8 @@ def complete_task(args, config):
     try:
         queries.complete_task(user, args.id)
     except ObjectDoesNotExist as e:
+        print(e)
+    except CompletionError as e:
         print(e)
     except PermissionError as e:
         print(e)

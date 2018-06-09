@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from nxtodo import queries
 
 from .common import identify_user
+from nxtodo.thirdparty import Looping
 
 USER_CHOICE_ADDTO = {
     'task': lambda args, config: addto_task(args, config),
@@ -52,7 +53,20 @@ def addto_task_reminders(args, config):
 
 
 def addto_task_subtasks(args, config):
-    pass
+    try:
+        user = identify_user(args, config)
+    except KeyError as e:
+        print(e)
+        return
+
+    try:
+        queries.add_subtasks_to_task(user, args.id, args.subtasks)
+    except ObjectDoesNotExist as e:
+        print(e)
+    except Looping as e:
+        print(e)
+    except PermissionError as e:
+        print(e)
 
 
 def addto_task_owners(args, config):

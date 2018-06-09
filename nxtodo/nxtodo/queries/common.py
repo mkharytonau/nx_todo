@@ -49,6 +49,14 @@ def get_reminder(reminder_id):
             'There is no reminder with id={}'.format(reminder_id))
 
 
+def get_users(name=None):
+    filters = common_functions.create_filters(name=name)
+    selection = User.objects.filter(**filters)
+    if not len(selection):
+        raise ObjectDoesNotExist('There is no users with selected filters.')
+    return selection
+
+
 def get_reminders(user, description=None, id=None):
     user = get_user(user)
     filters = common_functions.create_filters(id, description=description)

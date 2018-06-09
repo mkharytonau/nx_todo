@@ -20,6 +20,7 @@ from .addto import (
     add_reminders_to_plan
 )
 from .common import get_user
+from .logging_decorators import log_add_queri
 
 
 def add_user(user_name):
@@ -27,6 +28,7 @@ def add_user(user_name):
     user.save()
 
 
+@log_add_queri('Successfully added task {} to user {}', 'Error when adding {} task: ')
 def add_task(user_name, title, description=None, category=None, deadline=None,
              priority=None, owners=None):
     user = get_user(user_name)

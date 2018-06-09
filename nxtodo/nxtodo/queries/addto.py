@@ -17,6 +17,7 @@ from .common import (
     get_plan,
     get_reminder
 )
+from nxtodo.thirdparty import Looping
 
 
 @user_task_access
@@ -27,6 +28,20 @@ def add_owners_to_task(user_name, task_id, owners):
         relation = UserTasks(user=user, task=task, assign_date=datetime.now(),
                              access_level=owner.access_level)
         relation.save()
+
+
+@user_task_access
+def add_subtasks_to_task(user_name, task_id, subtasks_ids):
+    task = get_task(task_id)
+    for id in subtasks_ids:
+        subtask = get_task(id)
+        if not subtask.check_cycles(task):
+            task.subtasks.add(subtask)
+        else:
+            msg = ("You can't add subtask id={} to task id={}, because "
+                   "the task id={} already exists in the subtasks of the "
+                   "task id={}").format(id, task_id, task_id, id)
+            raise Looping(msg)
 
 
 @user_task_access

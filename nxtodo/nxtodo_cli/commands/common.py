@@ -9,7 +9,7 @@ def get_config():
         if not config.sections():
             raise FileNotFoundError
     except FileNotFoundError:
-        config_path = 'default_config.ini'
+        config_path = 'default.ini'
         config.read(config_path)
     return config
 

@@ -18,7 +18,7 @@ def user_task_access(func):
     def wrapper(*args, **kwargs):
         user = get_user(args[0])
         task = get_task(args[1])
-        relation = UserTasks.objects.get(user=user, task=task)
+        relation = UserTasks.objects.get(user=user, task=task)# stay here, you must check if relation does not exists!
         if relation.access_level == AccessLevels.EDIT.value:
             func(*args, **kwargs)
         else:

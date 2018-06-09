@@ -1,8 +1,9 @@
 from datetime import datetime
-
+from django.core.exceptions import ObjectDoesNotExist
 from nxtodo import queries
 from nxtodo_cli import (ColoredDate,
                         nxCalendar,
+                        show_user_table,
                         show_event_table,
                         show_task_table,
                         show_plan_table,
@@ -11,6 +12,7 @@ from nxtodo_cli import (ColoredDate,
 from .common import identify_user
 
 USER_CHOICE_SHOW = {
+    'user': lambda args, config: show_user(args, config),
     'task': lambda args, config: show_task(args, config),
     'event': lambda args, config: show_event(args, config),
     'plan': lambda args, config: show_plan(args, config),
@@ -22,16 +24,26 @@ def show(args, config):
     USER_CHOICE_SHOW.get(args.kind)(args, config)
 
 
+def show_user(args, config):
+    try:
+        users = queries.get_users(args.name)
+    except ObjectDoesNotExist as e:
+        print(e)
+        return
+    show_user_table(users, config)
+
+
 def show_task(args, config):
     try:
         user = identify_user(args, config)
     except KeyError as e:
         print(e)
         return
+
     try:
         tasks = queries.get_tasks(user, args.title, args.category,
                                   args.priority, args.status, args.id)
-    except Exception as e:
+    except ObjectDoesNotExist as e:
         print(e)
         return
 
@@ -69,11 +81,12 @@ def show_event(args, config):
     except KeyError as e:
         print(e)
         return
+
     try:
         events = queries.get_events(user, args.title, args.category,
                                     args.priority, args.status, args.place,
                                     args.id)
-    except Exception as e:
+    except ObjectDoesNotExist as e:
         print(e)
         return
 
@@ -115,7 +128,7 @@ def show_plan(args, config):
     try:
         plans = queries.get_plans(user, args.title, args.category,
                                   args.priority, args.status, args.id)
-    except Exception as e:
+    except ObjectDoesNotExist as e:
         print(e)
         return
 
@@ -131,7 +144,7 @@ def show_reminder(args, config):
 
     try:
         reminders = queries.get_reminders(user, args.description, args.id)
-    except Exception as e:
+    except ObjectDoesNotExist as e:
         print(e)
         return
 

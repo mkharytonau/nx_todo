@@ -5,6 +5,7 @@ from .common import (
     get_event,
     get_events,
     get_plan,
+    get_users,
     get_plans,
     get_reminder,
     get_reminders
@@ -20,6 +21,7 @@ from .add import (
 
 from .addto import (
     add_owners_to_task,
+    add_subtasks_to_task,
     add_participants_to_event,
     add_reminders_to_task,
     add_reminders_to_event,

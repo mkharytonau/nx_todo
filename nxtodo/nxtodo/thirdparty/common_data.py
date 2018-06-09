@@ -1,3 +1,4 @@
+import logging
 from enum import Enum
 
 
@@ -17,3 +18,9 @@ class Statuses(Enum):
 class AccessLevels(Enum):
     EDIT = 'edit'
     READONLY = 'readonly'
+
+
+class LogLevels(Enum):
+    DISABLED = logging.CRITICAL
+    INFO = logging.INFO
+    ERROR = logging.ERROR

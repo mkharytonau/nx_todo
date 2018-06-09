@@ -11,10 +11,15 @@ from nxtodo_cli.cmd_parser import (
 def parse(arguments):
     parser = argparse.ArgumentParser(description='nx_todo')
     subparsers_for_command = parser.add_subparsers(dest='command')
+    subparsers_for_command.required = True
 
     # Parsing the 'show' command ---------------------------------------------
     parser_show = subparsers_for_command.add_parser('show')
     subparsers_for_show = parser_show.add_subparsers(dest='kind')
+    subparsers_for_show.required = True
+
+    parser_show_user = subparsers_for_show.add_parser('user')
+    parser_show_user.add_argument('-n', '--name')
 
     parser_show_task = subparsers_for_show.add_parser('task')
     parser_show_task.add_argument('-i', '--id')
@@ -49,6 +54,7 @@ def parse(arguments):
     # Parsing the 'add' command ----------------------------------------------
     parser_add = subparsers_for_command.add_parser('add')
     subparsers_for_add = parser_add.add_subparsers(dest='kind')
+    subparsers_for_add.required = True
 
     parser_add_user = subparsers_for_add.add_parser('user')
     parser_add_user.add_argument('name')
@@ -113,6 +119,7 @@ def parse(arguments):
     # Parsing the 'addto' command--------------------------------------------
     parser_addto = subparsers_for_command.add_parser('addto')
     subparsers_for_addto = parser_addto.add_subparsers(dest='kind')
+    subparsers_for_addto.required = True
 
     parser_addto_task = subparsers_for_addto.add_parser('task')
     parser_addto_task.add_argument('id')
@@ -136,6 +143,7 @@ def parse(arguments):
     # Parsing the 'complete' command -------------------------------------------
     parser_complete = subparsers_for_command.add_parser('complete')
     subparsers_for_complete = parser_complete.add_subparsers(dest='kind')
+    subparsers_for_show.complete = True
 
     parser_complete_task = subparsers_for_complete.add_parser('task')
     parser_complete_task.add_argument('id')
@@ -156,6 +164,7 @@ def parse(arguments):
     # Parsing the 'remove' command -------------------------------------------
     parser_remove = subparsers_for_command.add_parser('remove')
     subparsers_for_remove = parser_remove.add_subparsers(dest='kind')
+    subparsers_for_remove.required = True
 
     parser_remove_task = subparsers_for_remove.add_parser('task')
     parser_remove_task.add_argument('id')
@@ -177,6 +186,7 @@ def parse(arguments):
     # Parsing for the 'check' command----------------------------------------
     parser_check = subparsers_for_command.add_parser('check')
     subparsers_for_check = parser_check.add_subparsers(dest='kind')
+    subparsers_for_check.required = True
 
     parser_check_task = subparsers_for_check.add_parser('task')
     parser_check_task.add_argument('-i', '--id')
@@ -198,6 +208,7 @@ def parse(arguments):
     # Parsing for the 'edit' command------------------------------------------
     parser_edit = subparsers_for_command.add_parser('edit')
     subparsers_for_edit = parser_edit.add_subparsers(dest='kind')
+    subparsers_for_edit.required = True
 
     parser_edit_task = subparsers_for_edit.add_parser('task')
     parser_edit_task.add_argument('id')
@@ -246,5 +257,5 @@ def parse(arguments):
                                          type=parse_weekdays)
     parser_edit_reminder.add_argument('-u', '--user')
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     return args
