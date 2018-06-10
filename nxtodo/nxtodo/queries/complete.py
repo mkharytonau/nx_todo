@@ -7,14 +7,15 @@ from .access_decorators import (
     user_task_access,
     user_event_access
 )
-from .logging_decorators import log_complete_queri
+from .logging_decorators import log_complete_query
 from .common import (
     get_task,
     get_event
 )
 
-
-@log_complete_queri('Successfully completed {} task', 'Error when completing {} task: ')
+SUCCESS = 'Successfully completed {} task'
+ERROR = 'Error when completing {} task: '
+@log_complete_query(SUCCESS, ERROR)
 @user_task_access
 def complete_task(user_name, task_id):
     task = get_task(task_id)

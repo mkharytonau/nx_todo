@@ -1,9 +1,9 @@
 from django.db import models
 from .user import User
 from .plan import Plan
-from .relation_base import RelationBase
+from .relations_bases import UserEntityBase
 
 
-class UserPlans(RelationBase):
+class UserPlans(UserEntityBase):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)

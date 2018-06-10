@@ -22,13 +22,14 @@ def initialize(psql_user="nxtodo", psql_password="todotodo",
     execute_from_command_line(['manage.py', 'migrate'])
 
 
-def configure(settings_module="nxtodo.configuration.settings",
-              log_file=os.path.join(os.path.dirname(__file__), 'nxtodo.log'),
-              log_level=LogLevels.INFO.value):
+def configure(settings_module="nxtodo.configuration.settings"):
     # Django configuration
+    print(__name__)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     get_wsgi_application()
 
-    # Logger configuration
-    logging.basicConfig(filename=log_file, level=log_level,
-                        format='%(asctime)s %(message)s')
+
+def get_logger():
+    logger = logging.getLogger('nxtodo_logger')
+    logger.setLevel(logging.DEBUG)
+    return logger

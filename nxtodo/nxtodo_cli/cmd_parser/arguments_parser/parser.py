@@ -9,9 +9,19 @@ from nxtodo_cli.cmd_parser import (
 
 
 def parse(arguments):
-    parser = argparse.ArgumentParser(description='nx_todo')
+    parser = argparse.ArgumentParser(description='nxtodo')
     subparsers_for_command = parser.add_subparsers(dest='command')
     subparsers_for_command.required = True
+
+    # 'test'-----------------------
+    parser_task = subparsers_for_command.add_parser('task')
+    parser_task.add_argument('ids')
+    subparsers_for_task = parser_task.add_subparsers(dest='comanda')
+    subparsers_for_task.required = True
+    parser_task_totask = subparsers_for_task.add_parser('totask')
+    parser_task_totask.add_argument('id')
+
+
 
     # Parsing the 'show' command ---------------------------------------------
     parser_show = subparsers_for_command.add_parser('show')

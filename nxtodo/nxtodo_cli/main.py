@@ -1,8 +1,10 @@
 #!/usr/bin/python3.6
 
+import logging
 import nxtodo
 
 nxtodo.configure('nxtodo.configuration.settings_for_tests')
+
 
 from nxtodo_cli.cmd_parser import parse
 from nxtodo_cli.commands import (
@@ -28,10 +30,21 @@ USER_CHOICE_COMMAND = {
 
 
 def main():
-    arguments = 'complete task 24 -u milana'.split()
+    arguments = 'task '.split()
     args = parse(arguments)
 
     config = get_config()
+
+    logger = nxtodo.get_logger()
+    handler = logging.FileHandler('/home/kharivitalij/nxtodo.log')
+    handler.setLevel(logging.DEBUG)
+
+    # create a logging format
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s')
+    handler.setFormatter(formatter)
+
+    logger.addHandler(handler)
 
     USER_CHOICE_COMMAND.get(args.command)(args, config)
 

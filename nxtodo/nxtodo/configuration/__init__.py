@@ -1,2 +1,5 @@
-from .configuration import (initialize,
-                            configure)
+from .configuration import (
+    initialize,
+    configure,
+    get_logger
+)

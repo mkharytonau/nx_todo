@@ -1,5 +1,11 @@
 import logging
 from enum import Enum
+from collections import namedtuple
+
+
+ADMINS_NAME = 'nxtodo_admin'
+
+Owner = namedtuple('Owner', 'user_name access_level')
 
 
 class Entities(Enum):

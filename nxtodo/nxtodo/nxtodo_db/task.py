@@ -1,23 +1,34 @@
 from django.db import models
 from .base import Base
-from nxtodo.thirdparty import Statuses
+
+from nxtodo.thirdparty import (
+    Statuses,
+    Entities
+)
 
 
 class Task(Base):
     deadline = models.DateTimeField(null=True)
     subtasks = models.ManyToManyField('self', symmetrical=False)
+    reminders = models.ManyToManyField('Reminder', through='TaskReminders')
 
     @classmethod
-    def create(cls, title, description, category, deadline, priority):
+    def create(cls, title, description, category, deadline,
+               priority, created_by):
         task = cls(
             title=title,
             description=description,
             category=category,
             deadline=deadline,
             priority=priority,
-            status=Statuses.INPROCESS.value
+            status=Statuses.INPROCESS.value,
+            created_by = created_by
         )
         return task
+
+    @staticmethod
+    def get_type():
+        return Entities.TASK
 
     def check_cycles(self, task):
         is_cycle = False
@@ -41,5 +52,3 @@ class Task(Base):
         self.deadline = None
         self.status = Statuses.PLANNED.value
         self.save()
-        for rem in self.reminder_set.all():
-            rem.prepare_to_plan()

@@ -1,8 +1,12 @@
 from datetime import datetime
 
 from nxtodo.nxtodo_db.models import (
-    Reminder,
-    UserTasks
+    UserTasks,
+    UserEvents,
+    UserPlans,
+    TaskReminders,
+    EventReminders,
+    PlanReminders
 )
 
 from .access_decorators import (
@@ -49,24 +53,19 @@ def add_reminders_to_task(user_name, task_id, reminders_ids):
     task = get_task(task_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
-        if reminder.task or reminder.event or reminder.plan:
-            reminder = Reminder.create(reminder.description,
-                                       reminder.start_remind_before,
-                                       reminder.start_remind_from,
-                                       reminder.stop_remind_in,
-                                       reminder.remind_in, reminder.datetimes,
-                                       reminder.interval, reminder.weekdays)
-            reminder.user = get_user(user_name)
-        reminder.task = task
-        reminder.save()
+        relation = TaskReminders(task=task, reminder=reminder)
+        relation.save()
 
 
 @user_event_access
 def add_participants_to_event(user_name, event_id, participants):
     event = get_event(event_id)
     for participant in participants:
-        u = get_user(participant)
-        event.user_set.add(u)
+        user = get_user(participant.user_name)
+        relation = UserEvents(user=user, event=event,
+                              assign_date=datetime.now(),
+                              access_level=participant.access_level)
+        relation.save()
 
 
 @user_event_access
@@ -74,16 +73,8 @@ def add_reminders_to_event(user_name, event_id, reminders_ids):
     event = get_event(event_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
-        if reminder.task or reminder.event or reminder.plan:
-            reminder = Reminder.create(reminder.description,
-                                       reminder.start_remind_before,
-                                       reminder.start_remind_from,
-                                       reminder.stop_remind_in,
-                                       reminder.remind_in, reminder.datetimes,
-                                       reminder.interval, reminder.weekdays)
-            reminder.user = get_user(user_name)
-        reminder.event = event
-        reminder.save()
+        relation = EventReminders(event=event, reminder=reminder)
+        relation.save()
 
 
 @user_plan_access
@@ -105,17 +96,18 @@ def add_events_to_plan(user_name, plan_id, events_ids):
 
 
 @user_plan_access
-def add_reminders_to_plan(user, plan_id, reminders_ids):
+def add_reminders_to_plan(user_name, plan_id, reminders_ids):
     plan = get_plan(plan_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
-        if reminder.task or reminder.event or reminder.plan:
-            reminder = Reminder.create(reminder.description,
-                                       reminder.start_remind_before,
-                                       reminder.start_remind_from,
-                                       reminder.stop_remind_in,
-                                       reminder.remind_in, reminder.datetimes,
-                                       reminder.interval, reminder.weekdays)
-            reminder.user = get_user(user)
-        reminder.plan = plan
-        reminder.save()
+        relation = PlanReminders(plan=plan, reminder=reminder)
+        relation.save()
+
+@user_plan_access
+def add_owners_to_plan(user_name, plan_id, owners):
+    plan = get_plan(plan_id)
+    for owner in owners:
+        user = get_user(owner.user_name)
+        relation = UserPlans(user=user, plan=plan, assign_date=datetime.now(),
+                             access_level=owner.access_level)
+        relation.save()

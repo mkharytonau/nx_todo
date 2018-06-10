@@ -9,11 +9,12 @@ class Base(models.Model):
     category = models.CharField(max_length=30, null=True)
     status = models.CharField(max_length=30, null=True)
     created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.CharField(max_length=30, null=True)
 
-    def get_notification(self, now):
+    def get_notification(self, user_name, now):
         notifications = []
-        for reminder in self.reminder_set.all():
-            notification = reminder.notify(now)
+        for reminder in self.reminder_set.filter(user__name=user_name):
+            notification = reminder.notify(now, self)
             if notification:
                 notifications.append(notification)
         if not notifications:
