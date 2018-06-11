@@ -2,11 +2,11 @@ import unittest
 from datetime import datetime, timedelta
 
 import nxtodo
-from django.core.exceptions import ObjectDoesNotExist
 
 nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
-from nxtodo.queries import queries
+from nxtodo import queries
+from nxtodo.thirdparty import ObjectDoesNotFound
 
 USER_NAME = 'plan_tester'
 
@@ -57,14 +57,14 @@ class TestPlan(unittest.TestCase):
             [queries.get_reminders(USER_NAME, 'test_reminder_2')[0].id])
 
     def test_add_plan(self):
-        with self.assertRaises(ObjectDoesNotExist):
+        with self.assertRaises(ObjectDoesNotFound):
             queries.add_plan('not_exist_user', '', '', '', '', '')
         queries.add_plan(USER_NAME, 'unique_plan', '', '', '', '')
         self.assertEqual(
             len(queries.get_plans(USER_NAME, title='unique_plan')), 1)
 
     def test_add_reminders_to_plan(self):
-        with self.assertRaises(ObjectDoesNotExist):
+        with self.assertRaises(ObjectDoesNotFound):
             queries.add_reminders_to_plan(USER_NAME, -1, 1)
         queries.add_reminders_to_plan(
             USER_NAME,

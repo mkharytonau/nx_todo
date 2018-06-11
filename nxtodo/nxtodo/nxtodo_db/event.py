@@ -1,5 +1,5 @@
 from django.db import models
-from .base import Base
+from nxtodo.nxtodo_db.models import Base
 from nxtodo.thirdparty import (
     Statuses,
     Entities
@@ -7,8 +7,8 @@ from nxtodo.thirdparty import (
 
 
 class Event(Base):
-    from_datetime = models.DateTimeField()
-    to_datetime = models.DateTimeField()
+    from_datetime = models.DateTimeField(null=True)
+    to_datetime = models.DateTimeField(null=True)
     place = models.CharField(max_length=30, null=True)
     reminders = models.ManyToManyField('Reminder', through='EventReminders')
 

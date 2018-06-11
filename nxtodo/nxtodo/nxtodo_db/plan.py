@@ -1,20 +1,16 @@
 from collections import namedtuple
 
 from django.db import models
+from nxtodo.nxtodo_db.models import Base
 from nxtodo.thirdparty import (
     Statuses,
     Entities
 )
 
-from .base import Base
-from .event import Event
-from .task import Task
-
-
 
 class Plan(Base):
-    tasks = models.ManyToManyField(Task)
-    events = models.ManyToManyField(Event)
+    tasks = models.ManyToManyField('Task')
+    events = models.ManyToManyField('Event')
     reminders = models.ManyToManyField('Reminder', through='PlanReminders')
 
     @classmethod
@@ -40,4 +36,4 @@ class Plan(Base):
         Planned_objects = namedtuple('Planned_objects',
                                      'tasks events created_at')
         return Planned_objects(self.tasks.all(), self.events.all(),
-                               actual_date)
+                               actual_date.date)

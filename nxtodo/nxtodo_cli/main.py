@@ -8,45 +8,43 @@ nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
 from nxtodo_cli.cmd_parser import parse
 from nxtodo_cli.commands import (
-    add,
-    addto,
-    check,
-    complete,
-    edit,
-    remove,
-    show,
-    get_config
+    handle_user,
+    handle_task,
+    handle_event,
+    handle_plan,
+    handle_reminder,
+    handle_subtask,
+    get_config,
+    identify_user
 )
 
-USER_CHOICE_COMMAND = {
-    'show': lambda args, config: show(args, config),
-    'add': lambda args, config: add(args, config),
-    'addto': lambda args, config: addto(args, config),
-    'complete': lambda args, config: complete(args, config),
-    'remove': lambda args, config: remove(args, config),
-    'edit': lambda args, config: edit(args, config),
-    'check': lambda args, config: check(args, config)
+USER_CHOICE_ENTITY = {
+    'user': lambda user, args, config: handle_user(args, config),
+    'task': lambda user, args, config: handle_task(user, args, config),
+    'event': lambda user, args, config: handle_event(user, args, config),
+    'plan': lambda user, args, config: handle_plan(user, args, config),
+    'reminder': lambda user, args, config: handle_reminder(user, args, config),
+    'subtask': lambda user, args, config: handle_subtask(user, args)
 }
 
 
 def main():
-    arguments = ['plan', 'add', '-t', 'plan', '-o', 'nikita edit', 'milana read', '-T', '1', '2', '-E', '3','4', '-r', '1']
+    arguments = 'user show'.split()
     args = parse(arguments)
 
     config = get_config()
+    user_name = identify_user(args, config)
 
     logger = nxtodo.get_logger()
     handler = logging.FileHandler('/home/kharivitalij/nxtodo.log')
     handler.setLevel(logging.DEBUG)
-
+    #
     # create a logging format
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - %(funcName)s')
     handler.setFormatter(formatter)
-
     logger.addHandler(handler)
 
-    USER_CHOICE_COMMAND.get(args.command)(args, config)
+    USER_CHOICE_ENTITY.get(args.entity)(user_name, args, config)
 
 
 if __name__ == "__main__":

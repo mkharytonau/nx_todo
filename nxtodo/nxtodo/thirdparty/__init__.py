@@ -7,7 +7,3 @@ from .common_data import (
     AccessLevels,
     LogLevels
 )
-from .exceptions import (
-    Looping,
-    CompletionError
-)

@@ -1,7 +1,9 @@
 from django.db import models
-from .task import Task
+from nxtodo.thirdparty import Entities
+
 from .event import Event
 from .plan import Plan
+from .task import Task
 
 
 class User(models.Model):
@@ -13,6 +15,10 @@ class User(models.Model):
     @classmethod
     def create(cls, name):
         return cls(name=name)
+
+    @staticmethod
+    def get_type():
+        return Entities.USER
 
     def __str__(self):
         return self.name

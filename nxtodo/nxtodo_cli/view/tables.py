@@ -1,12 +1,24 @@
 from datetime import datetime
 
+from nxtodo.thirdparty import Entities
 from prettytable import PrettyTable
 
 from .colorizer import colorize
 
-SPECIAL_FIELDS = ['title', 'description', 'reminders', 'owners',
-                  'subtasks', 'participants', 'created_at', 'date',
-                  'tasks', 'events', 'plans']
+LIST_FIELDS = [
+    'reminders', 'owners', 'subtasks', 'participants',
+    'tasks', 'events', 'plans'
+]
+
+FIELDS_TO_DECORATE = ['title', 'description']
+
+DATE_FIELDS = [
+    'created_at',
+    'start_remind_from',
+    'stop_remind_in',
+    'date'
+]
+
 NEW_LINE = '\n'
 COMMA = ','
 
@@ -31,50 +43,78 @@ def select_priority_color(priority, config):
     return 255
 
 
-def split_str(s, length):
-    if len(s) <= length:
-        return s
-    return s[:length] + '\n' + split_str(s[length:], length)
+def handle_list_field(obj, field):
+    if field == 'reminders':
+        if obj.get_type() == Entities.USER:
+            reminder_set = obj.reminder_set.all()
+        else:
+            reminder_set = obj.reminders.all()
+        reminders = [reminder.id for reminder in reminder_set]
+        return convert_list_field(reminders, COMMA)
+
+    if field == 'owners' or field == 'participants':
+        owners = [user.name for user in obj.user_set.all()]
+        return convert_list_field(owners, NEW_LINE)
+
+    if field == 'subtasks':
+        subtasks = [task.id for task in obj.subtasks.all()]
+        return convert_list_field(subtasks, COMMA)
+
+    if field == 'tasks':
+        tasks = [task.id for task in obj.tasks.all()]
+        return convert_list_field(tasks, COMMA)
+
+    if field == 'events':
+        events = [event.id for event in obj.events.all()]
+        return convert_list_field(events, COMMA)
+
+    if field == 'plans':
+        plans = [plan.id for plan in obj.plans.all()]
+        return convert_list_field(plans, COMMA)
 
 
-def handle_field(obj, field, config):
+def handle_date_field(obj, field, config):
+    template = config['table_styles']['datetime_format']
+    date = getattr(obj, field)
+    return datetime.strftime(date, template)
+
+
+def handle_field_to_decorate(obj, field, config):
     if field == 'title':
         return colorize(obj.title,
                         foreground=select_priority_color(obj.priority, config))
     if field == 'description':
         value = split_str(obj.description, 10) if obj.description else None
         return value
-    if field == 'reminders':
-        reminders = [reminder.id for reminder in obj.reminder_set.all()]
-        return handle_list_field(reminders, COMMA)
-    if field == 'created_at':
-        return datetime.strftime(obj.created_at, '%Y-%m-%d %H:%M:%S')
-    if field == 'date':
-        return datetime.strftime(obj.date, '%Y-%m-%d %H:%M:%S')
-    if field == 'owners' or field == 'participants':
-        owners = [user.name for user in obj.user_set.all()]
-        return handle_list_field(owners, NEW_LINE)
-    if field == 'subtasks':
-        subtasks = [task.id for task in obj.subtasks.all()]
-        return handle_list_field(subtasks, COMMA)
-    if field == 'tasks':
-        tasks = [task.id for task in obj.tasks.all()]
-        return handle_list_field(tasks, COMMA)
-    if field == 'events':
-        events = [event.id for event in obj.events.all()]
-        return handle_list_field(events, COMMA)
-    if field == 'plans':
-        plans = [plan.id for plan in obj.plans.all()]
-        return handle_list_field(plans, COMMA)
 
 
-def handle_list_field(row_list, separator):
+def split_str(s, length):
+    if len(s) <= length:
+        return s
+    return s[:length] + '\n' + split_str(s[length:], length)
+
+
+def convert_list_field(row_list, separator):
     if not len(row_list):
         return 'None'
     field_value = ''
     for item in row_list:
         field_value += str(item) + separator
     return field_value[:-1]
+
+
+def create_row(fields_to_display, obj, config):
+    row = []
+    for field in fields_to_display:
+        if field in LIST_FIELDS:
+            row.append(handle_list_field(obj, field))
+        elif field in DATE_FIELDS:
+            row.append(handle_date_field(obj, field, config))
+        elif field in FIELDS_TO_DECORATE:
+            row.append(handle_field_to_decorate(obj, field, config))
+        else:
+            row.append(getattr(obj, field))
+    return row
 
 
 def configurate_table(table, config):
@@ -96,12 +136,7 @@ def show_task_table(tasks, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for task in tasks:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(task, field, config))
-            else:
-                row.append(getattr(task, field))
+        row = create_row(fields_to_display, task, config)
         table.add_row(row)
     print(table)
 
@@ -116,12 +151,7 @@ def show_event_table(events, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for event in events:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(event, field, config))
-            else:
-                row.append(getattr(event, field))
+        row = create_row(fields_to_display, event, config)
         table.add_row(row)
     print(table)
 
@@ -137,12 +167,7 @@ def show_plan_table(plans, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for plan in plans:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(plan, field, config))
-            else:
-                row.append(getattr(plan, field))
+        row = create_row(fields_to_display, plan, config)
         table.add_row(row)
     print(table)
 
@@ -158,12 +183,7 @@ def show_notification_table(notifications, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for notification in notifications:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(notification, field, config))
-            else:
-                row.append(getattr(notification, field))
+        row = create_row(fields_to_display, notification, config)
         table.add_row(row)
     print(table)
 
@@ -179,12 +199,7 @@ def show_reminder_table(reminders, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for reminder in reminders:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(reminder, field, config))
-            else:
-                row.append(getattr(reminder, field))
+        row = create_row(fields_to_display, reminder, config)
         table.add_row(row)
     print(table)
 
@@ -200,11 +215,6 @@ def show_user_table(users, config):
                            foreground=config['colors']['foreground'])
     table.field_names = fields_to_display
     for user in users:
-        row = []
-        for field in fields_to_display:
-            if field in SPECIAL_FIELDS:
-                row.append(handle_field(user, field, config))
-            else:
-                row.append(getattr(user, field))
+        row = create_row(fields_to_display, user, config)
         table.add_row(row)
     print(table)

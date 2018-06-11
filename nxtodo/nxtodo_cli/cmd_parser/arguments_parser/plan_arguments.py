@@ -1,7 +1,5 @@
-from nxtodo_cli.cmd_parser import (
-    parse_owners,
-    parse_datetime,
-)
+from nxtodo_cli.cmd_parser import parse_owners
+
 
 PLAN_ADD_ARGUMENTS = [
     {
@@ -157,6 +155,10 @@ PLAN_SHARE_ARGUMENTS = [
         'required': True,
         'nargs': '+',
         'type': parse_owners
+    },
+    {
+        'short': '-u',
+        'full': '--user'
     }
 ]
 
@@ -172,5 +174,9 @@ PLAN_UNSHARE_ARGUMENTS = [
         'required': True,
         'nargs': '+',
         'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
     }
 ]

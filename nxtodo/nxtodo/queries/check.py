@@ -1,23 +1,12 @@
 from datetime import datetime
-from collections import namedtuple
 
 from nxtodo.nxtodo_db.models import (
-    Task,
-    Event,
     UserTasks,
     UserEvents
 )
-from nxtodo.thirdparty import (
-    Statuses,
-    Owner
-)
+from nxtodo.thirdparty import Owner
+from nxtodo.thirdparty.exceptions import NoNotifications
 
-from .addto import (
-    add_owners_to_task,
-    add_participants_to_event,
-    add_reminders_to_task,
-    add_reminders_to_event
-)
 from .add import (
     add_task,
     add_event
@@ -31,29 +20,30 @@ from .common import (
 )
 
 
-def check_tasks(user, title=None, category=None, priority=None, status=None,
-                id=None, now=datetime.now()):
-    tasks = get_tasks(user, title, category, priority, status, id)
+def check_tasks(user, title=None, category=None, deadline=None, priority=None,
+                status=None, id=None, now=datetime.now()):
+    tasks = get_tasks(user, title, category, deadline, priority, status, id)
     notifications = []
     for task in tasks:
         notification = task.get_notification(user, now)
         if notification:
             notifications.append(notification)
     if not notifications:
-        raise Exception('There is no notifications for tasks.')
+        raise NoNotifications('There is no notifications for tasks.')
     return notifications
 
 
-def check_events(user, title=None, category=None, priority=None, status=None,
-                place=None, id=None, now=datetime.now()):
-    events = get_events(user, title, category, priority, status, place, id)
+def check_events(user, title=None, category=None, fromdt=None, priority=None,
+                 status=None, place=None, id=None, now=datetime.now()):
+    events = get_events(user, title, category, fromdt, priority,
+                        status, place, id)
     notifications = []
     for event in events:
         notification = event.get_notification(user, now)
         if notification:
             notifications.append(notification)
     if not notifications:
-        raise Exception('There is no notifications for events.')
+        raise NoNotifications('There is no notifications for events.')
     return notifications
 
 
@@ -63,7 +53,7 @@ def check_plans(user, title=None, category=None, priority=None, status=None,
     for plan in plans:
         planned_objects = plan.get_planned_objects(user, now)
         if not planned_objects:
-            return
+            continue
         for task in planned_objects.tasks:
             duplicate_task(plan, task, planned_objects.created_at)
         for event in planned_objects.events:

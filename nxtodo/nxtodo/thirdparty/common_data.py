@@ -12,6 +12,8 @@ class Entities(Enum):
     TASK = 0
     EVENT = 1
     PLAN = 2
+    REMINDER = 3
+    USER = 4
 
 
 class Statuses(Enum):

@@ -183,6 +183,10 @@ TASK_SHARE_ARGUMENTS = [
         'required': True,
         'nargs': '+',
         'type': parse_owners
+    },
+    {
+        'short': '-u',
+        'full': '--user'
     }
 ]
 
@@ -198,5 +202,49 @@ TASK_UNSHARE_ARGUMENTS = [
         'required': True,
         'nargs': '+',
         'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+TASK_TOPLAN_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-p',
+        'full': '--plan',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+TASK_FROMPLAN_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-p',
+        'full': '--plan',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
     }
 ]

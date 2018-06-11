@@ -8,6 +8,7 @@ from nxtodo.nxtodo_db.models import (
     EventReminders,
     PlanReminders
 )
+from nxtodo.thirdparty.exceptions import Looping
 
 from .access_decorators import (
     user_task_access,
@@ -21,7 +22,6 @@ from .common import (
     get_plan,
     get_reminder
 )
-from nxtodo.thirdparty import Looping
 
 
 @user_task_access

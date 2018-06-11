@@ -31,7 +31,7 @@ def user_task_access(func):
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
                        "of the '{}' task").format(task.id)
-                raise ObjectDoesNotExist(msg)
+                raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)
@@ -56,7 +56,7 @@ def user_event_access(func):
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
                        "of the '{}' event").format(event.id)
-                raise ObjectDoesNotExist(msg)
+                raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)
@@ -81,7 +81,7 @@ def user_plan_access(func):
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
                        "of the '{}' plan").format(plan.id)
-                raise ObjectDoesNotExist(msg)
+                raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)

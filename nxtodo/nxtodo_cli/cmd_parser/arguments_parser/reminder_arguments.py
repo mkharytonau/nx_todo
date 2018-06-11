@@ -133,3 +133,122 @@ REMINDER_EDIT_ARGUMENTS = [
     }
 ]
 
+REMINDER_TOPLAN_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-p',
+        'full': '--plan',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+REMINDER_FROMPLAN_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-p',
+        'full': '--plan',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+REMINDER_TOTASK_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-t',
+        'full': '--task',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+REMINDER_FROMTASK_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-t',
+        'full': '--task',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+REMINDER_TOEVENT_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-e',
+        'full': '--event',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]
+
+REMINDER_FROMEVENT_ARGUMENTS = [
+    {
+        'short': '-i',
+        'full': '--ids',
+        'required': True,
+        'nargs': '+',
+        'type': int
+    },
+    {
+        'short': '-e',
+        'full': '--event',
+        'required': True,
+        'type': int
+    },
+    {
+        'short': '-u',
+        'full': '--user'
+    }
+]

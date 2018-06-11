@@ -13,7 +13,7 @@ class Base(models.Model):
 
     def get_notification(self, user_name, now):
         notifications = []
-        for reminder in self.reminder_set.filter(user__name=user_name):
+        for reminder in self.reminders.filter(user__name=user_name):
             notification = reminder.notify(now, self)
             if notification:
                 notifications.append(notification)

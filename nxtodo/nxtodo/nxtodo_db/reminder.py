@@ -3,14 +3,14 @@ from datetime import datetime
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
-from nxtodo.reminding import (
-    Notification,
-    check_times
-)
 from nxtodo.nxtodo_db.models import (
     TaskReminders,
     EventReminders,
     PlanReminders
+)
+from nxtodo.reminding import (
+    Notification,
+    check_times
 )
 from nxtodo.thirdparty import Entities
 
@@ -32,9 +32,6 @@ class Reminder(models.Model):
     )
     user = models.ForeignKey('User', null=True, on_delete=models.CASCADE)
 
-    # last_check = models.DateTimeField(default=datetime.min)
-    # check_later = models.BooleanField(default=False)
-
     @classmethod
     def create(cls, description, start_remind_before, start_remind_from,
                stop_remind_in, remind_in, datetimes, interval, weekdays):
@@ -53,6 +50,10 @@ class Reminder(models.Model):
             weekdays=weekdays
         )
         return reminder
+
+    @staticmethod
+    def get_type():
+        return Entities.REMINDER
 
     @staticmethod
     def mes_miss_task(task):

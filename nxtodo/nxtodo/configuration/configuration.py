@@ -24,7 +24,6 @@ def initialize(psql_user="nxtodo", psql_password="todotodo",
 
 def configure(settings_module="nxtodo.configuration.settings"):
     # Django configuration
-    print(__name__)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     get_wsgi_application()
 
