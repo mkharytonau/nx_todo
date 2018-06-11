@@ -30,7 +30,7 @@ USER_CHOICE_COMMAND = {
 
 
 def main():
-    arguments = 'task '.split()
+    arguments = ['plan', 'add', '-t', 'plan', '-o', 'nikita edit', 'milana read', '-T', '1', '2', '-E', '3','4', '-r', '1']
     args = parse(arguments)
 
     config = get_config()
