@@ -1,17 +1,17 @@
-from .access_decorators import (
+from nxtodo.queries.access_decorators import (
     user_task_access,
     user_event_access,
     user_plan_access,
     user_reminder_access
 )
-from .add import (
+from nxtodo.queries.add import (
     add_user,
     add_task,
     add_event,
     add_plan,
     add_reminder
 )
-from .addto import (
+from nxtodo.queries.addto import (
     add_owners_to_task,
     add_subtasks_to_task,
     add_participants_to_event,
@@ -21,12 +21,12 @@ from .addto import (
     add_tasks_to_plan,
     add_events_to_plan
 )
-from .check import (
+from nxtodo.queries.check import (
     check_tasks,
     check_events,
     check_plans
 )
-from .common import (
+from nxtodo.queries.common import (
     get_user,
     get_task,
     get_tasks,
@@ -38,17 +38,17 @@ from .common import (
     get_reminder,
     get_reminders
 )
-from .complete import (
+from nxtodo.queries.complete import (
     complete_task,
     complete_event
 )
-from .edit import (
+from nxtodo.queries.edit import (
     edit_task,
     edit_event,
     edit_plan,
     edit_reminder
 )
-from .remove import (
+from nxtodo.queries.remove import (
     remove_user,
     remove_task,
     remove_event,

@@ -11,10 +11,3 @@ def parse_owners(input_string):
         msg = "'{}' is incorrect data, expected " \
               "'user_name access_level'".format(input_string)
         raise argparse.ArgumentTypeError(msg)
-
-
-#def parse_int_list(input_string):
-#    try:
-#        return list(map(int, input_string.split()))
-#    except ValueError as e:
-#        raise argparse.ArgumentTypeError(str(e))

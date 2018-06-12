@@ -1,16 +1,20 @@
-from .access_decorators import (
+from nxtodo.queries.access_decorators import (
     user_task_access,
     user_event_access,
     user_plan_access,
     user_reminder_access
 )
-from .common import (
+from nxtodo.queries.common import (
     get_task,
     get_event,
     get_reminder
 )
 
+from nxtodo.queries.logging_decorators import log_edit_query
 
+
+@log_edit_query("Successfully edited '{}' task by user '{}'",
+                "Error when edited '{}' task by user '{}': ")
 @user_task_access
 def edit_task(user_name, task_id, title=None, description=None,
               category=None, deadline=None, priority=None):
@@ -28,6 +32,8 @@ def edit_task(user_name, task_id, title=None, description=None,
     task.save()
 
 
+@log_edit_query("Successfully edited '{}' event by user '{}'",
+                "Error when edited '{}' event by user '{}': ")
 @user_event_access
 def edit_event(user_name, event_id, title=None, description=None,
                category=None, priority=None, from_datetime=None,
@@ -50,6 +56,8 @@ def edit_event(user_name, event_id, title=None, description=None,
     event.save()
 
 
+@log_edit_query("Successfully edited '{}' plan by user '{}'",
+                "Error when edited '{}' plan by user '{}': ")
 @user_plan_access
 def edit_plan(user_name, plan_id, title=None, description=None,
               category=None, priority=None):
@@ -65,6 +73,8 @@ def edit_plan(user_name, plan_id, title=None, description=None,
     plan.save()
 
 
+@log_edit_query("Successfully edited '{}' reminder by user '{}'",
+                "Error when edited '{}' reminder by user '{}': ")
 @user_reminder_access
 def edit_reminder(user_name, reminder_id, description=None,
                   start_remind_before=None, start_remind_from=None,

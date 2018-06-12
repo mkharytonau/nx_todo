@@ -1,5 +1,5 @@
 from django.db import models
-from .relations_bases import EntityReminderBase
+from nxtodo.nxtodo_db.relations_bases import EntityReminderBase
 
 
 class TaskReminders(EntityReminderBase):

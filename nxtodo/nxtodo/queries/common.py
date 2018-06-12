@@ -9,13 +9,14 @@ from nxtodo.nxtodo_db.models import (
 
 from nxtodo.thirdparty import common_functions
 from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
+from nxtodo.queries.logging_decorators import log_get_query
 
 
 def get_user(name):
     try:
         return User.objects.get(name=name)
     except ObjectDoesNotExist:
-        raise ObjectDoesNotFound("There is no user '{}'".format(name))
+        raise ObjectDoesNotFound("There is no user '{}'.".format(name))
 
 
 def get_task(task_id):
@@ -23,7 +24,7 @@ def get_task(task_id):
         return Task.objects.get(id=task_id)
     except ObjectDoesNotExist:
         raise ObjectDoesNotFound(
-            'There is no task with id={}'.format(task_id))
+            'There is no task with id={}.'.format(task_id))
 
 
 def get_event(event_id):
@@ -31,7 +32,7 @@ def get_event(event_id):
         return Event.objects.get(id=event_id)
     except ObjectDoesNotExist:
         raise ObjectDoesNotFound(
-            'There is no event with id={}'.format(event_id))
+            'There is no event with id={}.'.format(event_id))
 
 
 def get_plan(plan_id):
@@ -39,7 +40,7 @@ def get_plan(plan_id):
         return Plan.objects.get(id=plan_id)
     except ObjectDoesNotExist:
         raise ObjectDoesNotFound(
-            'There is no plan with id={}'.format(plan_id))
+            'There is no plan with id={}.'.format(plan_id))
 
 
 def get_reminder(reminder_id):
@@ -47,7 +48,7 @@ def get_reminder(reminder_id):
         return Reminder.objects.get(id=reminder_id)
     except ObjectDoesNotExist:
         raise ObjectDoesNotFound(
-            'There is no reminder with id={}'.format(reminder_id))
+            'There is no reminder with id={}.'.format(reminder_id))
 
 
 def get_users(name=None):
@@ -58,6 +59,8 @@ def get_users(name=None):
     return selection
 
 
+@log_get_query("Successfully returned {} reminders to '{}' user",
+               "Error when '{}' user tried to get reminders: ")
 def get_reminders(user, description=None, id=None):
     user = get_user(user)
     filters = common_functions.create_filters(id, description=description)
@@ -68,6 +71,8 @@ def get_reminders(user, description=None, id=None):
     return selection
 
 
+@log_get_query("Successfully returned {} tasks to '{}' user",
+               "Error when '{}' user tried to get tasks: ")
 def get_tasks(user, title=None, category=None, deadline=None, priority=None,
               status=None, id=None):
     user = get_user(user)
@@ -79,6 +84,8 @@ def get_tasks(user, title=None, category=None, deadline=None, priority=None,
     return selection
 
 
+@log_get_query("Successfully returned {} events to '{}' user",
+               "Error when '{}' user tried to get events: ")
 def get_events(user, title=None, category=None, fromdt=None, priority=None,
                status=None, place=None, id=None):
     user = get_user(user)
@@ -91,6 +98,8 @@ def get_events(user, title=None, category=None, fromdt=None, priority=None,
     return selection
 
 
+@log_get_query("Successfully returned {} plans to '{}' user",
+               "Error when '{}' user tried to get plans: ")
 def get_plans(user, title=None, category=None, priority=None, status=None,
               id=None):
     user = get_user(user)

@@ -1,7 +1,7 @@
 from django.db import models
-from .user import User
-from .task import Task
-from .relations_bases import UserEntityBase
+from nxtodo.nxtodo_db.user import User
+from nxtodo.nxtodo_db.task import Task
+from nxtodo.nxtodo_db.relations_bases import UserEntityBase
 
 
 class UserTasks(UserEntityBase):

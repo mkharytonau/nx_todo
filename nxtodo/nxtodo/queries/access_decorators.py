@@ -11,7 +11,7 @@ from nxtodo.thirdparty import (
     ADMINS_NAME
 )
 
-from .common import (
+from nxtodo.queries.common import (
     get_user,
     get_task,
     get_event,
@@ -30,14 +30,14 @@ def user_task_access(func):
                 relation = UserTasks.objects.get(user=user, task=task)
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
-                       "of the '{}' task").format(task.id)
+                       "of the '{}' task.").format(task.id)
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
-                       "edit '{}' task").format(task.id)
+                       "edit '{}' task.").format(task.id)
                 raise PermissionError(msg)
         else:
             func(*args, **kwargs)
@@ -55,14 +55,14 @@ def user_event_access(func):
                 relation = UserEvents.objects.get(user=user, event=event)
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
-                       "of the '{}' event").format(event.id)
+                       "of the '{}' event.").format(event.id)
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
-                       "edit '{}' event").format(event.id)
+                       "edit '{}' event.").format(event.id)
                 raise PermissionError(msg)
         else:
             func(*args, **kwargs)
@@ -80,14 +80,14 @@ def user_plan_access(func):
                 relation = UserPlans.objects.get(user=user, plan=plan)
             except ObjectDoesNotExist:
                 msg = ("Invalid operation, you are not the owner "
-                       "of the '{}' plan").format(plan.id)
+                       "of the '{}' plan.").format(plan.id)
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
                 func(*args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
-                       "edit '{}' plan").format(plan.id)
+                       "edit '{}' plan.").format(plan.id)
                 raise PermissionError(msg)
         else:
             func(*args, **kwargs)
@@ -103,7 +103,7 @@ def user_reminder_access(func):
             func(*args, **kwargs)
         else:
             msg = ("Permission denied, you can't "
-                   "edit '{}' reminder").format(reminder.id)
+                   "edit '{}' reminder.").format(reminder.id)
             raise PermissionError(msg)
 
     return wrapper

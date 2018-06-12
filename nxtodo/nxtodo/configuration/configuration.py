@@ -1,19 +1,21 @@
 import os, logging
 from django.core.wsgi import get_wsgi_application
-from nxtodo.thirdparty import LogLevels
-
-# nxtodo.initialize('nxtodo', 'todotodo', 'nxtodo_test', 'nxtodo.configuration.settings_for_tests')
+from nxtodo.thirdparty.common_data import LOGGER_NAME
 
 
-def initialize(psql_user="nxtodo", psql_password="todotodo",
-               psql_db_name="nxtodo_db",
-               settings_module="nxtodo.configuration.settings"):
+CREATE_USER = "create user {} password '{}'"
+CREATE_DATEBASE = "create database {} owner {}"
 
-    psql_cmd_create_user = "create user {} password '{}'".format(psql_user,
-                                                                 psql_password)
+
+def initialize(
+        psql_user="nxtodo",
+        psql_password="todotodo",
+        psql_db_name="nxtodo",
+        settings_module="nxtodo.configuration.settings"):
+
+    psql_cmd_create_user = CREATE_USER.format(psql_user, psql_password)
     os.system("sudo -u postgres psql -c \"{}\"".format(psql_cmd_create_user))
-    psql_cmd_create_db = "create database {} owner {}".format(psql_db_name,
-                                                              psql_user)
+    psql_cmd_create_db = CREATE_DATEBASE.format(psql_db_name, psql_user)
     os.system("sudo -u postgres psql -c '{}'".format(psql_cmd_create_db))
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
@@ -23,12 +25,11 @@ def initialize(psql_user="nxtodo", psql_password="todotodo",
 
 
 def configure(settings_module="nxtodo.configuration.settings"):
-    # Django configuration
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     get_wsgi_application()
 
 
 def get_logger():
-    logger = logging.getLogger('nxtodo_logger')
+    logger = logging.getLogger(LOGGER_NAME)
     logger.setLevel(logging.DEBUG)
     return logger

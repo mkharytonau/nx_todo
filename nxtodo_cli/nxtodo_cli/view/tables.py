@@ -3,7 +3,7 @@ from datetime import datetime
 from nxtodo.thirdparty import Entities
 from prettytable import PrettyTable
 
-from .colorizer import colorize
+from nxtodo_cli.view.colorizer import colorize
 
 LIST_FIELDS = [
     'reminders', 'owners', 'subtasks', 'participants',

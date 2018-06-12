@@ -7,11 +7,11 @@ from nxtodo.nxtodo_db.models import (
 from nxtodo.thirdparty import Owner
 from nxtodo.thirdparty.exceptions import NoNotifications
 
-from .add import (
+from nxtodo.queries.add import (
     add_task,
     add_event
 )
-from .common import (
+from nxtodo.queries.common import (
     get_task,
     get_event,
     get_plans,

@@ -1,9 +1,9 @@
 from django.db import models
 from nxtodo.thirdparty import Entities
 
-from .event import Event
-from .plan import Plan
-from .task import Task
+from nxtodo.nxtodo_db.event import Event
+from nxtodo.nxtodo_db.plan import Plan
+from nxtodo.nxtodo_db.task import Task
 
 
 class User(models.Model):

@@ -1,9 +1,9 @@
 import logging
-from enum import Enum
 from collections import namedtuple
-
+from enum import Enum
 
 ADMINS_NAME = 'nxtodo_admin'
+LOGGER_NAME = 'nxtodo_logger'
 
 Owner = namedtuple('Owner', 'user_name access_level')
 

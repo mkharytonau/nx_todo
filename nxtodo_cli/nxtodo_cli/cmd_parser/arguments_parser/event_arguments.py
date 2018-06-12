@@ -32,14 +32,12 @@ EVENT_ADD_ARGUMENTS = [
     {
         'short': '-F',
         'full': '--fromdt',
-        'type': parse_datetime,
-        'required': True
+        'type': parse_datetime
     },
     {
         'short': '-T',
         'full': '--todt',
-        'type': parse_datetime,
-        'required': True
+        'type': parse_datetime
     },
     {
         'short': '-p',

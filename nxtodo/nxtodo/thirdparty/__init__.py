@@ -1,5 +1,5 @@
-from . import common_functions
-from .common_data import (
+from nxtodo.thirdparty import common_functions
+from nxtodo.thirdparty.common_data import (
     ADMINS_NAME,
     Owner,
     Entities,

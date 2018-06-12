@@ -1,4 +1,4 @@
-from .tables import (
+from nxtodo_cli.view.tables import (
     show_user_table,
     show_task_table,
     show_event_table,
@@ -6,4 +6,4 @@ from .tables import (
     show_notification_table,
     show_reminder_table
 )
-from .colorizer import colorize
+from nxtodo_cli.view.colorizer import colorize

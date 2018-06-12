@@ -1,8 +1,8 @@
 import unittest
 from datetime import datetime
 from datetime import timedelta
-from nxtodo_cli import parse_datetime
-from nxtodo_cli import Formats
+from nxtodo_cli.cmd_parser import parse_datetime
+from nxtodo_cli.cmd_parser.datetime_parser import Formats
 
 
 class TestDateTimeParser(unittest.TestCase):

@@ -1,4 +1,4 @@
-from .view import (
+from nxtodo_cli.view import (
     colorize,
     show_user_table,
     show_event_table,
@@ -8,7 +8,7 @@ from .view import (
     show_reminder_table
 )
 
-from .nxcalendar import (
+from nxtodo_cli.nxcalendar import (
     nxCalendar,
     ColoredDate
 )

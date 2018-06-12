@@ -1,9 +1,11 @@
 import argparse
 from datetime import datetime, timedelta
 
+from nxtodo_cli.cmd_parser.datetime_parser.parser_data import (
+    Formats,
+    WEEKDAYS
+)
 from nxtodo_cli.commands import get_config
-
-from .parser_data import Formats, WEEKDAYS
 
 
 def parse_datetime(input_string):

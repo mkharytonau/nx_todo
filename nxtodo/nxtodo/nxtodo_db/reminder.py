@@ -10,9 +10,23 @@ from nxtodo.nxtodo_db.models import (
 )
 from nxtodo.reminding import (
     Notification,
-    check_times
+    check_deadline,
+    check_range,
+    check_remind_in,
+    check_datetimes,
+    check_interval,
+    check_weekdays
 )
 from nxtodo.thirdparty import Entities
+
+MISSED_TASK = "You missed the deadline for the '{}' task."
+MISSED_EVENT = "You missed the '{}' event."
+RIGHT_NOW = "Right now! there is an '{}' event."
+REMEMBER_TASK = "Remember, in a {} deadline for the '{}' task."
+REMEMBER_EVENT = "Remember, in a {} start for the '{}' event."
+REMEMBER_ABOUT_TASK = "Remember about '{}' task."
+REMEMBER_ABOUT_EVENT = "Remember about '{}' event."
+
 
 
 class Reminder(models.Model):
@@ -55,50 +69,23 @@ class Reminder(models.Model):
     def get_type():
         return Entities.REMINDER
 
-    @staticmethod
-    def mes_miss_task(task):
-        return "You missed the deadline for the '{}' task.".format(task.title)
-
-    @staticmethod
-    def mes_miss_event(event):
-        return "You missed the '{}' event.".format(event.title)
-
-    @staticmethod
-    def mes_now_event(event):
-        return "Right now! there is an '{}' event.".format(event.title)
-
-    @staticmethod
-    def mes_rem_task(interval, task):
-        return "Remember, in a {} deadline for the '{}' task.". \
-            format(interval, task.title)
-
-    @staticmethod
-    def mes_rem_event(interval, event):
-        return "Remember, in a {} start for the '{}' event.". \
-            format(interval, event.title)
-
-    @staticmethod
-    def mes_about_task(task):
-        return "Remember about '{}' task.".format(task.title)
-
-    @staticmethod
-    def mes_about_event(event):
-        return "Remember about '{}' event.".format(event.title)
-
     def notify(self, now, entity):
 
         entity_type = entity.get_type()
         start_remind_from = self.start_remind_from
+
         if entity_type == Entities.TASK:
             relation = TaskReminders.objects.get(task=entity, reminder=self)
             deadline = entity.deadline
             if deadline and self.start_remind_before:
                 start_remind_from = deadline - self.start_remind_before
+
         if entity_type == Entities.EVENT:
             relation = EventReminders.objects.get(event=entity, reminder=self)
             deadline = entity.from_datetime
             if deadline and self.start_remind_before:
                 start_remind_from = deadline - self.start_remind_before
+
         if entity_type == Entities.PLAN:
             relation = PlanReminders.objects.get(plan=entity, reminder=self)
 
@@ -134,28 +121,28 @@ class Reminder(models.Model):
 
     def check_task(self, task, start_remind_from, now):
 
-        deadline_dt = check_times.check_deadline(task.deadline, now)
+        deadline_dt = check_deadline(task.deadline, now)
         deadline_notification = Notification(
-            Reminder.mes_miss_task(task),
+            MISSED_TASK.format(task.title),
             deadline_dt
         )
 
-        remind_in_dt = check_times.check_remind_in(self.remind_in,
+        remind_in_dt = check_remind_in(self.remind_in,
                                                    task.deadline, now)
         remind_in_notification = Notification(
-            Reminder.mes_rem_task(self.remind_in, task),
+            REMEMBER_TASK.format(self.remind_in, task.title),
             remind_in_dt
         )
 
-        msg = Reminder.mes_about_task(task)
-        datetimes_dt = check_times.check_datetimes(self.datetimes, now)
+        msg = REMEMBER_ABOUT_TASK.format(task.title)
+        datetimes_dt = check_datetimes(self.datetimes, now)
         datetimes_notification = Notification(msg, datetimes_dt)
 
-        interval_dt = check_times.check_interval(start_remind_from,
+        interval_dt = check_interval(start_remind_from,
                                                  self.interval, now)
         interval_notification = Notification(msg, interval_dt)
 
-        weekdays_dt = check_times.check_weekdays(start_remind_from,
+        weekdays_dt = check_weekdays(start_remind_from,
                                                  self.weekdays, now)
         weekdays_notification = Notification(msg, weekdays_dt)
 
@@ -167,41 +154,41 @@ class Reminder(models.Model):
             weekdays_notification
         ]
 
-        notifications = [notification for notification in all_notifications if
-                         notification.date is not None]
+        notifications = [notification for notification in all_notifications
+                         if notification.date is not None]
         return notifications
 
     def check_event(self, event, start_remind_from, now):
 
-        deadline_dt = check_times.check_deadline(event.to_datetime, now)
+        deadline_dt = check_deadline(event.to_datetime, now)
         deadline_notification = Notification(
-            Reminder.mes_miss_event(event),
+            MISSED_EVENT.format(event.title),
             deadline_dt
         )
 
-        right_now_dt = check_times.check_range(event.from_datetime,
+        right_now_dt = check_range(event.from_datetime,
                                                event.to_datetime, now)
         right_now_notification = Notification(
-            Reminder.mes_now_event(event),
+            RIGHT_NOW.format(event.title),
             right_now_dt
         )
 
-        remind_in_dt = check_times.check_remind_in(self.remind_in,
+        remind_in_dt = check_remind_in(self.remind_in,
                                                    event.from_datetime, now)
         remind_in_notification = Notification(
-            Reminder.mes_rem_event(self.remind_in, event),
+            REMEMBER_EVENT.format(self.remind_in, event.title),
             remind_in_dt
         )
 
-        msg = Reminder.mes_about_event(event)
-        datetimes_dt = check_times.check_datetimes(self.datetimes, now)
+        msg = REMEMBER_ABOUT_EVENT.format(event.title)
+        datetimes_dt = check_datetimes(self.datetimes, now)
         datetimes_notification = Notification(msg, datetimes_dt)
 
-        interval_dt = check_times.check_interval(start_remind_from,
+        interval_dt = check_interval(start_remind_from,
                                                  self.interval, now)
         interval_notification = Notification(msg, interval_dt)
 
-        weekdays_dt = check_times.check_weekdays(start_remind_from,
+        weekdays_dt = check_weekdays(start_remind_from,
                                                  self.weekdays, now)
         weekdays_notification = Notification(msg, weekdays_dt)
 
@@ -214,18 +201,18 @@ class Reminder(models.Model):
             weekdays_notification
         ]
 
-        notifications = [notification for notification in all_notifications if
-                         notification.date is not None]
+        notifications = [notification for notification in all_notifications
+                         if notification.date is not None]
         return notifications
 
     def check_plan(self, start_remind_from, now):
 
-        datetimes_dt = check_times.check_datetimes(self.datetimes, now)
+        datetimes_dt = check_datetimes(self.datetimes, now)
 
-        interval_dt = check_times.check_interval(start_remind_from,
+        interval_dt = check_interval(start_remind_from,
                                                  self.interval, now)
 
-        weekdays_dt = check_times.check_weekdays(start_remind_from,
+        weekdays_dt = check_weekdays(start_remind_from,
                                                  self.weekdays, now)
 
         all_datetimes = [

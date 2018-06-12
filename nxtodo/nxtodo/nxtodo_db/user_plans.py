@@ -1,7 +1,7 @@
 from django.db import models
-from .user import User
-from .plan import Plan
-from .relations_bases import UserEntityBase
+from nxtodo.nxtodo_db.models import User
+from nxtodo.nxtodo_db.models import Plan
+from nxtodo.nxtodo_db.relations_bases import UserEntityBase
 
 
 class UserPlans(UserEntityBase):

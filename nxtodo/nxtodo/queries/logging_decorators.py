@@ -1,38 +1,143 @@
 import logging
+
+from nxtodo.thirdparty.common_data import LOGGER_NAME
 from nxtodo.thirdparty.exceptions import (
     CompletionError,
     ObjectDoesNotFound,
-    NoNotifications,
     Looping
 )
 
 
-def log_query(success, error):
-    logger = logging.getLogger('nxtodo_logger')
+def log_user_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
-        def wrapper(*args, **kwargs):
+        def wrapper(user_name):
             try:
-                result = func(*args, **kwargs)
-                logger.info(success + str(args) + str(kwargs))
+                result = func(user_name)
+                logger.info(success.format(user_name))
+                return result
+            except Exception as e:
+                logger.error(error.format(user_name) + str(e))
+                raise
+
+        return wrapper
+
+    return log
+
+
+def log_get_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
+
+    def log(func):
+        def wrapper(user_name, *args, **kwargs):
+            try:
+                result = func(user_name, *args, **kwargs)
+                logger.info(success.format(len(result), user_name))
                 return result
             except ObjectDoesNotFound as e:
-                logger.error(error + str(e))
-                raise
-            except PermissionError as e:
-                logger.error(error + str(e))
-                raise
-            except CompletionError as e:
-                logger.error(error + str(e))
-                raise
-            except Looping as e:
-                logger.error(error + str(e))
-                raise
-            except NoNotifications as e:
-                logger.error(error + str(e))
+                logger.error(error.format(user_name) + str(e))
                 raise
             except Exception as e:
-                logger.error(error + str(e))
+                logger.error(error.format(user_name) + str(e))
                 raise
         return wrapper
     return log
+
+
+def log_add_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
+
+    def log(func):
+        def wrapper(user_name, *args, **kwargs):
+            try:
+                entity_id = func(user_name, *args, **kwargs)
+                logger.info(success.format(entity_id, user_name))
+                return entity_id
+            except ObjectDoesNotFound as e:
+                logger.error(error.format(user_name) + str(e))
+                raise
+            except Looping as e:
+                logger.error(error.format(user_name) + str(e))
+                raise
+            except Exception as e:
+                logger.error(error.format(user_name) + str(e))
+                raise
+        return wrapper
+    return log
+
+
+def log_edit_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
+
+    def log(func):
+        def wrapper(user_name, entity_id, *args, **kwargs):
+            try:
+                func(user_name, entity_id, *args, **kwargs)
+                logger.info(success.format(entity_id, user_name))
+            except ObjectDoesNotFound as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+            except PermissionError as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+            except Exception as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+        return wrapper
+    return log
+
+
+def log_addto_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
+
+    def log(func):
+        def wrapper(user_name, to_entity, entities):
+            try:
+                func(user_name, to_entity, entities)
+                msg = success.format(entities, to_entity, user_name)
+                logger.info(msg)
+            except ObjectDoesNotFound as e:
+                msg = error.format(entities, to_entity, user_name) + str(e)
+                logger.error(msg)
+                raise
+            except PermissionError as e:
+                msg = error.format(entities, to_entity, user_name) + str(e)
+                logger.error(msg)
+                raise
+            except Looping as e:
+                msg = error.format(entities, to_entity, user_name) + str(e)
+                logger.error(msg)
+                raise
+            except Exception as e:
+                msg = error.format(entities, to_entity, user_name) + str(e)
+                logger.error(msg)
+                raise
+        return wrapper
+    return log
+
+
+def log_query(success, error):
+    logger = logging.getLogger(LOGGER_NAME)
+
+    def log(func):
+        def wrapper(user_name, entity_id):
+            try:
+                func(user_name, entity_id)
+                logger.info(success.format(entity_id, user_name))
+            except ObjectDoesNotFound as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+            except PermissionError as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+            except CompletionError as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+            except Exception as e:
+                logger.error(error.format(entity_id, user_name) + str(e))
+                raise
+        return wrapper
+    return log
+
+

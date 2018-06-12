@@ -8,22 +8,24 @@ from nxtodo.nxtodo_db.models import (
     EventReminders,
     PlanReminders
 )
-from nxtodo.thirdparty.exceptions import Looping
-
-from .access_decorators import (
+from nxtodo.queries.access_decorators import (
     user_task_access,
     user_event_access,
     user_plan_access
 )
-from .common import (
+from nxtodo.queries.common import (
     get_user,
     get_task,
     get_event,
     get_plan,
     get_reminder
 )
+from nxtodo.thirdparty.exceptions import Looping
+from nxtodo.queries.logging_decorators import log_addto_query
 
 
+@log_addto_query("Successfully added {} owners to task '{}' by user '{}'",
+                 "Error when adding {} owners to task '{}' by user '{}'")
 @user_task_access
 def add_owners_to_task(user_name, task_id, owners):
     task = get_task(task_id)
@@ -34,6 +36,8 @@ def add_owners_to_task(user_name, task_id, owners):
         relation.save()
 
 
+@log_addto_query("Successfully added {} subtasks to task '{}' by user '{}'",
+                 "Error when adding {} subtasks to task '{}' by user '{}'")
 @user_task_access
 def add_subtasks_to_task(user_name, task_id, subtasks_ids):
     task = get_task(task_id)
@@ -48,6 +52,8 @@ def add_subtasks_to_task(user_name, task_id, subtasks_ids):
             raise Looping(msg)
 
 
+@log_addto_query("Successfully added {} reminders to task '{}' by user '{}'",
+                 "Error when adding {} reminders to task '{}' by user '{}'")
 @user_task_access
 def add_reminders_to_task(user_name, task_id, reminders_ids):
     task = get_task(task_id)
@@ -57,6 +63,8 @@ def add_reminders_to_task(user_name, task_id, reminders_ids):
         relation.save()
 
 
+@log_addto_query("Successfully added {} participants to event '{}' by user '{}'",
+                 "Error when adding {} participants to event '{}' by user '{}'")
 @user_event_access
 def add_participants_to_event(user_name, event_id, participants):
     event = get_event(event_id)
@@ -68,6 +76,8 @@ def add_participants_to_event(user_name, event_id, participants):
         relation.save()
 
 
+@log_addto_query("Successfully added {} reminders to event '{}' by user '{}'",
+                 "Error when adding {} reminders to event '{}' by user '{}'")
 @user_event_access
 def add_reminders_to_event(user_name, event_id, reminders_ids):
     event = get_event(event_id)
@@ -77,6 +87,8 @@ def add_reminders_to_event(user_name, event_id, reminders_ids):
         relation.save()
 
 
+@log_addto_query("Successfully added {} tasks to plan '{}' by user '{}'",
+                 "Error when adding {} tasks to plan '{}' by user '{}'")
 @user_plan_access
 def add_tasks_to_plan(user_name, plan_id, tasks_ids):
     plan = get_plan(plan_id)
@@ -86,6 +98,8 @@ def add_tasks_to_plan(user_name, plan_id, tasks_ids):
         plan.tasks.add(task)
 
 
+@log_addto_query("Successfully added {} events to plan '{}' by user '{}'",
+                 "Error when adding {} events to plan '{}' by user '{}'")
 @user_plan_access
 def add_events_to_plan(user_name, plan_id, events_ids):
     plan = get_plan(plan_id)
@@ -95,6 +109,8 @@ def add_events_to_plan(user_name, plan_id, events_ids):
         plan.events.add(event)
 
 
+@log_addto_query("Successfully added {} reminders to plan '{}' by user '{}'",
+                 "Error when adding {} reminders to plan '{}' by user '{}'")
 @user_plan_access
 def add_reminders_to_plan(user_name, plan_id, reminders_ids):
     plan = get_plan(plan_id)
@@ -103,6 +119,9 @@ def add_reminders_to_plan(user_name, plan_id, reminders_ids):
         relation = PlanReminders(plan=plan, reminder=reminder)
         relation.save()
 
+
+@log_addto_query("Successfully added {} owners to plan '{}' by user '{}'",
+                 "Error when adding {} owners to plan '{}' by user '{}'")
 @user_plan_access
 def add_owners_to_plan(user_name, plan_id, owners):
     plan = get_plan(plan_id)

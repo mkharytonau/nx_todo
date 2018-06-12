@@ -1,11 +1,11 @@
-SECRET_KEY = 'nxtodo'
+SECRET_KEY = 'nxtodo_cli'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nxtodo',
-        'USER': 'nxtodo',
-        'PASSWORD': 'todotodo',
+        'NAME': 'nxtodo_cli',
+        'USER': 'nxtodo_cli',
+        'PASSWORD': 'nxtodo_cli',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }

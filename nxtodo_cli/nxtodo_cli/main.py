@@ -3,7 +3,7 @@
 import logging
 import nxtodo
 
-nxtodo.configure('nxtodo.configuration.settings_for_tests')
+nxtodo.configure("nxtodo_cli.settings")
 
 
 from nxtodo_cli.cmd_parser import parse
@@ -29,18 +29,22 @@ USER_CHOICE_ENTITY = {
 
 
 def main():
-    arguments = 'user show'.split()
+    # parse arguments from command line
+    arguments = 'user add -n nikit'.split()
     args = parse(arguments)
 
+    # getting config and user_name
     config = get_config()
     user_name = identify_user(args, config)
 
+    # setup logger
     logger = nxtodo.get_logger()
-    handler = logging.FileHandler('/home/kharivitalij/nxtodo.log')
-    handler.setLevel(logging.DEBUG)
-    #
-    # create a logging format
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - %(funcName)s')
+    logs_path = config['logger']['logs_dir']
+    handler = logging.FileHandler(logs_path)
+    logs_level = config['logger']['logs_level']
+    handler.setLevel(int(logs_level))
+    logs_format = config['logger']['logs_format']
+    formatter = logging.Formatter(logs_format)
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 

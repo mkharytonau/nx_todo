@@ -15,7 +15,8 @@ def handle_user(args, config):
 
 
 def add_user(args):
-    queries.add_user(args.name)
+    user_name = queries.add_user(args.name)
+    print(user_name)
 
 
 def remove_user(args):
