@@ -51,9 +51,9 @@ def add_task(executor, title, description=None, category=None, deadline=None,
 
 @log_add_query("Successfully added event id='{}' by user '{}'",
                "Error when adding event by user '{}': ")
-def add_event(executor, title, from_datetime, to_datetime, description=None,
-              category=None, priority=None, place=None, participants=None,
-              reminders=None):
+def add_event(executor, title, from_datetime=None, to_datetime=None,
+              description=None, category=None, priority=None, place=None,
+              participants=None, reminders=None):
     event = Event.create(title, description, category, priority,
                          from_datetime, to_datetime, place, executor)
     event.save()

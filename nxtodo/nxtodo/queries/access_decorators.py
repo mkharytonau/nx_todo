@@ -99,7 +99,7 @@ def user_reminder_access(func):
     def wrapper(*args, **kwargs):
         user = get_user(args[0])
         reminder = get_reminder(args[1])
-        if reminder.user.id == user.id:
+        if reminder.user.name == user.name:
             func(*args, **kwargs)
         else:
             msg = ("Permission denied, you can't "

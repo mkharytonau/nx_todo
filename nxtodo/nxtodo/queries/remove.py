@@ -1,15 +1,15 @@
+from nxtodo.queries.access_decorators import (
+    user_task_access,
+    user_event_access,
+    user_plan_access,
+    user_reminder_access
+)
 from nxtodo.queries.common import (
     get_user,
     get_task,
     get_event,
     get_plan,
     get_reminder
-)
-from nxtodo.queries.access_decorators import (
-    user_task_access,
-    user_event_access,
-    user_plan_access,
-    user_reminder_access
 )
 from nxtodo.queries.logging_decorators import (
     log_query,

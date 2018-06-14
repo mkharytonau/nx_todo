@@ -25,5 +25,5 @@ def parse(arguments):
                     **without_keys(argument, ['short', 'full'])
                 )
 
-    args = parser.parse_args(arguments)
+    args = parser.parse_args()
     return args

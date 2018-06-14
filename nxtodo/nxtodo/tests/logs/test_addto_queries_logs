@@ -1,0 +1,396 @@
+2018-06-15 00:02:04,610 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:04,621 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:04,633 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:02:04,644 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:02:04,655 - INFO - Successfully added task id='542' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,666 - INFO - Successfully added event id='113' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,677 - INFO - Successfully added plan id='119' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,688 - INFO - Successfully added reminder id='264' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,694 - ERROR - Error when adding [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '0' by user 'nxtodo_admin'There is no task with id=0. - wrapper
+2018-06-15 00:02:04,888 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:04,900 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:04,933 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '543' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:04,933 - INFO - Successfully added task id='543' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,966 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '114' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:04,967 - INFO - Successfully added event id='114' by user 'queries_tester' - wrapper
+2018-06-15 00:02:04,975 - ERROR - Error when completing '114' event by user 'user_readonly'Permission denied, you can't edit '114' event. - wrapper
+2018-06-15 00:02:05,000 - INFO - Successfully completed '114' event by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,009 - ERROR - Error when completing '543' task by user 'user_readonly'Permission denied, you can't edit '543' task. - wrapper
+2018-06-15 00:02:05,033 - INFO - Successfully completed '543' task by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,100 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:05,111 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:05,144 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '544' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,146 - INFO - Successfully added task id='544' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,211 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '115' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,212 - INFO - Successfully added event id='115' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,255 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '120' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,256 - INFO - Successfully added plan id='120' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,266 - INFO - Successfully added reminder id='265' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,283 - ERROR - Error when edited '115' event by user 'user_readonly': Permission denied, you can't edit '115' event. - wrapper
+2018-06-15 00:02:05,300 - INFO - Successfully edited '115' event by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,313 - ERROR - Error when edited '120' plan by user 'user_readonly': Permission denied, you can't edit '120' plan. - wrapper
+2018-06-15 00:02:05,333 - INFO - Successfully edited '120' plan by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,350 - ERROR - Error when edited '265' reminder by user 'user_readonly': Permission denied, you can't edit '265' reminder. - wrapper
+2018-06-15 00:02:05,366 - INFO - Successfully edited '265' reminder by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,380 - ERROR - Error when edited '544' task by user 'user_readonly': Permission denied, you can't edit '544' task. - wrapper
+2018-06-15 00:02:05,400 - INFO - Successfully edited '544' task by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,489 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:05,500 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:02:05,533 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_2', access_level='edit')] owners to task '545' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,534 - INFO - Successfully added task id='545' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,600 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_2', access_level='edit')] owners to task '546' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,601 - INFO - Successfully added task id='546' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,667 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_2', access_level='edit')] owners to task '547' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,668 - INFO - Successfully added task id='547' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,722 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_2', access_level='edit')] owners to task '548' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,723 - INFO - Successfully added task id='548' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,778 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_2', access_level='edit')] owners to task '549' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,779 - INFO - Successfully added task id='549' by user 'queries_tester' - wrapper
+2018-06-15 00:02:05,822 - INFO - Successfully returned 1 tasks to 'queries_tester' user - wrapper
+2018-06-15 00:02:05,828 - INFO - Successfully returned 2 tasks to 'queries_tester' user - wrapper
+2018-06-15 00:02:05,834 - INFO - Successfully returned 2 tasks to 'queries_tester' user - wrapper
+2018-06-15 00:02:05,839 - INFO - Successfully returned 5 tasks to 'queries_tester' user - wrapper
+2018-06-15 00:02:05,911 - INFO - Successfully added user 'plan_tester' - wrapper
+2018-06-15 00:02:05,955 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '550' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,956 - INFO - Successfully added task id='550' by user 'plan_tester' - wrapper
+2018-06-15 00:02:05,989 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '551' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:05,990 - INFO - Successfully added task id='551' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,011 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to plan '121' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,012 - INFO - Successfully added plan id='121' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,022 - INFO - Successfully added reminder id='266' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,033 - INFO - Successfully added reminder id='267' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,056 - INFO - Successfully added reminder id='268' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,066 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,074 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,100 - INFO - Successfully added [266] reminders to task '550' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,113 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,125 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,144 - INFO - Successfully added [267] reminders to task '551' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,160 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,166 - ERROR - Error when adding 1 reminders to plan '-1' by user 'plan_tester'There is no plan with id=-1. - wrapper
+2018-06-15 00:02:06,171 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,176 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,189 - INFO - Successfully added [268] reminders to plan '121' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,193 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,201 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,206 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,211 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,229 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '550' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,256 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '551' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,278 - INFO - Successfully added [550, 551] tasks to plan '121' by user 'plan_tester' - wrapper
+2018-06-15 00:02:06,283 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,292 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,297 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,303 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,313 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,318 - INFO - Successfully returned 1 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,322 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,367 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '552' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,378 - INFO - Successfully added [266] reminders to task '552' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,380 - INFO - Successfully added task id='552' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,444 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '553' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,455 - INFO - Successfully added [267] reminders to task '553' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,456 - INFO - Successfully added task id='553' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,472 - INFO - Successfully returned 2 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,477 - INFO - Successfully returned 2 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,481 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,485 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,489 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,533 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '554' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,544 - INFO - Successfully added [266] reminders to task '554' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,545 - INFO - Successfully added task id='554' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,589 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '555' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,600 - INFO - Successfully added [267] reminders to task '555' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,601 - INFO - Successfully added task id='555' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,635 - INFO - Successfully returned 3 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,644 - INFO - Successfully returned 3 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,650 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,655 - INFO - Successfully returned 1 reminders to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,660 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,712 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '556' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,733 - INFO - Successfully added [266] reminders to task '556' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,734 - INFO - Successfully added task id='556' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,767 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '557' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,778 - INFO - Successfully added [267] reminders to task '557' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,778 - INFO - Successfully added task id='557' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,795 - INFO - Successfully returned 4 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,799 - INFO - Successfully returned 4 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,804 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,856 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '558' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,878 - INFO - Successfully added [266] reminders to task '558' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,879 - INFO - Successfully added task id='558' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,911 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '559' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,922 - INFO - Successfully added [267] reminders to task '559' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:06,923 - INFO - Successfully added task id='559' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:06,939 - INFO - Successfully returned 5 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,944 - INFO - Successfully returned 5 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:06,948 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,022 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '560' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:07,034 - INFO - Successfully added [266] reminders to task '560' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:07,034 - INFO - Successfully added task id='560' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:07,067 - INFO - Successfully added [Owner(user_name='plan_tester', access_level='edit')] owners to task '561' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:07,089 - INFO - Successfully added [267] reminders to task '561' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:07,090 - INFO - Successfully added task id='561' by user 'unique_plan(Plan)' - wrapper
+2018-06-15 00:02:07,110 - INFO - Successfully returned 6 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,116 - INFO - Successfully returned 6 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,120 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,129 - INFO - Successfully returned 6 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,133 - INFO - Successfully returned 6 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,138 - INFO - Successfully returned 1 plans to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,160 - INFO - Successfully returned 12 tasks to 'plan_tester' user - wrapper
+2018-06-15 00:02:07,200 - INFO - Successfully removed user 'plan_tester' - wrapper
+2018-06-15 00:02:08,011 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:08,022 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:08,034 - INFO - Successfully added user 'user_1' - wrapper
+2018-06-15 00:02:08,079 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '565' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,082 - INFO - Successfully added task id='565' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,156 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '118' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,157 - INFO - Successfully added event id='118' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,189 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '123' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,190 - INFO - Successfully added plan id='123' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,200 - INFO - Successfully added reminder id='275' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,210 - ERROR - Error when removing '118' event by user 'user_readonly': Permission denied, you can't edit '118' event. - wrapper
+2018-06-15 00:02:08,234 - INFO - Successfully removed '118' event by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,244 - ERROR - Error when removed '123' plan by user 'user_readonly': Permission denied, you can't edit '123' plan. - wrapper
+2018-06-15 00:02:08,267 - INFO - Successfully removed '123' plan by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,289 - INFO - Successfully removed '275' reminder by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,301 - ERROR - Error when removing '565' task by user 'user_readonly': Permission denied, you can't edit '565' task. - wrapper
+2018-06-15 00:02:08,334 - INFO - Successfully removed '565' task by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,367 - INFO - Successfully removed user 'user_1' - wrapper
+2018-06-15 00:02:25,134 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:25,145 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:25,156 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:02:25,167 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:02:25,179 - INFO - Successfully added task id='566' by user 'queries_tester' - wrapper
+2018-06-15 00:02:25,190 - INFO - Successfully added event id='119' by user 'queries_tester' - wrapper
+2018-06-15 00:02:25,201 - INFO - Successfully added plan id='124' by user 'queries_tester' - wrapper
+2018-06-15 00:02:25,212 - INFO - Successfully added reminder id='276' by user 'queries_tester' - wrapper
+2018-06-15 00:02:25,220 - ERROR - Error when adding [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '0' by user 'nxtodo_admin'There is no task with id=0. - wrapper
+2018-06-15 00:02:32,313 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:32,324 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:32,335 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:02:32,346 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:02:32,357 - INFO - Successfully added task id='567' by user 'queries_tester' - wrapper
+2018-06-15 00:02:32,368 - INFO - Successfully added event id='120' by user 'queries_tester' - wrapper
+2018-06-15 00:02:32,379 - INFO - Successfully added plan id='125' by user 'queries_tester' - wrapper
+2018-06-15 00:02:32,401 - INFO - Successfully added reminder id='277' by user 'queries_tester' - wrapper
+2018-06-15 00:02:32,419 - ERROR - Error when adding [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '0' by user 'nxtodo_admin'There is no task with id=0. - wrapper
+2018-06-15 00:02:59,814 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:59,825 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:59,836 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:02:59,847 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:02:59,858 - INFO - Successfully added task id='568' by user 'queries_tester' - wrapper
+2018-06-15 00:02:59,870 - INFO - Successfully added event id='121' by user 'queries_tester' - wrapper
+2018-06-15 00:02:59,881 - INFO - Successfully added plan id='126' by user 'queries_tester' - wrapper
+2018-06-15 00:02:59,892 - INFO - Successfully added reminder id='278' by user 'queries_tester' - wrapper
+2018-06-15 00:02:59,959 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '568' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:16:06,676 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:16:06,687 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:16:06,698 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:16:06,709 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:16:06,720 - INFO - Successfully added task id='569' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,731 - INFO - Successfully added task id='570' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,743 - INFO - Successfully added task id='571' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,754 - INFO - Successfully added task id='572' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,765 - INFO - Successfully added task id='573' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,776 - INFO - Successfully added event id='122' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,787 - INFO - Successfully added event id='123' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,798 - INFO - Successfully added plan id='127' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,821 - INFO - Successfully added reminder id='279' by user 'queries_tester' - wrapper
+2018-06-15 00:16:06,898 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '569' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:19:20,094 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:19:20,105 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:19:20,116 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:19:20,128 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:19:20,139 - INFO - Successfully added task id='574' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,150 - INFO - Successfully added task id='575' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,161 - INFO - Successfully added task id='576' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,172 - INFO - Successfully added task id='577' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,183 - INFO - Successfully added task id='578' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,194 - INFO - Successfully added event id='124' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,205 - INFO - Successfully added event id='125' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,217 - INFO - Successfully added plan id='128' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,239 - INFO - Successfully added reminder id='280' by user 'queries_tester' - wrapper
+2018-06-15 00:19:20,316 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '574' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:19:20,335 - ERROR - Error when adding [1] subtasks to task '574' by user 'user_readonly'Permission denied, you can't edit '574' task. - wrapper
+2018-06-15 00:25:51,497 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:25:51,508 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:25:51,519 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:25:51,530 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:25:51,541 - INFO - Successfully added task id='579' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,552 - INFO - Successfully added task id='580' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,564 - INFO - Successfully added task id='581' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,575 - INFO - Successfully added task id='582' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,586 - INFO - Successfully added task id='583' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,597 - INFO - Successfully added event id='126' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,608 - INFO - Successfully added event id='127' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,619 - INFO - Successfully added plan id='129' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,642 - INFO - Successfully added reminder id='281' by user 'queries_tester' - wrapper
+2018-06-15 00:25:51,764 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '579' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:25:51,784 - ERROR - Error when adding [1] subtasks to task '579' by user 'user_readonly'Permission denied, you can't edit '579' task. - wrapper
+2018-06-15 00:25:51,820 - INFO - Successfully added [580] subtasks to task '579' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,598 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:25:57,620 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:25:57,631 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:25:57,642 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:25:57,653 - INFO - Successfully added task id='584' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,664 - INFO - Successfully added task id='585' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,675 - INFO - Successfully added task id='586' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,686 - INFO - Successfully added task id='587' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,698 - INFO - Successfully added task id='588' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,709 - INFO - Successfully added event id='128' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,720 - INFO - Successfully added event id='129' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,731 - INFO - Successfully added plan id='130' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,753 - INFO - Successfully added reminder id='282' by user 'queries_tester' - wrapper
+2018-06-15 00:25:57,831 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '584' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:25:57,850 - ERROR - Error when adding [1] subtasks to task '584' by user 'user_readonly'Permission denied, you can't edit '584' task. - wrapper
+2018-06-15 00:25:57,886 - INFO - Successfully added [585] subtasks to task '584' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,409 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:26:02,498 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:26:02,509 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:26:02,528 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:26:02,542 - INFO - Successfully added task id='589' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,553 - INFO - Successfully added task id='590' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,564 - INFO - Successfully added task id='591' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,576 - INFO - Successfully added task id='592' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,587 - INFO - Successfully added task id='593' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,598 - INFO - Successfully added event id='130' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,609 - INFO - Successfully added event id='131' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,620 - INFO - Successfully added plan id='131' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,642 - INFO - Successfully added reminder id='283' by user 'queries_tester' - wrapper
+2018-06-15 00:26:02,731 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '589' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:26:02,746 - ERROR - Error when adding [1] subtasks to task '589' by user 'user_readonly'Permission denied, you can't edit '589' task. - wrapper
+2018-06-15 00:26:02,775 - INFO - Successfully added [590] subtasks to task '589' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,782 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:33:55,793 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:33:55,804 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:33:55,815 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:33:55,826 - INFO - Successfully added task id='594' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,837 - INFO - Successfully added task id='595' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,848 - INFO - Successfully added task id='596' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,860 - INFO - Successfully added task id='597' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,871 - INFO - Successfully added task id='598' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,882 - INFO - Successfully added event id='132' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,893 - INFO - Successfully added event id='133' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,905 - INFO - Successfully added plan id='132' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,927 - INFO - Successfully added reminder id='284' by user 'queries_tester' - wrapper
+2018-06-15 00:33:55,993 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '594' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:33:56,013 - ERROR - Error when adding [1] subtasks to task '594' by user 'user_readonly'Permission denied, you can't edit '594' task. - wrapper
+2018-06-15 00:33:56,060 - INFO - Successfully added [595] subtasks to task '594' by user 'queries_tester' - wrapper
+2018-06-15 00:33:56,070 - ERROR - Error when adding [Owner(user_name='queries_tester', access_level='edit')] owners to task '595' by user 'queries_tester'Invalid operation, you are not the owner of the '595' task. - wrapper
+2018-06-15 00:34:40,195 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:34:40,209 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:34:40,220 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:34:40,231 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:34:40,243 - INFO - Successfully added task id='599' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,254 - INFO - Successfully added task id='600' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,265 - INFO - Successfully added task id='601' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,276 - INFO - Successfully added task id='602' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,287 - INFO - Successfully added task id='603' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,298 - INFO - Successfully added event id='134' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,309 - INFO - Successfully added event id='135' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,321 - INFO - Successfully added plan id='133' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,343 - INFO - Successfully added reminder id='285' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,409 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '599' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:34:40,424 - ERROR - Error when adding [1] subtasks to task '599' by user 'user_readonly'Permission denied, you can't edit '599' task. - wrapper
+2018-06-15 00:34:40,454 - INFO - Successfully added [600] subtasks to task '599' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,476 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '600' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:34:40,510 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '601' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:34:40,554 - INFO - Successfully added [601] subtasks to task '600' by user 'queries_tester' - wrapper
+2018-06-15 00:34:40,568 - ERROR - Error when adding [599] subtasks to task '601' by user 'queries_tester'You can't add subtask id=599 to task id=601, because the task id=601 already exists in the subtasks of the task id=599 - wrapper
+2018-06-15 00:39:41,438 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:39:41,448 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:39:41,460 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:39:41,471 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:39:41,482 - INFO - Successfully added task id='604' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,497 - INFO - Successfully added task id='605' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,515 - INFO - Successfully added task id='606' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,526 - INFO - Successfully added task id='607' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,537 - INFO - Successfully added task id='608' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,549 - INFO - Successfully added event id='136' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,560 - INFO - Successfully added event id='137' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,571 - INFO - Successfully added plan id='134' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,593 - INFO - Successfully added reminder id='286' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,604 - INFO - Successfully added reminder id='287' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,760 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '604' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:39:41,804 - INFO - Successfully added [286] reminders to task '604' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,815 - ERROR - Error when adding [1] subtasks to task '604' by user 'user_readonly'Permission denied, you can't edit '604' task. - wrapper
+2018-06-15 00:39:41,837 - INFO - Successfully added [605] subtasks to task '604' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,860 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '605' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:39:41,871 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '606' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:39:41,915 - INFO - Successfully added [606] subtasks to task '605' by user 'queries_tester' - wrapper
+2018-06-15 00:39:41,930 - ERROR - Error when adding [604] subtasks to task '606' by user 'queries_tester'You can't add subtask id=604 to task id=606, because the task id=606 already exists in the subtasks of the task id=604 - wrapper
+2018-06-15 00:40:51,643 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:40:51,654 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:40:51,665 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:40:51,677 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:40:51,688 - INFO - Successfully added task id='609' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,699 - INFO - Successfully added task id='610' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,710 - INFO - Successfully added task id='611' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,721 - INFO - Successfully added task id='612' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,732 - INFO - Successfully added task id='613' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,743 - INFO - Successfully added event id='138' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,755 - INFO - Successfully added event id='139' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,766 - INFO - Successfully added plan id='135' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,788 - INFO - Successfully added reminder id='288' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,799 - INFO - Successfully added reminder id='289' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,866 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '609' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:40:51,899 - INFO - Successfully added [288] reminders to task '609' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,909 - ERROR - Error when adding [1] subtasks to task '609' by user 'user_readonly'Permission denied, you can't edit '609' task. - wrapper
+2018-06-15 00:40:51,932 - INFO - Successfully added [610] subtasks to task '609' by user 'queries_tester' - wrapper
+2018-06-15 00:40:51,955 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '610' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:40:51,966 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '611' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:40:51,988 - INFO - Successfully added [611] subtasks to task '610' by user 'queries_tester' - wrapper
+2018-06-15 00:40:52,015 - ERROR - Error when adding [609] subtasks to task '611' by user 'queries_tester'You can't add subtask id=609 to task id=611, because the task id=611 already exists in the subtasks of the task id=609 - wrapper
+2018-06-15 00:50:41,214 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:50:41,225 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:50:41,236 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:50:41,247 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:50:41,258 - INFO - Successfully added task id='614' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,269 - INFO - Successfully added task id='615' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,280 - INFO - Successfully added task id='616' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,292 - INFO - Successfully added task id='617' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,303 - INFO - Successfully added task id='618' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,325 - INFO - Successfully added event id='140' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,336 - INFO - Successfully added event id='141' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,347 - INFO - Successfully added plan id='136' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,370 - INFO - Successfully added reminder id='290' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,392 - INFO - Successfully added reminder id='291' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,503 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '614' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,559 - INFO - Successfully added [290] reminders to task '614' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,587 - ERROR - Error when adding [1] subtasks to task '614' by user 'user_readonly'Permission denied, you can't edit '614' task. - wrapper
+2018-06-15 00:50:41,626 - INFO - Successfully added [615] subtasks to task '614' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,659 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '615' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,681 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '616' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,714 - INFO - Successfully added [616] subtasks to task '615' by user 'queries_tester' - wrapper
+2018-06-15 00:50:41,733 - ERROR - Error when adding [614] subtasks to task '616' by user 'queries_tester'You can't add subtask id=614 to task id=616, because the task id=616 already exists in the subtasks of the task id=614 - wrapper
+2018-06-15 00:50:41,747 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to plan '136' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,767 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '615' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,804 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '616' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:41,825 - INFO - Successfully added [615, 616] tasks to plan '136' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,648 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:50:54,659 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:50:54,670 - INFO - Successfully added user 'user_2' - wrapper
+2018-06-15 00:50:54,682 - INFO - Successfully added user 'user_3' - wrapper
+2018-06-15 00:50:54,693 - INFO - Successfully added task id='619' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,704 - INFO - Successfully added task id='620' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,715 - INFO - Successfully added task id='621' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,726 - INFO - Successfully added task id='622' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,737 - INFO - Successfully added task id='623' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,748 - INFO - Successfully added event id='142' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,759 - INFO - Successfully added event id='143' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,771 - INFO - Successfully added plan id='137' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,793 - INFO - Successfully added reminder id='292' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,804 - INFO - Successfully added reminder id='293' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,871 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly'), Owner(user_name='user_2', access_level=<AccessLevels.EDIT: 'edit'>), Owner(user_name='user_3', access_level=<AccessLevels.READONLY: 'readonly'>)] owners to task '619' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:54,904 - INFO - Successfully added [292] reminders to task '619' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,914 - ERROR - Error when adding [1] subtasks to task '619' by user 'user_readonly'Permission denied, you can't edit '619' task. - wrapper
+2018-06-15 00:50:54,937 - INFO - Successfully added [620] subtasks to task '619' by user 'queries_tester' - wrapper
+2018-06-15 00:50:54,959 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '620' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:54,970 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '621' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:54,993 - INFO - Successfully added [621] subtasks to task '620' by user 'queries_tester' - wrapper
+2018-06-15 00:50:55,006 - ERROR - Error when adding [619] subtasks to task '621' by user 'queries_tester'You can't add subtask id=619 to task id=621, because the task id=621 already exists in the subtasks of the task id=619 - wrapper
+2018-06-15 00:50:55,026 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to plan '137' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:55,054 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '620' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:55,093 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit')] owners to task '621' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:50:55,115 - INFO - Successfully added [620, 621] tasks to plan '137' by user 'queries_tester' - wrapper

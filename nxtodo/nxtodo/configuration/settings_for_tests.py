@@ -3,7 +3,7 @@ SECRET_KEY = 'REPLACE_ME123'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nxtodo_test',
+        'NAME': 'nxtodo_tests',
         'USER': 'nxtodo',
         'PASSWORD': 'todotodo',
         'HOST': '127.0.0.1',

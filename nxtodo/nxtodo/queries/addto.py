@@ -18,10 +18,12 @@ from nxtodo.queries.common import (
     get_task,
     get_event,
     get_plan,
-    get_reminder
+    get_reminder,
+    get_objects_owners
 )
-from nxtodo.thirdparty.exceptions import Looping
 from nxtodo.queries.logging_decorators import log_addto_query
+from nxtodo.thirdparty.common_data import ADMINS_NAME
+from nxtodo.thirdparty.exceptions import Looping
 
 
 @log_addto_query("Successfully added {} owners to task '{}' by user '{}'",
@@ -31,9 +33,13 @@ def add_owners_to_task(user_name, task_id, owners):
     task = get_task(task_id)
     for owner in owners:
         user = get_user(owner.user_name)
-        relation = UserTasks(user=user, task=task, assign_date=datetime.now(),
-                             access_level=owner.access_level)
-        relation.save()
+        try:
+            relation = UserTasks.objects.get(user=user, task=task)
+        except:
+            relation = UserTasks(user=user, task=task,
+                                 assign_date=datetime.now(),
+                                 access_level=owner.access_level)
+            relation.save()
 
 
 @log_addto_query("Successfully added {} subtasks to task '{}' by user '{}'",
@@ -70,10 +76,13 @@ def add_participants_to_event(user_name, event_id, participants):
     event = get_event(event_id)
     for participant in participants:
         user = get_user(participant.user_name)
-        relation = UserEvents(user=user, event=event,
-                              assign_date=datetime.now(),
-                              access_level=participant.access_level)
-        relation.save()
+        try:
+            relation = UserEvents.objects.get(user=user, event=event)
+        except:
+            relation = UserEvents(user=user, event=event,
+                                  assign_date=datetime.now(),
+                                  access_level=participant.access_level)
+            relation.save()
 
 
 @log_addto_query("Successfully added {} reminders to event '{}' by user '{}'",
@@ -94,6 +103,7 @@ def add_tasks_to_plan(user_name, plan_id, tasks_ids):
     plan = get_plan(plan_id)
     for id in tasks_ids:
         task = get_task(id)
+        add_owners_to_task(ADMINS_NAME, id, get_objects_owners(plan))
         task.prepare_to_plan()
         plan.tasks.add(task)
 
@@ -105,6 +115,7 @@ def add_events_to_plan(user_name, plan_id, events_ids):
     plan = get_plan(plan_id)
     for id in events_ids:
         event = get_event(id)
+        add_participants_to_event(ADMINS_NAME, id, get_objects_owners(plan))
         event.prepare_to_plan()
         plan.events.add(event)
 

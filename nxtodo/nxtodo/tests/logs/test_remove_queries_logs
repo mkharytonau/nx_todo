@@ -1,0 +1,36 @@
+2018-06-14 22:54:33,807 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-14 22:54:33,819 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-14 22:54:33,841 - INFO - Successfully added user 'user_1' - wrapper
+2018-06-14 22:54:33,896 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '540' by user 'nxtodo_admin' - wrapper
+2018-06-14 22:54:33,897 - INFO - Successfully added task id='540' by user 'queries_tester' - wrapper
+2018-06-14 22:54:33,930 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '111' by user 'nxtodo_admin' - wrapper
+2018-06-14 22:54:33,930 - INFO - Successfully added event id='111' by user 'queries_tester' - wrapper
+2018-06-14 22:54:33,963 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '117' by user 'nxtodo_admin' - wrapper
+2018-06-14 22:54:33,964 - INFO - Successfully added plan id='117' by user 'queries_tester' - wrapper
+2018-06-14 22:54:33,974 - INFO - Successfully added reminder id='262' by user 'queries_tester' - wrapper
+2018-06-14 22:54:33,986 - ERROR - Error when removing '111' event by user 'user_readonly': Permission denied, you can't edit '111' event. - wrapper
+2018-06-14 22:54:34,007 - INFO - Successfully removed '111' event by user 'queries_tester' - wrapper
+2018-06-14 22:54:34,018 - ERROR - Error when removed '117' plan by user 'user_readonly': Permission denied, you can't edit '117' plan. - wrapper
+2018-06-14 22:54:34,041 - INFO - Successfully removed '117' plan by user 'queries_tester' - wrapper
+2018-06-14 22:54:34,063 - INFO - Successfully removed '262' reminder by user 'queries_tester' - wrapper
+2018-06-14 22:54:34,073 - ERROR - Error when removing '540' task by user 'user_readonly': Permission denied, you can't edit '540' task. - wrapper
+2018-06-14 22:54:34,096 - INFO - Successfully removed '540' task by user 'queries_tester' - wrapper
+2018-06-14 22:54:34,119 - INFO - Successfully removed user 'user_1' - wrapper
+2018-06-15 00:02:08,011 - INFO - Successfully added user 'queries_tester' - wrapper
+2018-06-15 00:02:08,022 - INFO - Successfully added user 'user_readonly' - wrapper
+2018-06-15 00:02:08,034 - INFO - Successfully added user 'user_1' - wrapper
+2018-06-15 00:02:08,079 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '565' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,082 - INFO - Successfully added task id='565' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,156 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '118' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,157 - INFO - Successfully added event id='118' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,189 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '123' by user 'nxtodo_admin' - wrapper
+2018-06-15 00:02:08,190 - INFO - Successfully added plan id='123' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,200 - INFO - Successfully added reminder id='275' by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,210 - ERROR - Error when removing '118' event by user 'user_readonly': Permission denied, you can't edit '118' event. - wrapper
+2018-06-15 00:02:08,234 - INFO - Successfully removed '118' event by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,244 - ERROR - Error when removed '123' plan by user 'user_readonly': Permission denied, you can't edit '123' plan. - wrapper
+2018-06-15 00:02:08,267 - INFO - Successfully removed '123' plan by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,289 - INFO - Successfully removed '275' reminder by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,301 - ERROR - Error when removing '565' task by user 'user_readonly': Permission denied, you can't edit '565' task. - wrapper
+2018-06-15 00:02:08,334 - INFO - Successfully removed '565' task by user 'queries_tester' - wrapper
+2018-06-15 00:02:08,367 - INFO - Successfully removed user 'user_1' - wrapper

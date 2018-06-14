@@ -19,7 +19,8 @@ from nxtodo.queries.addto import (
     add_reminders_to_event,
     add_reminders_to_plan,
     add_tasks_to_plan,
-    add_events_to_plan
+    add_events_to_plan,
+    add_owners_to_plan
 )
 from nxtodo.queries.check import (
     check_tasks,
@@ -36,7 +37,8 @@ from nxtodo.queries.common import (
     get_users,
     get_plans,
     get_reminder,
-    get_reminders
+    get_reminders,
+    get_objects_owners
 )
 from nxtodo.queries.complete import (
     complete_task,

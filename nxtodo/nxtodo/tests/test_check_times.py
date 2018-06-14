@@ -2,12 +2,14 @@ import unittest
 from datetime import datetime
 from datetime import timedelta
 
-from nxtodo.reminding import check_datetimes
-from nxtodo.reminding import check_deadline
-from nxtodo.reminding import check_interval
-from nxtodo.reminding import check_range
-from nxtodo.reminding import check_remind_in
-from nxtodo.reminding import check_weekdays
+from nxtodo.reminding import (
+    check_datetimes,
+    check_deadline,
+    check_interval,
+    check_range,
+    check_remind_in,
+    check_weekdays
+)
 
 
 class TestCheckTimes(unittest.TestCase):

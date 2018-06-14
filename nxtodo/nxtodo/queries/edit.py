@@ -7,6 +7,7 @@ from nxtodo.queries.access_decorators import (
 from nxtodo.queries.common import (
     get_task,
     get_event,
+    get_plan,
     get_reminder
 )
 
@@ -61,7 +62,7 @@ def edit_event(user_name, event_id, title=None, description=None,
 @user_plan_access
 def edit_plan(user_name, plan_id, title=None, description=None,
               category=None, priority=None):
-    plan = get_event(plan_id)
+    plan = get_plan(plan_id)
     if title:
         plan.title = title
     if description:

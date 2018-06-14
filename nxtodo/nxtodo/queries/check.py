@@ -16,7 +16,8 @@ from nxtodo.queries.common import (
     get_event,
     get_plans,
     get_tasks,
-    get_events
+    get_events,
+    get_objects_owners
 )
 
 
@@ -61,10 +62,7 @@ def check_plans(user, title=None, category=None, priority=None, status=None,
 
 
 def duplicate_task(plan, task, created_at):
-    owners = []
-    for user in task.user_set.all():
-        relation = UserTasks.objects.get(user=user, task=task)
-        owners.append(Owner(user.name, relation.access_level))
+    owners = get_objects_owners(task)
     reminders = [reminder.id for reminder in task.reminders.all()]
     executor = "{}(Plan)".format(plan.title)
     task_id = add_task(executor, task.title, task.description, task.category,
@@ -75,10 +73,7 @@ def duplicate_task(plan, task, created_at):
 
 
 def duplicate_event(plan, event, created_at):
-    participants = []
-    for user in event.user_set.all():
-        relation = UserEvents.objects.get(user=user, event=event)
-        participants.append(Owner(user.name, relation.access_level))
+    participants = get_objects_owners(event)
     reminders = [reminder.id for reminder in event.reminders.all()]
     executor = "{}(Plan)".format(plan.title)
     event_id = add_event(executor, event.title, event.from_datetime,

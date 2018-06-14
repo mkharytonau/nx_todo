@@ -4,12 +4,18 @@ from nxtodo.nxtodo_db.models import (
     Task,
     Event,
     Plan,
-    Reminder
+    Reminder,
+    UserTasks,
+    UserEvents,
+    UserPlans
 )
-
+from nxtodo.thirdparty import (
+    Owner,
+    Entities
+)
+from nxtodo.queries.logging_decorators import log_get_query
 from nxtodo.thirdparty import common_functions
 from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
-from nxtodo.queries.logging_decorators import log_get_query
 
 
 def get_user(name):
@@ -59,6 +65,23 @@ def get_users(name=None):
     return selection
 
 
+def get_objects_owners(obj):
+    type = obj.get_type()
+    owners = []
+    for user in obj.user_set.all():
+        if type == Entities.TASK:
+            relation = UserTasks.objects.get(user=user, task=obj)
+        elif type == Entities.EVENT:
+            relation = UserEvents.objects.get(user=user, event=obj)
+        elif type == Entities.PLAN:
+            relation = UserPlans.objects.get(user=user, plan=obj)
+        else:
+            raise TypeError
+        owners.append(Owner(user.name, relation.access_level))
+
+    return owners
+
+
 @log_get_query("Successfully returned {} reminders to '{}' user",
                "Error when '{}' user tried to get reminders: ")
 def get_reminders(user, description=None, id=None):
@@ -91,7 +114,7 @@ def get_events(user, title=None, category=None, fromdt=None, priority=None,
     user = get_user(user)
     filters = common_functions.create_filters(id, title, category,
                                               priority, status,
-                                       place)
+                                              place)
     selection = user.events.filter(**filters)
     if not len(selection):
         raise ObjectDoesNotFound('There is no events with selected filters.')
