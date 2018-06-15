@@ -1,6 +1,6 @@
 import argparse
 
-from nxtodo_cli.cmd_parser.arguments_parser.entities import ENTITIES
+from nxtodo_cli.cmd_parser.entities import ENTITIES
 
 
 def without_keys(d, keys):
@@ -25,5 +25,5 @@ def parse(arguments):
                     **without_keys(argument, ['short', 'full'])
                 )
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     return args

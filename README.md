@@ -1,9 +1,9 @@
 # Table of Contents
-* [nxtodo-lib](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-nxtodo-lib)
-    * [Getting started](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-getting-started)
-    * [Simple examples](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-simple-example)
-    * [Running the tests](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-running-the-tests)
-* [nxtodo-cli](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-nxtodo-cli)
+* [nxtodo-lib](#markdown-header-nxtodo-lib)
+    * [Getting started](#markdown-header-getting-started)
+    * [Simple examples](#markdown-header-simple-example)
+    * [Running the tests](#markdown-header-running-the-tests)
+* [nxtodo-cli](#markdown-header-nxtodo-cli)
 
 # nxtodo-lib
 nxtodo - is a simple python library that will allow you to create applications
@@ -11,8 +11,11 @@ like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
 ##Getting started
 nxtodo depends on a [PostgreSQL](https://www.postgresql.org/), open source 
-object-relational database. Please, [install](https://www.postgresql.org/download/) 
-it before using nxtodo. 
+object-relational database. Please, install it before using nxtodo:
+```
+$ sudo apt-get update
+$ sudo apt-get install postgresql postgresql-contrib
+``` 
 ###Installing
 Clone repository from bitbucket:
 ```

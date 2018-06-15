@@ -1,7 +1,7 @@
 import calendar
 from calendar import Calendar
 
-from nxtodo_cli.view import colorize
+from nxtodo_cli.displaying import colorize
 
 
 class nxCalendar(Calendar):

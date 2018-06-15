@@ -4,7 +4,7 @@ from nxtodo.thirdparty import (
     AccessLevels
 )
 from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
-from nxtodo_cli.view import show_plan_table
+from nxtodo_cli.displaying import show_plan_table
 
 USER_CHOICE_PLAN = {
     'add': lambda user, args, config: add_plan(user, args),

@@ -30,7 +30,7 @@ USER_CHOICE_ENTITY = {
 
 def main():
     # parse arguments from command line
-    arguments = 'user add -n nikit'.split()
+    arguments = 'task show'.split()
     args = parse(arguments)
 
     # getting config and user_name

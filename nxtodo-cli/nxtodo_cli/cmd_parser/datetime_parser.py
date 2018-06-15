@@ -1,11 +1,26 @@
 import argparse
+import enum
 from datetime import datetime, timedelta
 
-from nxtodo_cli.cmd_parser.datetime_parser.parser_data import (
-    Formats,
-    WEEKDAYS
-)
 from nxtodo_cli.commands import get_config
+
+
+class Formats(enum.Enum):
+    DATETIME = 'datetime'
+    DATETIME_LIST = 'datetime_list'
+    TIMEDELTA = 'timedelta'
+    WEEKDAYS = 'weekdays'
+
+
+WEEKDAYS = {
+    'mon': 0,
+    'tue': 1,
+    'wed': 2,
+    'thu': 3,
+    'fri': 4,
+    'sat': 5,
+    'sun': 6
+}
 
 
 def parse_datetime(input_string):

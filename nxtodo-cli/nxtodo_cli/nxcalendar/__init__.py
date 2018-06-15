@@ -1,2 +1,0 @@
-from nxtodo_cli.nxcalendar.nxcalendar import nxCalendar
-from nxtodo_cli.nxcalendar.nxcalendar import ColoredDate

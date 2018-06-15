@@ -6,11 +6,11 @@ from nxtodo.thirdparty import (
     Owner,
     AccessLevels
 )
-from nxtodo_cli.view import (
+from nxtodo_cli.displaying import (
     show_event_table,
     show_notification_table
 )
-from nxtodo_cli.nxcalendar import (
+from nxtodo_cli.displaying import (
     ColoredDate,
     nxCalendar,
 )

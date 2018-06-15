@@ -3,24 +3,24 @@ from datetime import datetime
 from nxtodo.thirdparty import Entities
 from prettytable import PrettyTable
 
-from nxtodo_cli.view.colorizer import colorize
+from nxtodo_cli.displaying.colorizer import colorize
 
-LIST_FIELDS = [
+LIST_FORMAT_FIELDNAMES = [
     'reminders', 'owners', 'subtasks', 'participants',
     'tasks', 'events', 'plans'
 ]
 
-FIELDS_TO_DECORATE = ['title', 'description']
+DECORATED_FIELDNAMES = ['title', 'description']
 
-DATE_FIELDS = [
+DATE_FORMAT_FIELDNAMES = [
     'created_at',
     'start_remind_from',
     'stop_remind_in',
     'date'
 ]
 
-NEW_LINE = '\n'
-COMMA = ','
+NEW_LINE_SEPARATOR = '\n'
+ELEMENTS_SEPARATOR = ','
 
 
 def style_to_int(style):
@@ -43,43 +43,58 @@ def select_priority_color(priority, config):
     return 255
 
 
-def handle_list_field(obj, field):
-    if field == 'reminders':
-        if obj.get_type() == Entities.USER:
-            reminder_set = obj.reminder_set.all()
-        else:
-            reminder_set = obj.reminders.all()
-        reminders = [reminder.id for reminder in reminder_set]
-        return convert_list_field(reminders, COMMA)
-
-    if field == 'owners' or field == 'participants':
-        owners = [user.name for user in obj.user_set.all()]
-        return convert_list_field(owners, NEW_LINE)
-
-    if field == 'subtasks':
-        subtasks = [task.id for task in obj.subtasks.all()]
-        return convert_list_field(subtasks, COMMA)
-
-    if field == 'tasks':
-        tasks = [task.id for task in obj.tasks.all()]
-        return convert_list_field(tasks, COMMA)
-
-    if field == 'events':
-        events = [event.id for event in obj.events.all()]
-        return convert_list_field(events, COMMA)
-
-    if field == 'plans':
-        plans = [plan.id for plan in obj.plans.all()]
-        return convert_list_field(plans, COMMA)
+format_field = {
+    'reminders': lambda obj: format_reminders_field(obj),
+    'owners': lambda obj: format_owners_field(obj),
+    'participants': lambda obj: format_owners_field(obj),
+    'subtasks': lambda obj: format_subtasks_field(obj),
+    'tasks': lambda obj: format_tasks_field(obj),
+    'events': lambda obj: format_events_field(obj),
+    'plans': lambda obj: format_events_field(obj)
+}
 
 
-def handle_date_field(obj, field, config):
+def format_reminders_field(obj):
+    if obj.get_type() == Entities.USER:
+        reminder_set = obj.reminder_set.all()
+    else:
+        reminder_set = obj.reminders.all()
+    reminders = [reminder.id for reminder in reminder_set]
+    return convert_list_field(reminders, ELEMENTS_SEPARATOR)
+
+
+def format_owners_field(obj):
+    owners = [user.name for user in obj.user_set.all()]
+    return convert_list_field(owners, NEW_LINE_SEPARATOR)
+
+
+def format_subtasks_field(obj):
+    subtasks = [task.id for task in obj.subtasks.all()]
+    return convert_list_field(subtasks, ELEMENTS_SEPARATOR)
+
+
+def format_tasks_field(obj):
+    tasks = [task.id for task in obj.tasks.all()]
+    return convert_list_field(tasks, ELEMENTS_SEPARATOR)
+
+
+def format_events_field(obj):
+    events = [event.id for event in obj.events.all()]
+    return convert_list_field(events, ELEMENTS_SEPARATOR)
+
+
+def format_plans_field(obj):
+    plans = [plan.id for plan in obj.plans.all()]
+    return convert_list_field(plans, ELEMENTS_SEPARATOR)
+
+
+def format_date_field(obj, field, config):
     template = config['table_styles']['datetime_format']
     date = getattr(obj, field)
     return datetime.strftime(date, template)
 
 
-def handle_field_to_decorate(obj, field, config):
+def format_decorated_field(obj, field, config):
     if field == 'title':
         return colorize(obj.title,
                         foreground=select_priority_color(obj.priority, config))
@@ -106,12 +121,12 @@ def convert_list_field(row_list, separator):
 def create_row(fields_to_display, obj, config):
     row = []
     for field in fields_to_display:
-        if field in LIST_FIELDS:
-            row.append(handle_list_field(obj, field))
-        elif field in DATE_FIELDS:
-            row.append(handle_date_field(obj, field, config))
-        elif field in FIELDS_TO_DECORATE:
-            row.append(handle_field_to_decorate(obj, field, config))
+        if field in LIST_FORMAT_FIELDNAMES:
+            row.append(format_field.get(field)(obj))
+        elif field in DATE_FORMAT_FIELDNAMES:
+            row.append(format_date_field(obj, field, config))
+        elif field in DECORATED_FIELDNAMES:
+            row.append(format_decorated_field(obj, field, config))
         else:
             row.append(getattr(obj, field))
     return row
