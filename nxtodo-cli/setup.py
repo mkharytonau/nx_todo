@@ -6,10 +6,10 @@ from setuptools.command.install import install
 
 class CustomInstall(install):
     def run(self):
+        install.run(self)
         from nxtodo import initialize
         initialize("nxtodo_cli", "nxtodo_cli",
                    "nxtodo_cli", "nxtodo_cli.settings")
-        install.run(self)
 
 
 setup(
@@ -30,7 +30,8 @@ setup(
         'nxtodo_cli': ['default.ini']
     },
     data_files=[
-        (os.path.join(os.environ['HOME'], '.nxtodo'), ['config.ini'])
+        (os.path.join(os.environ['HOME'], '.nxtodo'),
+         [os.path.join(os.path.dirname(__file__), 'config.ini')])
     ],
     license='MIT',
     author='kharivitalij',

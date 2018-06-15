@@ -1,4 +1,5 @@
 import logging
+from functools import wraps
 
 from nxtodo.thirdparty.common_data import LOGGER_NAME
 from nxtodo.thirdparty.exceptions import (
@@ -49,6 +50,7 @@ def log_add_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name, *args, **kwargs):
             try:
                 entity_id = func(user_name, *args, **kwargs)
