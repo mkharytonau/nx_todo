@@ -52,7 +52,7 @@ Simple examples:
         >> queries.get_tasks('user_1')
         <QuerySet [<Task: task_1>]>
            and some filters:
-        >> queries.get_tasks('user_1', category='sport')
+        >> queries.get_tasks('user_1', category='sport', priority=2)
         <QuerySet [<Task: do_exercises>]>
 
     d) Adding subtasks:
