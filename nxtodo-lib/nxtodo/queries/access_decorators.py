@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from functools import wraps
 
 
 from nxtodo.nxtodo_db.models import (
@@ -21,6 +22,7 @@ from nxtodo.queries.common import (
 
 
 def user_task_access(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if not args[0] == ADMINS_NAME:
             user = get_user(args[0])
@@ -46,6 +48,7 @@ def user_task_access(func):
 
 
 def user_event_access(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if not args[0] == ADMINS_NAME:
             user = get_user(args[0])
@@ -71,6 +74,7 @@ def user_event_access(func):
 
 
 def user_plan_access(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if not args[0] == ADMINS_NAME:
             user = get_user(args[0])
@@ -96,6 +100,7 @@ def user_plan_access(func):
 
 
 def user_reminder_access(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         user = get_user(args[0])
         reminder = get_reminder(args[1])

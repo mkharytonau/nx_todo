@@ -1,6 +1,6 @@
 """
 nxtodo - is a simple python library that will allow you to create applications
-like todos. Users, tasks, events, plans, reminders -q store them in the
+like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
 
 nxtodo depends on a PostgreSQL, open source object-relational database. You can

@@ -13,6 +13,7 @@ def log_user_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name):
             try:
                 result = func(user_name)
@@ -31,6 +32,7 @@ def log_get_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name, *args, **kwargs):
             try:
                 result = func(user_name, *args, **kwargs)
@@ -73,6 +75,7 @@ def log_edit_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name, entity_id, *args, **kwargs):
             try:
                 func(user_name, entity_id, *args, **kwargs)
@@ -94,6 +97,7 @@ def log_addto_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name, to_entity, entities):
             try:
                 func(user_name, to_entity, entities)
@@ -123,6 +127,7 @@ def log_query(success, error):
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
+        @wraps(func)
         def wrapper(user_name, entity_id):
             try:
                 func(user_name, entity_id)

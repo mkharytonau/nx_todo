@@ -1,8 +1,15 @@
+# Table of Contents
+* [nxtodo-lib](#nxtodo-lib)
+    * [Getting started](#Getting started)
+    * [Simple examples](#Simple examples)
+    * [Running the tests](#Running the tests)
+* [nxtodo-cli](#nxtodo-cli)
+
 # nxtodo-lib
 nxtodo - is a simple python library that will allow you to create applications
-like todos. Users, tasks, events, plans, reminders -q store them in the
+like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
-##Getting Started
+##Getting started
 nxtodo depends on a [PostgreSQL](https://www.postgresql.org/), open source 
 object-relational database. Please, [install](https://www.postgresql.org/download/) 
 it before using nxtodo. 
@@ -11,7 +18,7 @@ Clone repository from bitbucket:
 ```
 $ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
 ```
-Install using pip3:
+Install using [pip3](https://pip.pypa.io/en/stable/):
 ```
 $ pip3 install nxtodo/nxtodo-lib/dist/nxtodo-1.0.tar.gz
 ```
@@ -25,11 +32,11 @@ For default:
 For a more advanced configuration, use function with arguments:
 ```python
 >> initialize(
-            psql_user='nxtodo',
-            psql_password='todotodo',
-            psql_db_name='nxtodo',
-            settings_module='nxtodo.configuration.settings'
-          )
+        psql_user='nxtodo',
+        psql_password='todotodo',
+        psql_db_name='nxtodo',
+        settings_module='nxtodo.configuration.settings'
+   )
 ```      
 \**settings_module* - is a django [settings](https://docs.djangoproject.com/en/1.11/ref/settings/) module:
 ###Configuration
