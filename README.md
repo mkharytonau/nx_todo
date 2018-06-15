@@ -1,9 +1,9 @@
 # Table of Contents
-* [nxtodo-lib](#nxtodo-lib)
-    * [Getting started](#Getting started)
-    * [Simple examples](#Simple examples)
-    * [Running the tests](#Running the tests)
-* [nxtodo-cli](#nxtodo-cli)
+* [nxtodo-lib](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-nxtodo-lib)
+    * [Getting started](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-getting-started)
+    * [Simple examples](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-simple-example)
+    * [Running the tests](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-running-the-tests)
+* [nxtodo-cli](https://bitbucket.org/kharivitalij/nx_todo/overview#markdown-header-nxtodo-cli)
 
 # nxtodo-lib
 nxtodo - is a simple python library that will allow you to create applications
