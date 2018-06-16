@@ -1,9 +1,13 @@
 # Table of Contents
-* [nxtodo-lib](#markdown-header-nxtodo-lib)
+* [nxtodo(lib)](#markdown-header-nxtodo(lib))
     * [Getting started](#markdown-header-getting-started)
-    * [Simple examples](#markdown-header-simple-example)
+    * [Simple examples](#markdown-header-simple-examples)
     * [Running the tests](#markdown-header-running-the-tests)
-* [nxtodo-cli](#markdown-header-nxtodo-cli)
+* [nxtodo(cli)](#markdown-header-nxtodo(cli))
+    * [Installing](#markdown-header-installing)
+    * [Customize nxtodo](#markdown-header-customize-nxtodo)
+    * [How it works?](#markdown-header-how-it-works?)
+    * [Simple work session](#markdown-header-simple-work-session)
 
 # nxtodo-lib
 nxtodo - is a simple python library that will allow you to create applications
@@ -12,6 +16,8 @@ database and manage them as you want.
 ##Getting started
 nxtodo depends on a [PostgreSQL](https://www.postgresql.org/), open source 
 object-relational database. Please, install it before using nxtodo:
+
+For ubuntu:
 ```
 $ sudo apt-get update
 $ sudo apt-get install postgresql postgresql-contrib
@@ -143,10 +149,138 @@ Run all tests for nxtodo:
 ```
 $ python -m unittest discover nxtodo/nxtodo-lib/nxtodo/tests/ -v
 ```
-#nxtodo_cli
+#nxtodo(cli)
 nxtodo_cli - is a console client for nxtodo library.
+##Installing
+Clone repository from bitbucket:
+```
+$ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
+```
+Install using [pip3](https://pip.pypa.io/en/stable/):
+```
+$ pip3 install nxtodo/nxtodo-cli/dist/nxtodo_cli-1.0.tar.gz
+```
+##Customize nxtodo
+This section is about config.
+##How it works?
+Each command has two parts and additional arguments:
+```
+$ nxtodo <entity> <action> <additional_arguments>
+```
+####For example:
+#####Add user 
+```
+$ nxtodo user add -n username
+```
+#####Create task 'simple task' with deadline 2018/07/10 10:00:00
+```
+$ nxtodo task add -t 'simple task' -D '2018/07/10 10:00:00'
+```
+#####Show tasks with category 'sport' and priority '1'
+```
+$ nxtodo task show -c sport -p 1
+```
+##Simple work session
+Creating users:
+```commandline
+$ nxtodo user add -n nikita
+nikita
+$ nxtodo user add -n milana
+milana
+$ nxtodo user add -n yura
+yura
+```
+Adding some tasks:
+```commandline
+$ nxtodo task add -t 'simple task' -D 'description for task' -d '2018/06/20 10:00:00'
+6
+$ nxtodo task add -t 'task_1' -c 'sport' -p 2
+7
+$ nxtodo task add -t 'shared_task'
+8
+```
+Lets share nikita's task 'shared_task' to 'milana' and 'yura':
+```commandline
+$ nxtodo task share -i 8 -o 'milana edit' 'yura readonly'
+```
+And try edit it:
+```commandline
+$ nxtodo task edit -i 8 -t 'new title' -u yura
+Permission denied, you can't edit '8' task.
+$ nxtodo task edit -i 8 -t 'new title' -u milana
+$ nxtodo task  show
+      June          July           August     
+Mon    18 25     2  9 16 23 30     6 13 20 27 
+Tue    19 26     3 10 17 24 31     7 14 21 28 
+Wed    20 27     4 11 18 25     1  8 15 22 29 
+Thu    21 28     5 12 19 26     2  9 16 23 30 
+Fri    22 29     6 13 20 27     3 10 17 24 31 
+Sat 16 23 30     7 14 21 28     4 11 18 25    
+Sun 17 24     1  8 15 22 29     5 12 19 26    
+---------------------------------------------------------------------------------------------------------------------------------------
+| id |    title    | description |   status  |       deadline      |      created_at     | created_by | reminders | subtasks | owners |
+---------------------------------------------------------------------------------------------------------------------------------------
+| 6  | simple task |  descriptio | inprocess | 2018-06-20 10:00:00 | 2018/06/16 12:37:04 |   nikita   |    None   |   None   | nikita |
+|    |             |  n for task |           |                     |                     |            |           |          |        |
+| 7  |    task_1   |     None    | inprocess |         None        | 2018/06/16 12:40:33 |   nikita   |    None   |   None   | nikita |
+| 8  |  new title  |     None    | inprocess |         None        | 2018/06/16 12:46:50 |   nikita   |    None   |   None   | nikita |
+|    |             |             |           |                     |                     |            |           |          | milana |
+|    |             |             |           |                     |                     |            |           |          |  yura  |
+---------------------------------------------------------------------------------------------------------------------------------------
+```
+\* you may notice that milana changed the title, but yura could not.
 
+Create a reminder:
+```commandline
+$ nxtodo reminder add  -I 0:0:0:1
+1
+```
+It will show notifications for 'simple task' every minute:
+```commandline
+$ nxtodo reminder totask -i 1 -t 6
+```
+>Notice, that you may see tasks reminders, subtasks, owners in the table:
+```commandline
+$ nxtodo task show
+```
+![tasks showing](img/readme_01.png)
+Lets check all tasks:
+```commandline
+$ nxtodo task check
+```
+![tasks checking](img/readme_02.png)
 
+As for plans and events:
+```commandline
+$ nxtodo event add -t 'event to plan' -P Minsk
+1
+$ nxtodo task add -t 'task to plan'
+9
+$ nxtodo plan add -t "i'm creator" -o 'milana edit' -T 9 -E 1
+4
+$ nxtodo reminder toplan -i 1 -p 4
+```
+Now we created a plan, that will create common for 'nikita' and 'milana' 'event to plan' and 'task to plan' every minute.
+```commandline
+$ nxtodo plan check -i 4
+...some time
+$ nxtodo plan check -i 4
+```
+And now we can see new tasks and events for 'nikita' and 'milana':
+```commandline
+$ nxtodo task show
+```
+![plan](img/readme_03.png)
+```commandline
+$ nxtodo event show -u milana
+```
+![plan](img/readme_04.png)
 
+**Remimber**, it was only example, for more deatails you may use -h flag:
+```commandline
+$ nxtodo task -h
+```
+##Author
+Mikita Kharitonau, nikita.kharitonov99@gmail.com
 
 

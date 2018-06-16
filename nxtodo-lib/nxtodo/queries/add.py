@@ -71,14 +71,14 @@ def add_plan(executor, title, description=None, category=None, priority=None,
              tasks=None, events=None, reminders=None, owners=None):
     plan = Plan.create(title, description, category, priority, executor)
     plan.save()
+    if owners:
+        add_owners_to_plan(ADMINS_NAME, plan.id, owners)
     if tasks:
         add_tasks_to_plan(ADMINS_NAME, plan.id, tasks)
     if events:
         add_events_to_plan(ADMINS_NAME, plan.id, events)
     if reminders:
         add_reminders_to_plan(ADMINS_NAME, plan.id, reminders)
-    if owners:
-        add_owners_to_plan(ADMINS_NAME, plan.id, owners)
     return plan.id
 
 
