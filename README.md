@@ -4,12 +4,12 @@
     * [Simple examples](#markdown-header-simple-examples)
     * [Running the tests](#markdown-header-running-the-tests)
 * [nxtodo(cli)](#markdown-header-nxtodo(cli))
-    * [Installing](#markdown-header-installing)
+    * [How to install?](#markdown-header-how-to-install?)
     * [Customize nxtodo](#markdown-header-customize-nxtodo)
     * [How it works?](#markdown-header-how-it-works?)
     * [Simple work session](#markdown-header-simple-work-session)
 
-# nxtodo-lib
+# nxtodo(lib)
 nxtodo - is a simple python library that will allow you to create applications
 like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
@@ -66,7 +66,7 @@ Here you can find some simple examples to get you started.
 ```
 ###Adding task
 ```python
->> queries.add_task('creator', 'simple_task')
+>> queries.add_task(executor='creator', title='simple_task')
 ```
 ###Task with owners
 ```python
@@ -75,32 +75,32 @@ Here you can find some simple examples to get you started.
     Owner('user_1', AccessLevels.EDIT.value),
     Owner('user_2', AccessLevels.READONLY.value)
   ]
->> queries.add_task('creator', 'task_with_owners', owners=owners)
+>> queries.add_task(executor='creator', title='task_with_owners', owners=owners)
 ```
 \* *note, that owners 'user_1' and 'user_2' must be existing nxtodo users.*
 ###Getting tasks of user 'user_1'
 ```python
->> queries.get_tasks('user_1')
+>> queries.get_tasks(user='user_1')
 <QuerySet [<Task: task_1>]>
 ```
 And some filters:
 ```python
->> queries.get_tasks('user_1', category='sport', priority=2)
+>> queries.get_tasks(user='user_1', category='sport', priority=2)
 <QuerySet [<Task: do_exercises>]>
 ```
 ###Adding subtasks
 ```python
->> queries.add_subtasks('user_1', to_task, [subtask1, subtask2 ...])
+>> queries.add_subtasks(user_name='user_1', task_id=to_task, subtasks_ids=[subtask1, subtask2 ...])
 ```
 ###Create a reminder for 'user_1', which can remind in a week before deadline with a periodicity of one day and also remind 2018/06/07 at 17:00:00
 ```python
 >> queries.add_reminder(
-    'user_1',
+    user='user_1',
     start_remind_before=timedelta(weeks=1),
     datetimes=[datetime(2018, 6, 7, 17)],
     interval=timedelta(hours=1)
   )
->> queries.add_reminders_to_task('user_1', task_1_id, [reminder_1, ...])
+>> queries.add_reminders_to_task(user_name='user_1', task_id=task_1_id, [reminder_1, ...])
 ```
 And this same reminder to another task:
 ```
@@ -108,8 +108,8 @@ And this same reminder to another task:
 ```
 ###Getting notification from tasks, events
 ```python
->> queries.check_tasks('user_1')
->> queries.check_events('user_1')
+>> queries.check_tasks(user='user_1')
+>> queries.check_events(user='user_1')
 ```
 ###And a bit more interesting:
 Create a plan by 'user_1', which will create common for users 'user_2'
@@ -117,15 +117,15 @@ Create a plan by 'user_1', which will create common for users 'user_2'
     to 2018/07/20 20:30 with a periodicity of 8 hours, and on weekends.
 ```python
 >> queries.add_reminder(
-    'user_1',
+    user='user_1',
     start_remind_from=datetime(2018, 6, 10, 10),
     stop_remind_in=datetime(2018, 7, 20, 20, 30),
     interval=timedelta(hours=8),
     weekdays=[5, 6]
   )
 >> queries.add_plan(
-    'user_1',
-    'interesting_plan',
+    executor='user_1',
+    title='interesting_plan',
     tasks=[task_1, ...],
     events=[event_1, ...],
     owners=[
@@ -134,7 +134,7 @@ Create a plan by 'user_1', which will create common for users 'user_2'
     ],
     reminders=[reminder_1, ...]
   )
->> queries.check_plans('user_2')
+>> queries.check_plans(user='user_2')
 ```
 ##Running the tests
 First, you need to initialize the database for tests:
@@ -151,7 +151,7 @@ $ python -m unittest discover nxtodo/nxtodo-lib/nxtodo/tests/ -v
 ```
 #nxtodo(cli)
 nxtodo_cli - is a console client for nxtodo library.
-##Installing
+##How to install?
 Clone repository from bitbucket:
 ```
 $ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
@@ -161,7 +161,8 @@ Install using [pip3](https://pip.pypa.io/en/stable/):
 $ pip3 install nxtodo/nxtodo-cli/dist/nxtodo_cli-1.0.tar.gz
 ```
 ##Customize nxtodo
-This section is about config.
+After installing nxtodo_cli you can find '.nxtodo' folder in your home catalog. This folder contains 
+the **config file.** For example, you can set your colors for display, set the current user and some other parameters.
 ##How it works?
 Each command has two parts and additional arguments:
 ```
@@ -242,13 +243,35 @@ $ nxtodo reminder totask -i 1 -t 6
 >Notice, that you may see tasks reminders, subtasks, owners in the table:
 ```commandline
 $ nxtodo task show
+      June          July           August
+Mon    18 25     2  9 16 23 30     6 13 20 27
+Tue    19 26     3 10 17 24 31     7 14 21 28
+Wed    20 27     4 11 18 25     1  8 15 22 29
+Thu    21 28     5 12 19 26     2  9 16 23 30
+Fri    22 29     6 13 20 27     3 10 17 24 31
+Sat 16 23 30     7 14 21 28     4 11 18 25
+Sun 17 24     1  8 15 22 29     5 12 19 26
+---------------------------------------------------------------------------------------------------------------------------------------
+| id |    title    | description |   status  |       deadline      |      created_at     | created_by | reminders | subtasks | owners |
+---------------------------------------------------------------------------------------------------------------------------------------
+| 6  | simple task |  descriptio | inprocess | 2018-06-20 10:00:00 | 2018/06/16 12:37:04 |   nikita   |     1     |   None   | nikita |
+|    |             |  n for task |           |                     |                     |            |           |          |        |
+| 7  |    task_1   |     None    | inprocess |         None        | 2018/06/16 12:40:33 |   nikita   |    None   |   None   | nikita |
+| 8  |  new title  |     None    | inprocess |         None        | 2018/06/16 12:46:50 |   nikita   |    None   |   None   | nikita |
+|    |             |             |           |                     |                     |            |           |          | milana |
+|    |             |             |           |                     |                     |            |           |          |  yura  |
+---------------------------------------------------------------------------------------------------------------------------------------
 ```
-![tasks showing](img/readme_01.png)
+
 Lets check all tasks:
 ```commandline
 $ nxtodo task check
+------------------------------------------------------------
+|              message               |         date        |
+------------------------------------------------------------
+| Remember about 'simple task' task. | 2018/06/16 13:16:59 |
+------------------------------------------------------------
 ```
-![tasks checking](img/readme_02.png)
 
 As for plans and events:
 ```commandline
@@ -269,12 +292,52 @@ $ nxtodo plan check -i 4
 And now we can see new tasks and events for 'nikita' and 'milana':
 ```commandline
 $ nxtodo task show
+      June          July           August
+Mon    18 25     2  9 16 23 30     6 13 20 27
+Tue    19 26     3 10 17 24 31     7 14 21 28
+Wed    20 27     4 11 18 25     1  8 15 22 29
+Thu    21 28     5 12 19 26     2  9 16 23 30
+Fri    22 29     6 13 20 27     3 10 17 24 31
+Sat 16 23 30     7 14 21 28     4 11 18 25
+Sun 17 24     1  8 15 22 29     5 12 19 26
+-----------------------------------------------------------------------------------------------------------------------------------------------
+| id |    title     | description |   status  |       deadline      |      created_at     |     created_by    | reminders | subtasks | owners |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+| 6  | simple task  |  descriptio | inprocess | 2018-06-20 10:00:00 | 2018/06/16 12:37:04 |       nikita      |     1     |   None   | nikita |
+|    |              |  n for task |           |                     |                     |                   |           |          |        |
+| 7  |    task_1    |     None    | inprocess |         None        | 2018/06/16 12:40:33 |       nikita      |    None   |   None   | nikita |
+| 8  |  new title   |     None    | inprocess |         None        | 2018/06/16 12:46:50 |       nikita      |    None   |   None   | nikita |
+|    |              |             |           |                     |                     |                   |           |          | milana |
+|    |              |             |           |                     |                     |                   |           |          |  yura  |
+| 9  | task to plan |     None    |  planned  |         None        | 2018/06/16 13:29:07 |       nikita      |    None   |   None   | nikita |
+|    |              |             |           |                     |                     |                   |           |          | milana |
+| 10 | task to plan |     None    | inprocess |         None        | 2018/06/16 13:51:59 | i'm creator(Plan) |    None   |   None   | nikita |
+|    |              |             |           |                     |                     |                   |           |          | milana |
+| 11 | task to plan |     None    | inprocess |         None        | 2018/06/16 13:58:59 | i'm creator(Plan) |    None   |   None   | nikita |
+|    |              |             |           |                     |                     |                   |           |          | milana |
+-----------------------------------------------------------------------------------------------------------------------------------------------
 ```
-![plan](img/readme_03.png)
 ```commandline
 $ nxtodo event show -u milana
+      June          July           August
+Mon    18 25     2  9 16 23 30     6 13 20 27
+Tue    19 26     3 10 17 24 31     7 14 21 28
+Wed    20 27     4 11 18 25     1  8 15 22 29
+Thu    21 28     5 12 19 26     2  9 16 23 30
+Fri    22 29     6 13 20 27     3 10 17 24 31
+Sat 16 23 30     7 14 21 28     4 11 18 25
+Sun 17 24     1  8 15 22 29     5 12 19 26
+-------------------------------------------------------------------------------------------------------
+| id |     title     |   status  |      created_at     |     created_by    | reminders | participants |
+-------------------------------------------------------------------------------------------------------
+| 1  | event to plan |  planned  | 2018/06/16 13:26:52 |       nikita      |    None   |    nikita    |
+|    |               |           |                     |                   |           |    milana    |
+| 2  | event to plan | inprocess | 2018/06/16 13:51:59 | i'm creator(Plan) |    None   |    nikita    |
+|    |               |           |                     |                   |           |    milana    |
+| 3  | event to plan | inprocess | 2018/06/16 13:58:59 | i'm creator(Plan) |    None   |    nikita    |
+|    |               |           |                     |                   |           |    milana    |
+-------------------------------------------------------------------------------------------------------
 ```
-![plan](img/readme_04.png)
 
 **Remimber**, it was only example, for more deatails you may use -h flag:
 ```commandline

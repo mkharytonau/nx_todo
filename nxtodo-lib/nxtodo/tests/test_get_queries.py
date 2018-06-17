@@ -9,7 +9,7 @@ nxtodo.configure('nxtodo.configuration.settings_for_tests')
 from datetime import datetime
 
 from nxtodo import queries
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     User,
     Task
 )

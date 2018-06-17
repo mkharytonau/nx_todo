@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     UserTasks,
     UserEvents,
     UserPlans,

@@ -12,7 +12,7 @@ from datetime import (
 )
 
 from nxtodo import queries
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     User,
     Task
 )

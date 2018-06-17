@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 from django.db import models
-from nxtodo.nxtodo_db.models import Base
+from nxtodo.db.models import Base
 from nxtodo.thirdparty import (
     Statuses,
     Entities

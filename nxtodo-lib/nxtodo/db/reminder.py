@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     TaskReminders,
     EventReminders,
     PlanReminders
