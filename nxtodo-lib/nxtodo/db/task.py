@@ -1,5 +1,5 @@
 from django.db import models
-from nxtodo.nxtodo_db.base import Base
+from nxtodo.db.base import Base
 
 from nxtodo.thirdparty import (
     Statuses,

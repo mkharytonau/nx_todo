@@ -8,7 +8,7 @@ import nxtodo
 
 nxtodo.configure('nxtodo.configuration.settings_for_tests')
 
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     Reminder,
     Task,
     Event,

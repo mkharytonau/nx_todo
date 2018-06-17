@@ -12,7 +12,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = [
-    'nxtodo.nxtodo_db'
+    'nxtodo.db'
 ]
 
 TIME_ZONE = 'Europe/Moscow'

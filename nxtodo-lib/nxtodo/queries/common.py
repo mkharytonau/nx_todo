@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from nxtodo.nxtodo_db.models import (
+from nxtodo.db.models import (
     User,
     Task,
     Event,
