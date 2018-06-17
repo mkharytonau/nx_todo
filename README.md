@@ -1,12 +1,12 @@
 # Table of Contents
-* [nxtodo(lib)](#markdown-header-nxtodo(lib))
+* [nxtodo (lib)](#markdown-header-nxtodo-lib)
     * [Getting started](#markdown-header-getting-started)
     * [Simple examples](#markdown-header-simple-examples)
     * [Running the tests](#markdown-header-running-the-tests)
-* [nxtodo(cli)](#markdown-header-nxtodo(cli))
-    * [How to install?](#markdown-header-how-to-install?)
+* [nxtodo (cli)](#markdown-header-nxtodo-cli)
+    * [How to install?](#markdown-header-how-to-install)
     * [Customize nxtodo](#markdown-header-customize-nxtodo)
-    * [How it works?](#markdown-header-how-it-works?)
+    * [How it works?](#markdown-header-how-it-works)
     * [Simple work session](#markdown-header-simple-work-session)
 
 # nxtodo(lib)
