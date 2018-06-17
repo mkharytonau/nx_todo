@@ -9,7 +9,7 @@
     * [How it works?](#markdown-header-how-it-works)
     * [Simple work session](#markdown-header-simple-work-session)
 
-# nxtodo(lib)
+# nxtodo (lib)
 nxtodo - is a simple python library that will allow you to create applications
 like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
@@ -149,7 +149,7 @@ Run all tests for nxtodo:
 ```
 $ python -m unittest discover nxtodo/nxtodo-lib/nxtodo/tests/ -v
 ```
-#nxtodo(cli)
+#nxtodo (cli)
 nxtodo_cli - is a console client for nxtodo library.
 ##How to install?
 Clone repository from bitbucket:
