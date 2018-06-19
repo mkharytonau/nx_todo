@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extended_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'nxtodoapp/styles.css' %}" />
+{% endblock %}
+
+{% block nxtodoapp %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            {% block filters %}{% endblock %}
+        </div>
+        <div class="col-lg-5">
+            {% block content %}
+            {% block content_nav %}{% endblock %}
+            {% block content_list %}{% endblock %}
+            {% endblock %}
+        </div>
+        <div class="col-lg-4">
+            {% block notice_board %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

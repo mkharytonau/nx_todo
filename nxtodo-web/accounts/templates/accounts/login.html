@@ -1,0 +1,16 @@
+{% extends 'accounts/accounts_base.html' %}
+
+
+{% block login %}
+<h3>Log in</h3>
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    {% if login_error %}
+    <p>
+        <small class="text-danger">{{ login_error }}</small>
+    </p>
+    {% endif %}
+    <button type="submit" class="btn btn-success">Log in</button>
+</form>
+{% endblock %}

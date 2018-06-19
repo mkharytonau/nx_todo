@@ -1,0 +1,16 @@
+{% extends 'nxtodoapp/tasks.html' %}
+
+
+{% block content_list %}
+<p><label>Title:</label><label>{{task.title}}</label></p>
+<p><label>Description:</label><label>{{task.description}}</label></p>
+<p><label>Category:</label><label>{{task.category}}</label></p>
+<p><label>Priority:</label><label>{{task.priority}}</label></p>
+<p><label>Title:</label><label>{{task.title}}</label></p>
+<p><label>Status:</label><label>{{task.status}}</label></p>
+<p><label>Created at:</label><label>{{task.created_at}}</label></p>
+<p><label>Created by:</label><label>{{task.created_by}}</label></p>
+<p><label>Deadline:</label><label>{{task.deadline}}</label></p>
+<p><label>Subtasks:</label><label>{{task.subtasks}}</label></p>
+<p><label>Reminders:</label><label>{{task.reminders}}</label></p>
+{% endblock %}

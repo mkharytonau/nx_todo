@@ -1,0 +1,31 @@
+{% extends 'nxtodoapp/nxtodoapp_base.html' %}
+
+
+
+{% block filters %}
+    <p>I can write html for reminders filters here</p>
+{% endblock %}
+{% block content %}
+    {% block content_nav %}
+        <div class="row">
+            <a class="entity-link" href="{% url 'tasks'%}">
+                <div class="entity-button col-lg-3">Tasks</div>
+            </a>
+            <a class="entity-link" href="{% url 'events'%}">
+                <div class="entity-button col-lg-3">Events</div>
+            </a>
+            <a class="entity-link" href="{% url 'plans'%}">
+                <div class="entity-button col-lg-3">Plans</div>
+            </a>
+            <a class="entity-link" href="{% url 'reminders'%}">
+                <div class="selected entity-button col-lg-3">Reminders</div>
+            </a>
+        </div>
+    {% endblock %}
+    {% block content_list %}
+        <p>List of reminders will be here</p>
+    {% endblock %}
+{% endblock %}
+{% block notice_board %}
+    <p>I can write html for hotifications here</p>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extended_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/styles.css' %}" />
+{% endblock %}
+
+{% block accounts %}
+<div class="accounts_bg"></div>
+<div class="accounts_content">
+    {% block login %}{% endblock %}
+    {% block logout %}{% endblock %}
+</div>
+{% endblock %}
+

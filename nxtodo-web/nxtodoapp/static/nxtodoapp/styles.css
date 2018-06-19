@@ -1,0 +1,19 @@
+.selected {
+    background-color: #397D7CB3;
+}
+
+body {
+    background-color: #fafafa;
+}
+
+.entity-link {
+    color: #333;
+}
+
+.entity-link:hover {
+    color: #333;
+}
+
+.text-gray {
+    color: gray;
+}
