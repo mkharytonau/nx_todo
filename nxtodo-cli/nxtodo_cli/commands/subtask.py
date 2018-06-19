@@ -1,5 +1,5 @@
 from nxtodo import queries
-from nxtodo.thirdparty.exceptions import (
+from nxtodo.common.exceptions import (
     ObjectDoesNotFound,
     Looping
 )

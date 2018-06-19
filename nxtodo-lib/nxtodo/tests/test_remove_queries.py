@@ -18,11 +18,11 @@ from nxtodo.db.models import (
     Event,
     Plan
 )
-from nxtodo.thirdparty import (
+from nxtodo.common import (
     Owner,
     AccessLevels
 )
-from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
+from nxtodo.common.exceptions import ObjectDoesNotFound
 
 from nxtodo.tests.setup_logger import setup_logger
 

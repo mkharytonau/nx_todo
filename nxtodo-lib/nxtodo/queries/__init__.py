@@ -1,3 +1,14 @@
+"""
+module contains main logic for manipulation with models:
+- "add" group of methods
+- "addto" group of methods
+- "check" group of methods
+- "common" group of methods, it's contains common for all groups methods
+- "complete" group of methods
+- "edit" group of methods
+- "remove" group of methods
+"""
+
 from nxtodo.queries.access_decorators import (
     user_task_access,
     user_event_access,
@@ -23,8 +34,8 @@ from nxtodo.queries.addto import (
     add_owners_to_plan
 )
 from nxtodo.queries.check import (
-    check_tasks,
-    check_events,
+    get_tasks_notifications,
+    get_events_notifications,
     check_plans
 )
 from nxtodo.queries.common import (

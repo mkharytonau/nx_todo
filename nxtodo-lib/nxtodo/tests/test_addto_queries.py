@@ -19,12 +19,12 @@ from nxtodo.db.models import (
     Plan,
     Reminder
 )
-from nxtodo.thirdparty import (
+from nxtodo.common import (
     Owner,
     AccessLevels,
     ADMINS_NAME
 )
-from nxtodo.thirdparty.exceptions import Looping
+from nxtodo.common.exceptions import Looping
 
 from nxtodo.tests.setup_logger import setup_logger
 

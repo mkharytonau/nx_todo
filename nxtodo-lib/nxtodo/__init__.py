@@ -40,7 +40,7 @@ Simple examples:
         >> queries.add_task('creator', 'simple_task')
 
     b) Task with owners:
-        >> from nxtodo.thirdparty import Owner, AccessLevels
+        >> from nxtodo.common import Owner, AccessLevels
         >> owners = [
             Owner('user_1', AccessLevels.EDIT.value),
             Owner('user_2', AccessLevels.READONLY.value)
@@ -71,8 +71,8 @@ Simple examples:
         >> queries.add_reminders_to_task('user_1', task_2_id, [reminder_1, ...])
 
     f) Getting notification from tasks, events:
-        >> queries.check_tasks('user_1')
-        >> queries.check_events('user_1')
+        >> queries.get_tasks_notifications('user_1')
+        >> queries.get_events_notifications('user_1')
 
     And a bit more interesting:
 

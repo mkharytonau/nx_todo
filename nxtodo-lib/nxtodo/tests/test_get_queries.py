@@ -13,7 +13,7 @@ from nxtodo.db.models import (
     User,
     Task
 )
-from nxtodo.thirdparty import (
+from nxtodo.common import (
     Statuses,
     AccessLevels,
     Owner

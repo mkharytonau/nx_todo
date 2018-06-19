@@ -3,11 +3,10 @@ from datetime import datetime
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
-from nxtodo.db.models import (
-    TaskReminders,
-    EventReminders,
-    PlanReminders
-)
+from nxtodo.common import Entities
+from nxtodo.db.event import EventReminders
+from nxtodo.db.plan import PlanReminders
+from nxtodo.db.task import TaskReminders
 from nxtodo.reminding import (
     Notification,
     check_deadline,
@@ -17,7 +16,6 @@ from nxtodo.reminding import (
     check_interval,
     check_weekdays
 )
-from nxtodo.thirdparty import Entities
 
 MISSED_TASK = "You missed the deadline for the '{}' task."
 MISSED_EVENT = "You missed the '{}' event."

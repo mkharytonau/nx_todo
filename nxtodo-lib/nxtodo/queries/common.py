@@ -4,18 +4,39 @@ from nxtodo.db.models import (
     Task,
     Event,
     Plan,
-    Reminder,
-    UserTasks,
-    UserEvents,
-    UserPlans
+    Reminder
 )
-from nxtodo.thirdparty import (
+from nxtodo.db.task import UserTasks
+from nxtodo.db.event import UserEvents
+from nxtodo.db.plan import UserPlans
+from nxtodo.common import (
     Owner,
     Entities
 )
 from nxtodo.queries.logging_decorators import log_get_query
-from nxtodo.thirdparty import common_functions
-from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
+from nxtodo.common.exceptions import ObjectDoesNotFound
+
+
+def create_filters(id=None, title=None, category=None, priority=None,
+                   status=None, place=None, description=None, name=None):
+    filters = {}
+    if id:
+        filters['id'] = id
+    if title:
+        filters['title'] = title
+    if category:
+        filters['category'] = category
+    if priority:
+        filters['priority'] = priority
+    if status:
+        filters['status'] = status
+    if place:
+        filters['place'] = place
+    if description:
+        filters['description'] = description
+    if name:
+        filters['name'] = name
+    return filters
 
 
 def get_user(name):
@@ -58,7 +79,7 @@ def get_reminder(reminder_id):
 
 
 def get_users(name=None):
-    filters = common_functions.create_filters(name=name)
+    filters = create_filters(name=name)
     selection = User.objects.filter(**filters)
     if not len(selection):
         raise ObjectDoesNotFound('There is no users with selected filters.')
@@ -86,7 +107,7 @@ def get_objects_owners(obj):
                "Error when '{}' user tried to get reminders: ")
 def get_reminders(user, description=None, id=None):
     user = get_user(user)
-    filters = common_functions.create_filters(id, description=description)
+    filters = create_filters(id, description=description)
     selection = user.reminder_set.filter(**filters)
     if not len(selection):
         raise ObjectDoesNotFound('There is no reminders '
@@ -99,7 +120,7 @@ def get_reminders(user, description=None, id=None):
 def get_tasks(user, title=None, category=None, deadline=None, priority=None,
               status=None, id=None):
     user = get_user(user)
-    filters = common_functions.create_filters(id, title, category,
+    filters = create_filters(id, title, category,
                                               priority, status)
     selection = user.tasks.filter(**filters)
     if not len(selection):
@@ -112,7 +133,7 @@ def get_tasks(user, title=None, category=None, deadline=None, priority=None,
 def get_events(user, title=None, category=None, fromdt=None, priority=None,
                status=None, place=None, id=None):
     user = get_user(user)
-    filters = common_functions.create_filters(id, title, category,
+    filters = create_filters(id, title, category,
                                               priority, status,
                                               place)
     selection = user.events.filter(**filters)
@@ -126,7 +147,7 @@ def get_events(user, title=None, category=None, fromdt=None, priority=None,
 def get_plans(user, title=None, category=None, priority=None, status=None,
               id=None):
     user = get_user(user)
-    filters = common_functions.create_filters(id, title, category,
+    filters = create_filters(id, title, category,
                                               priority, status)
     selection = user.plans.filter(**filters)
     if not len(selection):

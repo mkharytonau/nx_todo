@@ -1,12 +1,6 @@
 from datetime import datetime
 
-from nxtodo.db.models import (
-    UserTasks,
-    UserEvents
-)
-from nxtodo.thirdparty import Owner
-from nxtodo.thirdparty.exceptions import NoNotifications
-
+from nxtodo.common.exceptions import NoNotifications
 from nxtodo.queries.add import (
     add_task,
     add_event
@@ -21,8 +15,9 @@ from nxtodo.queries.common import (
 )
 
 
-def check_tasks(user, title=None, category=None, deadline=None, priority=None,
-                status=None, id=None, now=datetime.now()):
+def get_tasks_notifications(user, title=None, category=None, deadline=None,
+                            priority=None, status=None, id=None,
+                            now=datetime.now()):
     tasks = get_tasks(user, title, category, deadline, priority, status, id)
     notifications = []
     for task in tasks:
@@ -34,8 +29,9 @@ def check_tasks(user, title=None, category=None, deadline=None, priority=None,
     return notifications
 
 
-def check_events(user, title=None, category=None, fromdt=None, priority=None,
-                 status=None, place=None, id=None, now=datetime.now()):
+def get_events_notifications(user, title=None, category=None, fromdt=None,
+                             priority=None, status=None, place=None, id=None,
+                             now=datetime.now()):
     events = get_events(user, title, category, fromdt, priority,
                         status, place, id)
     notifications = []

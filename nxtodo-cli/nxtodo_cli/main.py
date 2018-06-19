@@ -30,7 +30,7 @@ USER_CHOICE_ENTITY = {
 
 def main():
     # parse arguments from command line
-    arguments = 'task show'.split()
+    arguments = 'task complete -i 1'.split()
     args = parse(arguments)
 
     # getting config and user_name

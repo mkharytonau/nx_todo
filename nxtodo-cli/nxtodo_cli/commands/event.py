@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
+from nxtodo.common.exceptions import ObjectDoesNotFound
+from nxtodo_cli.commands.common import with_printing_exception
 from nxtodo import queries
-from nxtodo.thirdparty import (
+from nxtodo.common import (
     Owner,
     AccessLevels
 )
@@ -33,19 +34,17 @@ def handle_event(user, args, config):
     USER_CHOICE_EVENT.get(args.command)(user, args, config)
 
 
+@with_printing_exception
 def add_event(user_name, args):
-    try:
-        participants = [Owner(user_name, AccessLevels.EDIT.value)]
-        if args.participants:
-            participants += args.participants
-        event_id = queries.add_event(
-            user_name, args.title, args.fromdt, args.todt,
-            args.description, args.category, args.priority,
-            args.place, participants, args.reminders
-        )
-        print(event_id)
-    except ObjectDoesNotFound as e:
-        print(e)
+    participants = [Owner(user_name, AccessLevels.EDIT.value)]
+    if args.participants:
+        participants += args.participants
+    event_id = queries.add_event(
+        user_name, args.title, args.fromdt, args.todt,
+        args.description, args.category, args.priority,
+        args.place, participants, args.reminders
+    )
+    print(event_id)
 
 
 def show_event(user_name, args, config):
@@ -87,7 +86,7 @@ def show_event(user_name, args, config):
 
 def check_event(user_name, args, config):
     try:
-        notifications = queries.check_events(
+        notifications = queries.get_events_notifications(
             user_name, args.title, args.category, args.fromdt,
             args.priority, args.status, args.place, args.id
         )
@@ -98,68 +97,39 @@ def check_event(user_name, args, config):
     show_notification_table(notifications, config)
 
 
+@with_printing_exception
 def complete_event(user_name, args):
-    try:
-        queries.complete_event(user_name, args.id)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.complete_event(user_name, args.id)
 
 
+@with_printing_exception
 def edit_event(user_name, args):
-    try:
-        queries.edit_event(user_name, args.id, args.title, args.description,
-                           args.category, args.priority, args.fromdt,
-                           args.todt, args.place)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.edit_event(user_name, args.id, args.title, args.description,
+                       args.category, args.priority, args.fromdt,
+                       args.todt, args.place)
 
 
+@with_printing_exception
 def remove_event(user_name, args):
-    try:
-        queries.remove_event(user_name, args.id)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_event(user_name, args.id)
 
 
+@with_printing_exception
 def share_event(user_name, args):
-    try:
-        queries.add_participants_to_event(user_name, args.id,
-                                          args.participants)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.add_participants_to_event(user_name, args.id, args.participants)
 
 
+@with_printing_exception
 def unshare_event(user_name, args):
-    try:
-        queries.remove_participants_from_event(user_name, args.id,
-                                               args.participants)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_participants_from_event(user_name, args.id,
+                                           args.participants)
 
 
+@with_printing_exception
 def add_events_to_plan(user_name, args):
-    try:
-        queries.add_events_to_plan(user_name, args.plan, args.ids)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.add_events_to_plan(user_name, args.plan, args.ids)
 
 
+@with_printing_exception
 def remove_events_from_plan(user_name, args):
-    try:
-        queries.remove_events_from_plan(user_name, args.plan, args.ids)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_events_from_plan(user_name, args.plan, args.ids)

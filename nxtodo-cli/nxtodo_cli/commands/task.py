@@ -1,21 +1,19 @@
 from datetime import datetime
 
 from nxtodo import queries
-from nxtodo.thirdparty import (
+from nxtodo.common import (
     Owner,
     AccessLevels
 )
-from nxtodo.thirdparty.exceptions import (
-    ObjectDoesNotFound,
-    CompletionError
+from nxtodo.common.exceptions import ObjectDoesNotFound
+from nxtodo_cli.commands.common import with_printing_exception
+from nxtodo_cli.displaying import (
+    ColoredDate,
+    nxCalendar,
 )
 from nxtodo_cli.displaying import (
     show_task_table,
     show_notification_table
-)
-from nxtodo_cli.displaying import (
-    ColoredDate,
-    nxCalendar,
 )
 
 USER_CHOICE_TASK = {
@@ -36,19 +34,17 @@ def handle_task(user, args, config):
     USER_CHOICE_TASK.get(args.command)(user, args, config)
 
 
+@with_printing_exception
 def add_task(user_name, args):
-    try:
-        owners = [Owner(user_name, AccessLevels.EDIT.value)]
-        if args.owners:
-            owners += args.owners
-        task_id = queries.add_task(
-            user_name, args.title, args.description, args.category,
-            args.deadline, args.priority, owners, args.reminders,
-            args.subtasks
-        )
-        print(task_id)
-    except ObjectDoesNotFound as e:
-        print(e)
+    owners = [Owner(user_name, AccessLevels.EDIT.value)]
+    if args.owners:
+        owners += args.owners
+    task_id = queries.add_task(
+        user_name, args.title, args.description, args.category,
+        args.deadline, args.priority, owners, args.reminders,
+        args.subtasks
+    )
+    print(task_id)
 
 
 def show_task(user_name, args, config):
@@ -91,7 +87,7 @@ def show_task(user_name, args, config):
 
 def check_task(user_name, args, config):
     try:
-        notifications = queries.check_tasks(
+        notifications = queries.get_tasks_notifications(
             user_name, args.title, args.category, args.deadline,
             args.priority, args.status, args.id
         )
@@ -102,67 +98,37 @@ def check_task(user_name, args, config):
     show_notification_table(notifications, config)
 
 
+@with_printing_exception
 def complete_task(user_name, args):
-    try:
-        queries.complete_task(user_name, args.id)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except CompletionError as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.complete_task(user_name, args.id)
 
 
+@with_printing_exception
 def edit_task(user_name, args):
-    try:
-        queries.edit_task(user_name, args.id, args.title, args.description,
-                          args.category, args.deadline, args.priority)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.edit_task(user_name, args.id, args.title, args.description,
+                      args.category, args.deadline, args.priority)
 
 
+@with_printing_exception
 def remove_task(user_name, args):
-    try:
-        queries.remove_task(user_name, args.id)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_task(user_name, args.id)
 
 
+@with_printing_exception
 def share_task(user_name, args):
-    try:
-        queries.add_owners_to_task(user_name, args.id, args.owners)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.add_owners_to_task(user_name, args.id, args.owners)
 
 
+@with_printing_exception
 def unshare_task(user_name, args):
-    try:
-        queries.remove_owners_from_task(user_name, args.id, args.owners)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_owners_from_task(user_name, args.id, args.owners)
 
 
+@with_printing_exception
 def add_tasks_to_plan(user_name, args):
-    try:
-        queries.add_tasks_to_plan(user_name, args.plan, args.ids)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.add_tasks_to_plan(user_name, args.plan, args.ids)
 
 
+@with_printing_exception
 def remove_tasks_from_plan(user_name, args):
-    try:
-        queries.remove_tasks_from_plan(user_name, args.plan, args.ids)
-    except ObjectDoesNotFound as e:
-        print(e)
-    except PermissionError as e:
-        print(e)
+    queries.remove_tasks_from_plan(user_name, args.plan, args.ids)

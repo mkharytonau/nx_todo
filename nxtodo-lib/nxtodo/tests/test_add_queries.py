@@ -19,7 +19,7 @@ from nxtodo.db.models import (
     Plan,
     Reminder
 )
-from nxtodo.thirdparty import Statuses
+from nxtodo.common import Statuses
 from nxtodo.tests.setup_logger import setup_logger
 
 USER_NAME = 'plan_tester'

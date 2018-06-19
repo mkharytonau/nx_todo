@@ -1,8 +1,8 @@
 import logging
 from functools import wraps
 
-from nxtodo.thirdparty.common_data import LOGGER_NAME
-from nxtodo.thirdparty.exceptions import (
+from nxtodo.common.constants import LOGGER_NAME
+from nxtodo.common.exceptions import (
     CompletionError,
     ObjectDoesNotFound,
     Looping

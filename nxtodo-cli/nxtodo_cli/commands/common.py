@@ -1,6 +1,16 @@
 import os
 import configparser
-from nxtodo.thirdparty import LogLevels
+from nxtodo.common import LogLevels
+
+
+def with_printing_exception(func):
+    def wrapper(user_name, args):
+        try:
+            func(user_name, args)
+        except Exception as e:
+            print(e)
+
+    return wrapper
 
 
 def get_config():

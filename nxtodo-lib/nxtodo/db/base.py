@@ -3,6 +3,9 @@ from django.utils import timezone
 
 
 class Base(models.Model):
+    """
+    This class is base for Task, Event, Plan classes.
+    """
     title = models.CharField(max_length=30)
     description = models.TextField(null=True)
     priority = models.CharField(max_length=1, null=True)

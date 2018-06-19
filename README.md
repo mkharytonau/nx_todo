@@ -108,8 +108,8 @@ And this same reminder to another task:
 ```
 ###Getting notification from tasks, events
 ```python
->> queries.check_tasks(user='user_1')
->> queries.check_events(user='user_1')
+>> queries.get_tasks_notifications(user='user_1')
+>> queries.get_events_notifications(user='user_1')
 ```
 ###And a bit more interesting:
 Create a plan by 'user_1', which will create common for users 'user_2'

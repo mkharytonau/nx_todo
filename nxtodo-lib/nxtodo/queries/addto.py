@@ -1,12 +1,18 @@
 from datetime import datetime
 
-from nxtodo.db.models import (
-    UserTasks,
+from nxtodo.common.constants import ADMINS_NAME
+from nxtodo.common.exceptions import Looping
+from nxtodo.db.event import (
     UserEvents,
+    EventReminders
+)
+from nxtodo.db.plan import (
     UserPlans,
-    TaskReminders,
-    EventReminders,
     PlanReminders
+)
+from nxtodo.db.task import (
+    UserTasks,
+    TaskReminders
 )
 from nxtodo.queries.access_decorators import (
     user_task_access,
@@ -22,8 +28,6 @@ from nxtodo.queries.common import (
     get_objects_owners
 )
 from nxtodo.queries.logging_decorators import log_addto_query
-from nxtodo.thirdparty.common_data import ADMINS_NAME
-from nxtodo.thirdparty.exceptions import Looping
 
 
 @log_addto_query("Successfully added {} owners to task '{}' by user '{}'",

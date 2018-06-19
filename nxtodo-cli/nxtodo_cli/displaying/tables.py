@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from nxtodo.thirdparty import Entities
+from nxtodo.common import Entities
 from prettytable import PrettyTable
 
 from nxtodo_cli.displaying.colorizer import colorize

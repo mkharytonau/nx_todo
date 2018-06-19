@@ -1,5 +1,5 @@
 from nxtodo import queries
-from nxtodo.thirdparty.exceptions import ObjectDoesNotFound
+from nxtodo.common.exceptions import ObjectDoesNotFound
 from nxtodo_cli.displaying import show_user_table
 
 

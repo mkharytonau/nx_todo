@@ -6,8 +6,8 @@ from nxtodo.queries import (
     user_task_access,
     user_event_access
 )
-from nxtodo.thirdparty import Statuses
-from nxtodo.thirdparty.exceptions import CompletionError
+from nxtodo.common import Statuses
+from nxtodo.common.exceptions import CompletionError
 from nxtodo.queries.logging_decorators import log_query
 
 

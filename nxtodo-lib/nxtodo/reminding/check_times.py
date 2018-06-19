@@ -3,6 +3,9 @@ from datetime import timedelta
 
 
 def check_deadline(deadline, now):
+    """
+    This function checks if we missed deadline.
+    """
     if deadline and now > deadline:
         return deadline
     else:
@@ -10,6 +13,10 @@ def check_deadline(deadline, now):
 
 
 def check_range(from_datetime, to_datetime, now):
+    """
+    This function checks if now in the time interval
+    between from_datetime and to_datetime.
+    """
     if not (from_datetime and to_datetime and now):
         return None
     if from_datetime <= now <= to_datetime:
@@ -19,6 +26,10 @@ def check_range(from_datetime, to_datetime, now):
 
 
 def check_remind_in(remind_in, deadline, now):
+    """
+    This function checks if now in the time interval
+    between deadline - remind_in and to_datetime.
+    """
     if not (remind_in and deadline and now):
         return None
     date = deadline - remind_in
@@ -29,6 +40,9 @@ def check_remind_in(remind_in, deadline, now):
 
 
 def check_datetimes(datetimes, now):
+    """
+    This function returns last passed date from datetimes list or None.
+    """
     if not datetimes:
         return None
     counter = 0
@@ -42,6 +56,9 @@ def check_datetimes(datetimes, now):
 
 
 def check_interval(start_remind_from, interval, now):
+    """
+    This function returns last passed interval or None.
+    """
     if interval is None:
         return None
     counter = (now - start_remind_from) // interval
@@ -52,6 +69,9 @@ def check_interval(start_remind_from, interval, now):
 
 
 def check_weekdays(start_remind_from, weekdays, now):
+    """
+    This function returns last passed weekday from weekdays list or None.
+    """
     if weekdays is None:
         return None
     day = timedelta(days=1)

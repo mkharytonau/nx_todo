@@ -1,17 +1,13 @@
-from django.core.exceptions import ObjectDoesNotExist
 from functools import wraps
 
-
-from nxtodo.db.models import (
-    UserTasks,
-    UserEvents,
-    UserPlans
-)
-from nxtodo.thirdparty import (
+from django.core.exceptions import ObjectDoesNotExist
+from nxtodo.common import (
     AccessLevels,
     ADMINS_NAME
 )
-
+from nxtodo.db.event import UserEvents
+from nxtodo.db.plan import UserPlans
+from nxtodo.db.task import UserTasks
 from nxtodo.queries.common import (
     get_user,
     get_task,
