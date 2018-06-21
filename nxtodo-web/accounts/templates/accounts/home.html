@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extended_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/styles.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <section class="banner-area relative">
+        <div class="container">
+            <div class="row fullscreen align-items-center justify-content-center">
+                <div class="banner-left col-lg-6">
+                    <img class="logo_home d-flex mx-auto img-fluid" src="{% static 'accounts/img/logo_home.png' %}" alt="">
+                </div>
+                <div class="col-lg-6">
+                    <div class="story-content">
+                        <h1>Share tasks, events and plans using <span class="sp-1">nxtodo</span><br>
+                            and make your life <span class="sp-2">easier</span></h1>
+                        <a href="/accounts/signup/" class="genric-btn primary circle arrow">Get started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

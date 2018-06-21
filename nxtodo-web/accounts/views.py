@@ -7,6 +7,10 @@ from .forms import (
 from nxtodo import queries
 
 
+def home(request):
+    return render(request, 'accounts/home.html')
+
+
 def signup(request):
     args = {}
     args['form'] = SignupForm()

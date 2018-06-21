@@ -1,16 +1,33 @@
-{% extends 'accounts/accounts_base.html' %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extended_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/styles.css' %}"/>
+{% endblock %}
 
 
-{% block login %}
-<h3>Log in</h3>
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    {% if login_error %}
-    <p>
-        <small class="text-danger">{{ login_error }}</small>
-    </p>
-    {% endif %}
-    <button type="submit" class="btn btn-success">Log in</button>
-</form>
+{% block content %}
+    <div class="accounts_bg"></div>
+    <div class="container-fluid">
+        <div class="signup_pos row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <form action="{% url 'login' %}" method="post">
+                    <h3>Log in</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>
+                            {{ field }}<br>
+                        </p>
+                    {% endfor %}
+                    {% if login_error %}
+                        <p>
+                            <small class="text-danger">{{ login_error }}</small>
+                        </p>
+                    {% endif %}
+                    <button type="submit" name="submit" class="btn">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

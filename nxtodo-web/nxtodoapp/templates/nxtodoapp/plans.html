@@ -5,8 +5,8 @@
 {% block filters %}
     <p>I can write html for plans filters here</p>
 {% endblock %}
-{% block content %}
-    {% block content_nav %}
+{% block appcontent %}
+    {% block appcontent_nav %}
         <div class="row">
             <a class="entity-link" href="{% url 'tasks'%}">
                 <div class="entity-button col-lg-3">Tasks</div>
@@ -22,7 +22,7 @@
             </a>
         </div>
     {% endblock %}
-    {% block content_list %}
+    {% block appcontent_list %}
         <p>List of plans will be here</p>
     {% endblock %}
 {% endblock %}

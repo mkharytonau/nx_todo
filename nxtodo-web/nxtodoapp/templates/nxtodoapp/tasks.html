@@ -1,38 +1,65 @@
 {% extends 'nxtodoapp/nxtodoapp_base.html' %}
-
+{% load static %}
 
 
 {% block filters %}
     <p>I can write html for task filters here</p>
 {% endblock %}
-{% block content %}
-    {% block content_nav %}
-        <div class="row">
-            <a class="entity-link" href="{% url 'tasks'%}">
-                <div class="selected entity-button col-lg-3">Tasks</div>
-            </a>
-            <a class="entity-link" href="{% url 'events'%}">
-                <div class="entity-button col-lg-3">Events</div>
-            </a>
-            <a class="entity-link" href="{% url 'plans'%}">
-                <div class="entity-button col-lg-3">Plans</div>
-            </a>
-            <a class="entity-link" href="{% url 'reminders'%}">
-                <div class="entity-button col-lg-3">Reminders</div>
-            </a>
-        </div>
-    {% endblock %}
-    {% block content_list %}
-        {% if tasks %}
-            {% for task in tasks %}
-                <p>
-                    <a href="{% url 'task_details' id=task.id %}">{{task.title}}</a>
-                </p>
-            {% endfor %}
-        {% else %}
-            <p class="text-gray">There is no tasks available.</p>
-        {% endif %}
-    {% endblock %}
+{% block appcontent_nav %}
+    <div class="selected col-lg-3">
+        <a class="entity-link" href="{% url 'tasks' %}">
+            Tasks
+        </a>
+    </div>
+    <div class="col-lg-3">
+        <a class="entity-link" href="{% url 'events' %}">
+            Events
+        </a>
+    </div>
+    <div class="col-lg-3">
+        <a class="entity-link" href="{% url 'plans' %}">
+            Plans
+        </a>
+    </div>
+    <div class="col-lg-3">
+        <a class="entity-link" href="{% url 'reminders' %}">
+            Reminders
+        </a>
+    </div>
+{% endblock %}
+{% block appcontent_list %}
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="entity-container">
+                <span class="glyphicon glyphicon-asterisk {% if task.status == 'inprocess' %}blue-star{% endif %} {% if task.status == 'fulfilled' %}green-star{% endif %}"></span>
+                <a href="{% url 'task_details' id=task.id %}">{{ task.title }}</a>
+                <a href="{% url 'task_complete' id=task.id %}">
+                    <span class="entity-icon glyphicon glyphicon-ok"></span>
+                </a>
+                <a href="{% url 'task_remove' id=task.id %}">
+                    <span class="entity-icon glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-gray">There is no tasks available.</p>
+    {% endif %}
+
+{% endblock %}
+{% block appcontent_footer %}
+    <div class="footer_left col-lg-2"></div>
+    <div class="footer_msg col-lg-8">
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="footer_right col-lg-2">
+        <a href="{% url 'task_add' %}">
+            <img class="img-add" src="{% static 'nxtodoapp/img/add.png' %}">
+        </a>
+    </div>
 {% endblock %}
 {% block notice_board %}
     <p>I can write html for hotifications here</p>

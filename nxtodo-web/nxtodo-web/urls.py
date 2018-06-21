@@ -18,5 +18,6 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     url(r'^', include('nxtodoapp.urls')),
-    url(r'^accounts/', include('accounts.urls'))
+    url(r'^accounts/', include('accounts.urls')),
+    #url((r'^simple-autocomplete/', include('simple_autocomplete.urls', namespace='simple_autocomplete')))
 ]

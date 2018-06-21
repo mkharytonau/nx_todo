@@ -2,24 +2,39 @@
 {% load static %}
 
 {% block extended_head %}
-<link rel="stylesheet" type="text/css" href="{% static 'nxtodoapp/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'nxtodoapp/styles.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    {{ form.media }}
+    <script src="{{ STATIC_URL }}simple_autocomplete/jquery-ui.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}simple_autocomplete/jquery-ui.css" />
 {% endblock %}
 
-{% block nxtodoapp %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3">
-            {% block filters %}{% endblock %}
-        </div>
-        <div class="col-lg-5">
-            {% block content %}
-            {% block content_nav %}{% endblock %}
-            {% block content_list %}{% endblock %}
-            {% endblock %}
-        </div>
-        <div class="col-lg-4">
-            {% block notice_board %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="box col-lg-3">
+                <div class="inbox">
+                    {% block filters %}{% endblock %}
+                </div>
+            </div>
+            <div class="col-lg-5 ">
+                <div class="inbox">
+                    <div class="app_row row">
+                        {% block appcontent_nav %}{% endblock %}
+                    </div>
+                    <div class="app_row row">
+                        {% block appcontent_list %}{% endblock %}
+                    </div>
+                    <div class="app_row row app_footer">
+                        {% block appcontent_footer %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="inbox">
+                    {% block notice_board %}{% endblock %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

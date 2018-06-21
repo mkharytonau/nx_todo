@@ -7,7 +7,7 @@ def with_authorization_check(func):
     @wraps(func)
     def wrapper(request):
         if not request.user.is_authenticated:
-            return redirect('/accounts/signup')
+            return redirect('/accounts/home')
         else:
             return func(request)
 

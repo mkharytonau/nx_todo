@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,36 +6,32 @@
     <title>nxtodo</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
     {% block extended_head %}{% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">nxtodo</a>
+            <a class="navbar-brand" href="/">
+                <img class="navbar_logo" src="{% static 'img/logo.png' %}">
+            </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li>
-                <a href="/accounts/logout">
-                    <span class="glyphicon glyphicon-log-in"></span> Log out({{user.username}})
-                </a>
-            </li>
+                <li>
+                    <a href="/accounts/logout">
+                        <span class="glyphicon glyphicon-log-in"></span> Log out({{ user.username }})
+                    </a>
+                </li>
             {% else %}
-            <li><a href="/accounts/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+                <li><a href="/accounts/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
             {% endif %}
         </ul>
     </div>
 </nav>
-{% block accounts %}{% endblock %}
-{% block nxtodoapp %}
-    {% block filters %}{% endblock %}
-    {% block content %}
-        {% block content_nav %}{% endblock %}
-        {% block content_list %}{% endblock %}
-    {% endblock %}
-    {% block notice_board %}{% endblock %}
+{% block content %}
 {% endblock %}
 </body>
 </html>

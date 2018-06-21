@@ -76,6 +76,7 @@ def add_event(executor, title, from_datetime=None, to_datetime=None,
     """
     Create event, save it and add participants, reminders if they were
     passed into arguments.
+
     :param executor: the username of the person who adds the event
     :param title: event title
     :param from_datetime: event start date and time
@@ -87,6 +88,7 @@ def add_event(executor, title, from_datetime=None, to_datetime=None,
     :param participants: list of Owner(username, access_level) objects
     :param reminders: list of reminders ids
     :return: id
+
     """
     event = Event.create(title, description, category, priority,
                          from_datetime, to_datetime, place, executor)
