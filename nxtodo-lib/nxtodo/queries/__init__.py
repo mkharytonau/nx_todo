@@ -33,6 +33,17 @@ from nxtodo.queries.addto import (
     add_events_to_plan,
     add_owners_to_plan
 )
+from nxtodo.queries.removefrom import (
+    remove_owners_from_task,
+    remove_subtasks_from_task,
+    remove_reminders_from_task,
+    remove_participants_from_event,
+    remove_reminders_from_event,
+    remove_tasks_from_plan,
+    remove_events_from_plan,
+    remove_reminders_from_plan,
+    remove_owners_from_plan
+)
 from nxtodo.queries.check import (
     get_tasks_notifications,
     get_events_notifications,

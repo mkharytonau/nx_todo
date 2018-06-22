@@ -24,26 +24,24 @@
 
 
     <div class="subtasks-container">
+        <label>Subtasks</label>
         <div class="subtask_form">
-            <label>Subtasks</label>
-            <div class="subtask_form">
-                <form action="{% url 'addsubtask' id=task.id %}" method="post">
-                    {% csrf_token %}
-                    {% for field in subtask_form %}
-                        {{ field }}
-                    {% endfor %}
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-pushpin"></span>
-                    </button>
-                </form>
-            </div>
+            <form action="{% url 'addsubtask' id=task.id %}" method="post">
+                {% csrf_token %}
+                {% for field in subtask_form %}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit">
+                    <span class="glyphicon glyphicon-pushpin"></span>
+                </button>
+            </form>
         </div>
 
         {% if task.subtasks.all %}
-            {% for task in task.subtasks.all %}
+            {% for subtask in task.subtasks.all %}
                 <div class="entity-container">
-                    <a href="{% url 'task_details' id=task.id %}">{{ task.title }}</a>
-                    <a href="">
+                    <a href="{% url 'task_details' id=subtask.id %}">{{ subtask.title }}</a>
+                    <a href="{% url 'removesubtask' id=task.id s_id=subtask.id %}">
                         <span class="entity-icon glyphicon glyphicon-remove"></span>
                     </a>
                 </div>
@@ -52,6 +50,67 @@
             <p class="text-gray">There is no subtasks yet.</p>
         {% endif %}
     </div>
+
+    <div class="subtasks-container">
+        <label>Owners</label>
+        <div class="subtask_form">
+            <form action="{% url 'addowner' id=task.id %}" method="post">
+                {% csrf_token %}
+                {% for field in owner_form %}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </form>
+        </div>
+
+
+        {% for owner in task_owners %}
+            <div class="entity-container">
+                {% if user.username == owner.user_name %}
+                    <strong>me : </strong>{{ owner.access_level }}
+                {% else %}
+                    {{ owner.user_name }} : {{ owner.access_level }}
+                    <a href="{% url 'removeowner' id=task.id o_id=owner.user_name %}">
+                        <span class="entity-icon glyphicon glyphicon-remove"></span>
+                    </a>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="subtasks-container">
+        <label>Reminders</label>
+        <div class="subtask_form">
+            <form action="{% url 'addreminder' id=task.id %}" method="post">
+                {% csrf_token %}
+                {% for field in reminder_form %}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit">
+                    <span class="glyphicon glyphicon-pushpin"></span>
+                </button>
+            </form>
+        </div>
+
+        {% if task.reminders.all %}
+            {% for reminder in task.reminders.all %}
+                <div class="entity-container">
+                    <a href="{% url 'reminder_details' id=reminder.id %}">{{ reminder.id }}</a>
+                    <a href="{% url 'removereminder' id=task.id r_id=reminder.id %}">
+                        <span class="entity-icon glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-gray">There is no reminders yet.</p>
+        {% endif %}
+    </div>
+
+
+
 
 {% endblock %}
 {% block appcontent_footer %}

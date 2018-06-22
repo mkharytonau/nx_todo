@@ -1,9 +1,22 @@
 {% extends 'nxtodoapp/nxtodoapp_base.html' %}
 {% load static %}
+{% load extends1 %}
 
 
 {% block filters %}
-    <p>I can write html for task filters here</p>
+    <h4 class="filters-header">Filters</h4>
+    <form action="{% url 'tasks_filter' %}" class="entity-filters" method="post" id="task_filter">
+        {% csrf_token %}
+        {% for field in filters_form %}
+            {% if field.name != 'description' %}
+                <label>{{ field.name|title }}:</label>
+                <p>
+                    {{ field }}<br>
+                </p>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn">Show</button>
+    </form>
 {% endblock %}
 {% block appcontent_nav %}
     <div class="selected col-lg-3">
@@ -31,7 +44,8 @@
     {% if tasks %}
         {% for task in tasks %}
             <div class="entity-container">
-                <span class="glyphicon glyphicon-asterisk {% if task.status == 'inprocess' %}blue-star{% endif %} {% if task.status == 'fulfilled' %}green-star{% endif %}"></span>
+                <span class="glyphicon glyphicon-asterisk {% if task.status == 'inprocess' %}blue-star{% endif %}
+                                                {% if task.status == 'fulfilled' %}green-star{% endif %}"></span>
                 <a href="{% url 'task_details' id=task.id %}">{{ task.title }}</a>
                 <a href="{% url 'task_complete' id=task.id %}">
                     <span class="entity-icon glyphicon glyphicon-ok"></span>
@@ -63,4 +77,5 @@
 {% endblock %}
 {% block notice_board %}
     <p>I can write html for hotifications here</p>
+    {% show_datetime %}
 {% endblock %}
