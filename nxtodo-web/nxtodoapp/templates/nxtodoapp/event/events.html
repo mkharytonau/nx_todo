@@ -1,0 +1,85 @@
+{% extends 'nxtodoapp/nxtodoapp_base.html' %}
+{% load static %}
+
+
+{% block filters %}
+    <h4 class="filters-header">Filters</h4>
+    <form action="{% url 'events:filter' %}" class="entity-filters" method="post">
+        {% csrf_token %}
+        {% for field in filters_form %}
+            <label>{{ field.label|title }}:</label>
+            <p>
+                {{ field }}<br>
+                {% for error in field.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        {% endfor %}
+        <button type="submit" class="btn btn-show">Show</button>
+        <a href="{% url 'events:all' %}">
+            <button class="btn btn-reset" type="button">Reset</button>
+        </a>
+    </form>
+{% endblock %}
+{% block appcontent_nav %}
+    <a class="entity-link" href="{% url 'tasks:all' %}">
+        <div class="col-lg-3 nav-item">
+            Tasks
+        </div>
+    </a>
+    <a class="entity-link" href="{% url 'events:all' %}">
+        <div class="selected col-lg-3 nav-item">
+            Events
+        </div>
+    </a>
+    <a class="entity-link" href="{% url 'plans:all' %}">
+        <div class="col-lg-3 nav-item">
+            Plans
+        </div>
+    </a>
+    <a class="entity-link" href="{% url 'reminders:all' %}">
+        <div class="col-lg-3 nav-item">
+            Reminders
+        </div>
+    </a>
+{% endblock %}
+{% block appcontent_list %}
+    {% if events %}
+        {% for event in events %}
+            <div class="entity-container">
+                <span class="glyphicon glyphicon-certificate
+                                           {% if event.status == 'inprocess' %}blue-star{% endif %}
+                                           {% if event.status == 'fulfilled' %}green-star{% endif %}
+                                           {% if event.status == 'failed' %}red-star{% endif %}
+                                           {% if event.status == 'right_now' %}yellow-star{% endif %}
+                                           {% if event.status == 'planned' %}glyphicon glyphicon-dashboard{% endif %}">
+                </span>
+                <a href="{% url 'events:details' id=event.id %}">{{ event.title }}</a>
+                <a href="{% url 'events:complete' id=event.id %}">
+                    <span class="entity-icon glyphicon glyphicon-ok"></span>
+                </a>
+                <a href="{% url 'events:remove' id=event.id %}">
+                    <span class="entity-icon glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="list-msg text-center text-gray">There is no events available.</p>
+    {% endif %}
+
+{% endblock %}
+{% block appcontent_footer %}
+    <div class="footer_left col-lg-2"></div>
+    <div class="footer_msg col-lg-8">
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="footer_right col-lg-2">
+        <a href="{% url 'events:add' %}">
+            <img class="img-add" src="{% static 'nxtodoapp/img/add.png' %}">
+        </a>
+    </div>
+{% endblock %}

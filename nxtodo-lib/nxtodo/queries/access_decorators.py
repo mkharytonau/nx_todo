@@ -18,11 +18,14 @@ from nxtodo.queries.common import (
 
 
 def user_task_access(func):
+    """
+    Decorator, which checks the level of user access to the task.
+    """
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args[0] == ADMINS_NAME:
-            user = get_user(args[0])
-            task = get_task(args[1])
+    def wrapper(username, task_id, *args, **kwargs):
+        if not username == ADMINS_NAME:
+            user = get_user(username)
+            task = get_task(task_id)
 
             try:
                 relation = UserTasks.objects.get(user=user, task=task)
@@ -32,23 +35,26 @@ def user_task_access(func):
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
-                func(*args, **kwargs)
+                func(username, task_id, *args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
                        "edit '{}' task.").format(task.id)
                 raise PermissionError(msg)
         else:
-            func(*args, **kwargs)
+            func(username, task_id, *args, **kwargs)
 
     return wrapper
 
 
 def user_event_access(func):
+    """
+    Decorator, which checks the level of user access to the event.
+    """
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args[0] == ADMINS_NAME:
-            user = get_user(args[0])
-            event = get_event(args[1])
+    def wrapper(username, event_id, *args, **kwargs):
+        if not username == ADMINS_NAME:
+            user = get_user(username)
+            event = get_event(event_id)
 
             try:
                 relation = UserEvents.objects.get(user=user, event=event)
@@ -58,23 +64,26 @@ def user_event_access(func):
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
-                func(*args, **kwargs)
+                func(username, event_id, *args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
                        "edit '{}' event.").format(event.id)
                 raise PermissionError(msg)
         else:
-            func(*args, **kwargs)
+            func(username, event_id, *args, **kwargs)
 
     return wrapper
 
 
 def user_plan_access(func):
+    """
+    Decorator, which checks the level of user access to the plan.
+    """
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args[0] == ADMINS_NAME:
-            user = get_user(args[0])
-            plan = get_plan(args[1])
+    def wrapper(username, plan_id, *args, **kwargs):
+        if not username == ADMINS_NAME:
+            user = get_user(username)
+            plan = get_plan(plan_id)
 
             try:
                 relation = UserPlans.objects.get(user=user, plan=plan)
@@ -84,24 +93,27 @@ def user_plan_access(func):
                 raise PermissionError(msg)
 
             if relation.access_level == AccessLevels.EDIT.value:
-                func(*args, **kwargs)
+                func(username, plan_id, *args, **kwargs)
             else:
                 msg = ("Permission denied, you can't "
                        "edit '{}' plan.").format(plan.id)
                 raise PermissionError(msg)
         else:
-            func(*args, **kwargs)
+            func(username, plan_id, *args, **kwargs)
 
     return wrapper
 
 
 def user_reminder_access(func):
+    """
+    Decorator, which checks the level of user access to the reminder.
+    """
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        user = get_user(args[0])
-        reminder = get_reminder(args[1])
+    def wrapper(username, reminder_id, *args, **kwargs):
+        user = get_user(username)
+        reminder = get_reminder(reminder_id)
         if reminder.user.name == user.name:
-            func(*args, **kwargs)
+            func(username, reminder_id, *args, **kwargs)
         else:
             msg = ("Permission denied, you can't "
                    "edit '{}' reminder.").format(reminder.id)

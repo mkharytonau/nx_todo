@@ -20,8 +20,8 @@ class Event(Base):
     @classmethod
     def create(cls, title, description, category, priority,
                from_datetime, to_datetime, place, created_by):
-        """
-        This method creates event.
+        """This method creates event.
+
         :param title: event title
         :param description: event description
         :param category: event category
@@ -33,7 +33,9 @@ class Event(Base):
         :param place: the place where event takes place
         :param created_by: username of the person, who created this event.
         :return: event object
+
         """
+
         event = cls(
             title=title,
             description=description,

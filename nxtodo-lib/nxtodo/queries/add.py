@@ -27,11 +27,13 @@ from nxtodo.common import ADMINS_NAME
 @log_user_query("Successfully added user '{}'",
                 "Error when adding user '{}': ")
 def add_user(username):
-    """
-    Create user 'username' and save if in database.
+    """Create user 'username' and save if in database.
+
     :param username: username of created user
     :return: username
+
     """
+
     user = User.create(username)
     user.save()
     return user.name
@@ -41,9 +43,9 @@ def add_user(username):
                "Error when adding task by user '{}': ")
 def add_task(executor, title, description=None, category=None, deadline=None,
              priority=None, owners=None, reminders=None, subtasks=None):
-    """
-    Create task, save it and add owners, reminders, subtasks if they were
+    """Create task, save it and add owners, reminders, subtasks if they were
     passed into arguments.
+
     :param executor: the username of the person who adds the task
     :param title: task title
     :param description: task description
@@ -54,7 +56,9 @@ def add_task(executor, title, description=None, category=None, deadline=None,
     :param reminders: list of reminders ids
     :param subtasks: list of subtasks ids
     :return: id
+
     """
+
     task = Task.create(title, description, category, deadline,
                        priority, executor)
     task.save()
@@ -73,8 +77,7 @@ def add_task(executor, title, description=None, category=None, deadline=None,
 def add_event(executor, title, from_datetime=None, to_datetime=None,
               description=None, category=None, priority=None, place=None,
               participants=None, reminders=None):
-    """
-    Create event, save it and add participants, reminders if they were
+    """Create event, save it and add participants, reminders if they were
     passed into arguments.
 
     :param executor: the username of the person who adds the event
@@ -90,6 +93,7 @@ def add_event(executor, title, from_datetime=None, to_datetime=None,
     :return: id
 
     """
+
     event = Event.create(title, description, category, priority,
                          from_datetime, to_datetime, place, executor)
     event.save()
@@ -105,9 +109,9 @@ def add_event(executor, title, from_datetime=None, to_datetime=None,
                "Error when adding plan by user '{}': ")
 def add_plan(executor, title, description=None, category=None, priority=None,
              tasks=None, events=None, reminders=None, owners=None):
-    """
-    Create plan, save it and add tasks, events, owners, reminders if they were
+    """Create plan, save it and add tasks, events, owners, reminders if they were
     passed into arguments.
+
     :param executor: the username of the person who adds the plan
     :param title: plan title
     :param description: plan description
@@ -118,7 +122,9 @@ def add_plan(executor, title, description=None, category=None, priority=None,
     :param reminders: list of reminders ids attached to plan
     :param owners: list of Owner(username, access_level) objects
     :return:
+
     """
+
     plan = Plan.create(title, description, category, priority, executor)
     plan.save()
     if owners:
@@ -137,8 +143,8 @@ def add_plan(executor, title, description=None, category=None, priority=None,
 def add_reminder(user_name, description=None, start_remind_before=None,
                  start_remind_from=None, stop_remind_in=None, remind_in=None,
                  datetimes=None, interval=None, weekdays=None):
-    """
-    Create reminder, save it and attach it to user.
+    """Create reminder, save it and attach it to user.
+
     :param user_name:
     :param description:
     :param start_remind_before:
@@ -149,7 +155,9 @@ def add_reminder(user_name, description=None, start_remind_before=None,
     :param interval:
     :param weekdays:
     :return:
+
     """
+
     reminder = Reminder.create(description, start_remind_before,
                                start_remind_from, stop_remind_in, remind_in,
                                datetimes, interval, weekdays)

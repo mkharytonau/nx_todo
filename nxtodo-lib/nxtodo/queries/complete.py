@@ -15,6 +15,9 @@ from nxtodo.queries.logging_decorators import log_query
            "Error when completing '{}' task by user '{}'")
 @user_task_access
 def complete_task(user_name, task_id):
+    """
+    Complete task if it can be completed.
+    """
     task = get_task(task_id)
     if task.can_complete():
         task.status = Statuses.FULFILLED.value
@@ -29,6 +32,9 @@ def complete_task(user_name, task_id):
            "Error when completing '{}' event by user '{}'")
 @user_event_access
 def complete_event(user_name, event_id):
+    """
+    Complete event if user 'username' has authority to do this.
+    """
     event = get_event(event_id)
     event.status = Statuses.FULFILLED.value
     event.save()

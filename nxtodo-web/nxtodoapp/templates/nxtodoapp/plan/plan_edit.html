@@ -1,0 +1,35 @@
+{% extends 'nxtodoapp/plan/plans.html' %}
+
+
+{% block appcontent_list %}
+    <h4 class="text-center">Edit plan</h4>
+    <form class="entity-creation" method="post" id="plan_save">
+        {% csrf_token %}
+        {% for field in form %}
+            <label>{{ field.name|title }}:</label>
+            <p>
+                {{ field }}<br>
+                {% for error in field.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        {% endfor %}
+    </form>
+{% endblock %}
+{% block appcontent_footer %}
+    <div class="footer_left col-lg-2">
+        <a href="{% url 'plans:all' %}">
+            <span class="btn-cancel glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="footer_msg col-lg-8">
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="footer_right col-lg-2">
+        <button class="btn" type="submit" form="plan_save">Save</button>
+    </div>
+{% endblock %}

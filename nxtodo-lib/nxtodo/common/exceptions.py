@@ -17,10 +17,12 @@ class CompletionError(Exception):
 
 
 class ObjectDoesNotFound(Exception):
+
     """
     ObjectDoesNotFound exception, this exception occurs when the objects
     where not found in the database
     """
+
     def __init__(self, msg):
         ObjectDoesNotFound.txt = msg
 

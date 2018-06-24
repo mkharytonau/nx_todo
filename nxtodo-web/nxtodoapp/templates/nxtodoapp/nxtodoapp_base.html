@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load notice_board %}
+
 
 {% block extended_head %}
     <link rel="stylesheet" type="text/css" href="{% static 'nxtodoapp/styles.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     {{ form.media }}
     {{ filters_form.media }}
-    <script src="{{ STATIC_URL }}simple_autocomplete/jquery-ui.js"></script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}simple_autocomplete/jquery-ui.css" />
+    {{ datetime_form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="box col-lg-3">
-                <div class="inbox">
+            <div class="col-lg-3">
+                <div class="inbox-filters">
                     {% block filters %}{% endblock %}
                 </div>
             </div>
@@ -32,9 +33,11 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="inbox">
-                    {% block notice_board %}
-                    {% endblock %}
+                <div class="inbox-notice">
+                    <h4 class="notice-header">Notice board</h4>
+                    <div class="notifications-container">
+                        {% notice_board user.username %}
+                    </div>
                 </div>
             </div>
         </div>

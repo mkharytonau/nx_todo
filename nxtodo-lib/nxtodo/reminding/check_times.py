@@ -59,7 +59,7 @@ def check_interval(start_remind_from, interval, now):
     """
     This function returns last passed interval or None.
     """
-    if interval is None:
+    if not interval:
         return None
     counter = (now - start_remind_from) // interval
     if counter > 0:
@@ -72,7 +72,7 @@ def check_weekdays(start_remind_from, weekdays, now):
     """
     This function returns last passed weekday from weekdays list or None.
     """
-    if weekdays is None:
+    if not weekdays:
         return None
     day = timedelta(days=1)
     date_now = now.date()

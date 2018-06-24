@@ -1,2 +1,20 @@
-<h3>Current time: </h3>
-<h2>{{ time }}</h2>
+{% if notifications %}
+    {% for notification in notifications %}
+        <div class="notification">
+            <div class="row notification_row">
+                <div class="col-lg-2 bells-col
+                            {% if notification.style == 'positive' %}bells-col-pos{% endif %}
+                            {% if notification.style == 'negative' %}bells-col-neg{% endif %}
+                            {% if notification.style == 'medium' %}bells-col-med{% endif %}">
+                    <span class="glyphicon glyphicon-bell"></span>
+                </div>
+                <div class="col-lg-10">
+                    <h5>{{ notification.message }}</h5>
+                    <h6>{{ notification.date|date:"F j, Y H:i:s" }}</h6>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h5 class="text-gray text-center">There is no notifications for this moment</h5>
+{% endif %}

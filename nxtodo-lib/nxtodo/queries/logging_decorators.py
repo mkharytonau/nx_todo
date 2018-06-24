@@ -10,6 +10,13 @@ from nxtodo.common.exceptions import (
 
 
 def log_user_query(success, error):
+    """Logs functions, that manage users.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
@@ -29,6 +36,13 @@ def log_user_query(success, error):
 
 
 def log_get_query(success, error):
+    """Logs get query.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
@@ -49,6 +63,13 @@ def log_get_query(success, error):
 
 
 def log_add_query(success, error):
+    """Logs add query.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
@@ -72,6 +93,13 @@ def log_add_query(success, error):
 
 
 def log_edit_query(success, error):
+    """Logs edit query.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
@@ -94,6 +122,13 @@ def log_edit_query(success, error):
 
 
 def log_addto_query(success, error):
+    """Logs addto query.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):
@@ -124,6 +159,13 @@ def log_addto_query(success, error):
 
 
 def log_query(success, error):
+    """Logs common queries, like complete or remove.
+
+    :param success: success message
+    :param error: error message
+
+    """
+
     logger = logging.getLogger(LOGGER_NAME)
 
     def log(func):

@@ -1,0 +1,155 @@
+{% extends 'nxtodoapp/task/tasks.html' %}
+{% load filters %}
+
+
+{% block appcontent_list %}
+    <div class="task">
+        <h4 class="title">{{ task.title }}</h4>
+        <ul>
+            <li class="justify-content-between align-items-center d-flex"><h6>Deadline:</h6>
+                <span>{{ task.deadline|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Category:</h6>
+                <span>{{ task.category|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Priority:</h6>
+                <span>{{ task.priority|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Status:</h6>
+                <span>{{ task.status|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Created at:</h6>
+                <span>{{ task.created_at|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Created by:</h6>
+                <span>{{ task.created_by|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Description:</h6>
+                <span>{{ task.description|handle_blank }}</span></li>
+        </ul>
+    </div>
+
+
+    <div class="subtasks-container">
+        <label>Subtasks</label>
+        {% if readonly is False %}
+            <div class="subtask_form">
+                <form action="{% url 'tasks:addsubtask' id=task.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in subtask_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <button class="details-submit" type="submit">
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        {% if task.subtasks.all %}
+            {% for subtask in task.subtasks.all %}
+                <div class="entity-container">
+                    <a href="{% url 'tasks:details' id=subtask.id %}">{{ subtask.title }}</a>
+                    {% if readonly is False %}
+                        <a href="{% url 'tasks:removesubtask' id=task.id s_id=subtask.id %}">
+                            <span class="entity-icon glyphicon glyphicon-remove"></span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-gray">There is no subtasks yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="subtasks-container">
+        <label>Owners</label>
+        {% if readonly is False %}
+            <div class="subtask_form">
+                <form action="{% url 'tasks:addowner' id=task.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in owner_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <button class="details-submit" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+
+        {% for owner in task_owners %}
+            <div class="entity-container">
+                {% if user.username == owner.user_name %}
+                    <strong>me : </strong>{{ owner.access_level }}
+                {% else %}
+                    {{ owner.user_name }} : {{ owner.access_level }}
+                    {% if readonly is False %}
+                        <a href="{% url 'tasks:removeowner' id=task.id o_id=owner.user_name %}">
+                            <span class="entity-icon glyphicon glyphicon-remove"></span>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="subtasks-container">
+        <label>Reminders</label>
+        {% if readonly is False %}
+            <div class="subtask_form">
+                <form action="{% url 'tasks:addreminder' id=task.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in reminder_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <button class="details-submit" type="submit">
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        {% if task.reminders.all %}
+            {% for reminder in task.reminders.all %}
+                <div class="entity-container">
+                    <a href="{% url 'reminders:details' id=reminder.id %}">{{ reminder.id }}</a>
+                    {% if readonly is False %}
+                        <a href="{% url 'tasks:removereminder' id=task.id r_id=reminder.id %}">
+                            <span class="entity-icon glyphicon glyphicon-remove"></span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-gray">There is no reminders yet.</p>
+        {% endif %}
+    </div>
+
+
+
+
+{% endblock %}
+{% block appcontent_footer %}
+    <div class="footer_left col-lg-2">
+        <a href="{% url 'tasks:all' %}">
+            <span class="btn-cancel glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="footer_msg col-lg-8">
+        {% if readonly %}
+            <p>
+                <span class="glyphicon glyphicon-lock"></span>
+                You can not edit this task because you do not have enough rights.
+            </p>
+        {% endif %}
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="footer_right col-lg-2">
+        {% if readonly is False %}
+            <a href="{% url 'tasks:edit' id=task.id %}">
+                <button class="btn">Edit</button>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

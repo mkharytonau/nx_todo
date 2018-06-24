@@ -19,6 +19,13 @@ from nxtodo.queries.logging_decorators import log_edit_query
 @user_task_access
 def edit_task(user_name, task_id, title=None, description=None,
               category=None, deadline=None, priority=None):
+    """Edit task
+
+    If the next argument is not None, then change the corresponding
+    field to a new value.
+
+    """
+
     task = get_task(task_id)
     if title:
         task.title = title
@@ -39,6 +46,13 @@ def edit_task(user_name, task_id, title=None, description=None,
 def edit_event(user_name, event_id, title=None, description=None,
                category=None, priority=None, from_datetime=None,
                to_datetime=None, place=None):
+    """Edit event
+
+    If the next argument is not None, then change the corresponding
+    field to a new value.
+
+    """
+
     event = get_event(event_id)
     if title:
         event.title = title
@@ -62,6 +76,13 @@ def edit_event(user_name, event_id, title=None, description=None,
 @user_plan_access
 def edit_plan(user_name, plan_id, title=None, description=None,
               category=None, priority=None):
+    """Edit plan
+
+    If the next argument is not None, then change the corresponding
+    field to a new value.
+
+    """
+
     plan = get_plan(plan_id)
     if title:
         plan.title = title
@@ -81,6 +102,13 @@ def edit_reminder(user_name, reminder_id, description=None,
                   start_remind_before=None, start_remind_from=None,
                   stop_remind_in=None, remind_in=None, datetimes=None,
                   interval=None, weekdays=None):
+    """Edit reminder
+
+    If the next argument is not None, then change the corresponding
+    field to a new value.
+
+    """
+
     reminder = get_reminder(reminder_id)
     if description:
         reminder.description = description

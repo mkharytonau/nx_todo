@@ -20,6 +20,9 @@ from nxtodo.queries.logging_decorators import (
 @log_user_query("Successfully removed user '{}'",
                 "Error when removing '{}' user: ")
 def remove_user(name):
+    """
+    Remove user
+    """
     get_user(name).delete()
 
 
@@ -27,6 +30,9 @@ def remove_user(name):
            "Error when removing '{}' task by user '{}': ")
 @user_task_access
 def remove_task(user_name, task_id):
+    """
+    Remove task if it can be removed.
+    """
     get_task(task_id).delete()
 
 
@@ -34,6 +40,9 @@ def remove_task(user_name, task_id):
            "Error when removing '{}' event by user '{}': ")
 @user_event_access
 def remove_event(user_name, event_id):
+    """
+    Remove event if it can be removed.
+    """
     get_event(event_id).delete()
 
 
@@ -41,6 +50,9 @@ def remove_event(user_name, event_id):
            "Error when removed '{}' plan by user '{}': ")
 @user_plan_access
 def remove_plan(user_name, plan_id):
+    """
+    Remove plan if it can be removed.
+    """
     get_plan(plan_id).delete()
 
 
@@ -48,4 +60,7 @@ def remove_plan(user_name, plan_id):
            "Error when removing '{}' reminder by user '{}': ")
 @user_reminder_access
 def remove_reminder(user_name, reminder_id):
+    """
+    Remove reminder if it can be removed.
+    """
     get_reminder(reminder_id).delete()

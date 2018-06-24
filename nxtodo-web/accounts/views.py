@@ -12,6 +12,8 @@ def home(request):
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('/tasks/')
     args = {}
     args['form'] = SignupForm()
     if request.POST:
@@ -26,9 +28,7 @@ def signup(request):
             return redirect('/')
         else:
             args['form'] = user_form
-    # args = {
-    #     'form': current_form
-    # }
+
     return render(request, 'accounts/signup.html', args)
 
 

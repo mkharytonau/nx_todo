@@ -1,4 +1,5 @@
 from collections import namedtuple
+from datetime import timedelta
 
 from django.db import models
 from nxtodo.common import (
@@ -20,15 +21,17 @@ class Plan(Base):
 
     @classmethod
     def create(cls, title, description, category, priority, created_by):
-        """
-        This method creates plan.
+        """This method creates plan.
+
         :param title: plan title
         :param description: plan description
         :param category: plan category
         :param priority: plan priority
         :param created_by: username of the person, who created this plan.
         :return: plan object
+
         """
+
         plan = cls(
             title=title,
             description=description,
@@ -47,14 +50,16 @@ class Plan(Base):
         return Entities.PLAN
 
     def get_planned_objects(self, username, now):
-        """
-        This method returns tasks and events attached to plan with the time
+        """This method returns tasks and events attached to plan with the time
         in which they were supposed to be created.
+
         :param username: username, who get planned objects.
         :param now: now - datetime python object
         :return: PlannedObjects or None
+
         """
-        actual_date = self.get_notification(username, now)
+
+        actual_date = self.get_notification(username, now, timedelta(0))
         if not actual_date:
             return None
         PlannedObjects = namedtuple('PlannedObjects',

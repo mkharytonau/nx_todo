@@ -27,6 +27,7 @@ class Statuses(Enum):
     FAILED = 'failed'
     FULFILLED = 'fulfilled'
     PLANNED = 'planned'
+    RIGHTNOW = 'right_now'
 
 
 class AccessLevels(Enum):
@@ -44,3 +45,20 @@ class LogLevels(Enum):
     DISABLED = logging.CRITICAL
     INFO = logging.INFO
     ERROR = logging.ERROR
+
+
+class NotificationsStyles(Enum):
+    """
+    This enum represents notifications styles, which are used in nxtodo.
+    """
+    POSITIVE = 'positive'
+    MEDIUM = 'medium'
+    NEGATIVE = 'negative'
+
+
+class ReminderStatuses(Enum):
+    """
+    This enum represents reminder statuses, which are used in nxtodo.
+    """
+    ACTIVE = 'active'
+    ARCHIVED = 'archived'

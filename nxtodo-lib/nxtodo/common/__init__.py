@@ -20,5 +20,7 @@ from nxtodo.common.constants import (
     Entities,
     Statuses,
     AccessLevels,
-    LogLevels
+    LogLevels,
+    NotificationsStyles,
+    ReminderStatuses
 )

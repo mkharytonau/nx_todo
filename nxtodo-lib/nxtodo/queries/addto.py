@@ -34,6 +34,15 @@ from nxtodo.queries.logging_decorators import log_addto_query
                  "Error when adding {} owners to task '{}' by user '{}'")
 @user_task_access
 def add_owners_to_task(user_name, task_id, owners):
+    """Adds owners to task.
+
+    :param user_name: users name, who makes query
+    :param task_id: task id
+    :param owners: list of owners
+    :return:
+
+    """
+
     task = get_task(task_id)
     for owner in owners:
         user = get_user(owner.user_name)
@@ -50,6 +59,15 @@ def add_owners_to_task(user_name, task_id, owners):
                  "Error when adding {} subtasks to task '{}' by user '{}'")
 @user_task_access
 def add_subtasks_to_task(user_name, task_id, subtasks_ids):
+    """Adds subtasks to task.
+
+    :param user_name: users name, who makes query
+    :param task_id: task id
+    :param subtasks_ids: list of subtasks ids
+    :return:
+
+    """
+
     task = get_task(task_id)
     for id in subtasks_ids:
         subtask = get_task(id)
@@ -66,6 +84,15 @@ def add_subtasks_to_task(user_name, task_id, subtasks_ids):
                  "Error when adding {} reminders to task '{}' by user '{}'")
 @user_task_access
 def add_reminders_to_task(user_name, task_id, reminders_ids):
+    """Adds reminders to task.
+
+    :param user_name: users name, who makes query
+    :param task_id: task id
+    :param reminders_ids: list of reminders ids
+    :return:
+
+    """
+
     task = get_task(task_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
@@ -77,6 +104,15 @@ def add_reminders_to_task(user_name, task_id, reminders_ids):
                  "Error when adding {} participants to event '{}' by user '{}'")
 @user_event_access
 def add_participants_to_event(user_name, event_id, participants):
+    """Adds participants to event.
+
+    :param user_name: users name, who makes query
+    :param event_id: event id
+    :param participants: list of participants
+    :return:
+
+    """
+
     event = get_event(event_id)
     for participant in participants:
         user = get_user(participant.user_name)
@@ -93,6 +129,15 @@ def add_participants_to_event(user_name, event_id, participants):
                  "Error when adding {} reminders to event '{}' by user '{}'")
 @user_event_access
 def add_reminders_to_event(user_name, event_id, reminders_ids):
+    """Adds reminders to event.
+
+    :param user_name: users name, who makes query
+    :param event_id: event id
+    :param reminders_ids: list of reminder ids
+    :return:
+
+    """
+
     event = get_event(event_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
@@ -104,6 +149,15 @@ def add_reminders_to_event(user_name, event_id, reminders_ids):
                  "Error when adding {} tasks to plan '{}' by user '{}'")
 @user_plan_access
 def add_tasks_to_plan(user_name, plan_id, tasks_ids):
+    """Adds tasks to plan.
+
+    :param user_name: users name, who makes query.
+    :param plan_id: plan id
+    :param tasks_ids: list of tasks ids
+    :return:
+
+    """
+
     plan = get_plan(plan_id)
     for id in tasks_ids:
         task = get_task(id)
@@ -116,6 +170,14 @@ def add_tasks_to_plan(user_name, plan_id, tasks_ids):
                  "Error when adding {} events to plan '{}' by user '{}'")
 @user_plan_access
 def add_events_to_plan(user_name, plan_id, events_ids):
+    """Adds events to plan.
+
+    :param user_name: users name, who makes query
+    :param plan_id: plan id
+    :param events_ids: list of events ids
+
+    """
+
     plan = get_plan(plan_id)
     for id in events_ids:
         event = get_event(id)
@@ -128,6 +190,14 @@ def add_events_to_plan(user_name, plan_id, events_ids):
                  "Error when adding {} reminders to plan '{}' by user '{}'")
 @user_plan_access
 def add_reminders_to_plan(user_name, plan_id, reminders_ids):
+    """Adds reminders to plan.
+
+    :param user_name: users name, who makes query.
+    :param plan_id: plan id
+    :param reminders_ids: list of reminders ids
+
+    """
+
     plan = get_plan(plan_id)
     for id in reminders_ids:
         reminder = get_reminder(id)
@@ -139,6 +209,14 @@ def add_reminders_to_plan(user_name, plan_id, reminders_ids):
                  "Error when adding {} owners to plan '{}' by user '{}'")
 @user_plan_access
 def add_owners_to_plan(user_name, plan_id, owners):
+    """Adds owners to plan.
+
+    :param user_name: users name, who makes query.
+    :param plan_id: plan id
+    :param owners: list of owners ids
+
+    """
+
     plan = get_plan(plan_id)
     for owner in owners:
         user = get_user(owner.user_name)

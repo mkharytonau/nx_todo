@@ -1,0 +1,122 @@
+{% extends 'nxtodoapp/event/events.html' %}
+{% load filters %}
+
+
+{% block appcontent_list %}
+    <div class="task">
+        <h4 class="title">{{ event.title }}</h4>
+        <ul>
+            <li class="justify-content-between align-items-center d-flex"><h6>From:</h6>
+                <span>{{ event.from_datetime|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>To:</h6>
+                <span>{{ event.to_datetime|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Category:</h6>
+                <span>{{ event.category|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Priority:</h6>
+                <span>{{ event.priority|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Status:</h6>
+                <span>{{ event.status|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Created at:</h6>
+                <span>{{ event.created_at|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Created by:</h6>
+                <span>{{ event.created_by|handle_blank }}</span></li>
+            <li class="justify-content-between align-items-center d-flex"><h6>Description:</h6>
+                <span>{{ event.description|handle_blank }}</span></li>
+        </ul>
+    </div>
+
+
+    <div class="subtasks-container">
+        <label>Participants</label>
+        {% if readonly is False %}
+            <div class="subtask_form">
+                <form action="{% url 'events:addparticipant' id=event.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in owner_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <button class="details-submit" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+
+        {% for participant in event_participants %}
+            <div class="entity-container">
+                {% if user.username == participant.user_name %}
+                    <strong>me : </strong>{{ participant.access_level }}
+                {% else %}
+                    {{ participant.user_name }} : {{ participant.access_level }}
+                    {% if readonly is False %}
+                        <a href="{% url 'events:removeparticipant' id=event.id p_id=participant.user_name %}">
+                            <span class="entity-icon glyphicon glyphicon-remove"></span>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="subtasks-container">
+        <label>Reminders</label>
+        {% if readonly is False %}
+            <div class="subtask_form">
+                <form action="{% url 'events:addreminder' id=event.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in reminder_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <button class="details-submit" type="submit">
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        {% if event.reminders.all %}
+            {% for reminder in event.reminders.all %}
+                <div class="entity-container">
+                    <a href="{% url 'reminders:details' id=reminder.id %}">{{ reminder.id }}</a>
+                    {% if readonly is False %}
+                        <a href="{% url 'events:removereminder' id=event.id r_id=reminder.id %}">
+                            <span class="entity-icon glyphicon glyphicon-remove"></span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-gray">There is no reminders yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block appcontent_footer %}
+    <div class="footer_left col-lg-2">
+        <a href="{% url 'events:all' %}">
+            <span class="btn-cancel glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="footer_msg col-lg-8">
+        {% if readonly %}
+            <p>
+                <span class="glyphicon glyphicon-lock"></span>
+                You can not edit this event because you do not have enough rights.
+            </p>
+        {% endif %}
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="footer_right col-lg-2">
+        {% if readonly is False %}
+            <a href="{% url 'events:edit' id=event.id %}">
+                <button class="btn">Edit</button>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

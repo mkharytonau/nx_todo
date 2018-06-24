@@ -24,6 +24,7 @@ class Task(Base):
                priority, created_by):
         """
         This method creates task.
+
         :param title: task title
         :param description: task description
         :param category: task category
@@ -53,9 +54,11 @@ class Task(Base):
     def check_cycles(self, task):
         """
         This method check if there are no paths from the self to task.
+
         :param task:
         :return: boolean
         """
+
         is_cycle = False
         for subtask in self.subtasks.all():
             if task.id == subtask.id:
