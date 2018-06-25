@@ -7,7 +7,7 @@ def without_keys(d, keys):
     return {k: v for k, v in d.items() if k not in keys}
 
 
-def parse(arguments):
+def parse():
     parser = argparse.ArgumentParser(description='nxtodo')
     subparsers_for_entity = parser.add_subparsers(dest='entity')
     subparsers_for_entity.required = True

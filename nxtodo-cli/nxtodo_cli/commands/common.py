@@ -1,4 +1,5 @@
 import os
+import sys
 import configparser
 from nxtodo.common import LogLevels
 
@@ -8,7 +9,7 @@ def with_printing_exception(func):
         try:
             func(user_name, args)
         except Exception as e:
-            print(e)
+            print(e, file=sys.stderr)
 
     return wrapper
 

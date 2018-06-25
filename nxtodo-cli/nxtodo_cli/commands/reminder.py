@@ -1,3 +1,4 @@
+import sys
 from nxtodo import queries
 from nxtodo.common.exceptions import ObjectDoesNotFound
 from nxtodo_cli.commands.common import with_printing_exception
@@ -38,7 +39,7 @@ def show_reminder(user_name, args, config):
     try:
         reminders = queries.get_reminders(user_name, args.description, args.id)
     except ObjectDoesNotFound as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     show_reminder_table(reminders, config)

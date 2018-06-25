@@ -1,3 +1,4 @@
+import sys
 from nxtodo import queries
 from nxtodo.common import (
     Owner,
@@ -39,7 +40,7 @@ def show_plan(user_name, args, config):
         plans = queries.get_plans(user_name, args.title, args.category,
                                   args.priority, args.status, args.id)
     except ObjectDoesNotFound as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     show_plan_table(plans, config)

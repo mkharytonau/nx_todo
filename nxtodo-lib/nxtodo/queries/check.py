@@ -61,7 +61,11 @@ def check_plans(user, title=None, category=None, priority=None, status=None,
     """
     if not now:
         now = datetime.now()
-    plans = get_plans(user, title, category, priority, status, id)
+    try:
+        plans = get_plans(user, title, category, priority, status, id)
+    except:
+        plans = []
+
     for plan in plans:
         planned_objects = plan.get_planned_objects(user, now)
         if not planned_objects:

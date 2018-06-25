@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime
 
 from nxtodo import queries
@@ -54,7 +55,7 @@ def show_task(user_name, args, config):
             args.priority, args.status, args.id
         )
     except ObjectDoesNotFound as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     calendar = nxCalendar(datetime.today())
@@ -77,7 +78,7 @@ def show_task(user_name, args, config):
             raise ValueError('month_num is integer in range(0, 7),'
                              'please, check your config file.')
     except ValueError as e:
-        print(e)
+        print(e, file=sys.stderr)
         show_task_table(tasks, config)
         return
 
@@ -92,7 +93,7 @@ def check_task(user_name, args, config):
             args.priority, args.status, args.id
         )
     except Exception as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     show_notification_table(notifications, config)

@@ -1,8 +1,6 @@
 from datetime import timedelta
 from django import template
 from nxtodo import queries
-from datetime import datetime
-from nxtodo.reminding import Notification
 
 
 register = template.Library()
@@ -24,14 +22,6 @@ def notice_board(username):
     except:
         event_notifications = []
 
-    try:
-        queries.check_plans(username)
-    except:
-        pass
+    queries.check_plans(username)
 
-    test = [
-        Notification('Remind about some tasks!!!', datetime.now()),
-        Notification('Remind about some tasksww egwegw ewegegwege wgewgew!!!', datetime.now()),
-        Notification('wqgewgerq erqgeqrger  erGERQGerq erqG ergeger  ergrgrgreqg qeg!!!', datetime.now())
-    ]
     return {'notifications': task_notifications + event_notifications}
