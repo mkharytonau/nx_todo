@@ -1,13 +1,13 @@
 # Table of Contents
 * [nxtodo (lib)](#nxtodo-lib)
     * [Getting started](#getting-started)
-    * [Simple examples](#markdown-header-simple-examples)
-    * [Running the tests](#markdown-header-running-the-tests)
-* [nxtodo (cli)](#markdown-header-nxtodo-cli)
-    * [How to install?](#markdown-header-how-to-install)
-    * [Customize nxtodo](#markdown-header-customize-nxtodo)
-    * [How it works?](#markdown-header-how-it-works)
-    * [Simple work session](#markdown-header-simple-work-session)
+    * [Simple examples](#simple-examples)
+    * [Running the tests](#running-the-tests)
+* [nxtodo (cli)](#nxtodo-cli)
+    * [How to install?](#how-to-install)
+    * [Customize nxtodo](#customize-nxtodo)
+    * [How it works?](#how-it-works)
+    * [Simple work session](#simple-work-session)
 
 # nxtodo (lib)
 nxtodo - is a simple python library that will allow you to create applications
@@ -22,7 +22,7 @@ For ubuntu:
 $ sudo apt-get update
 $ sudo apt-get install postgresql postgresql-contrib
 ``` 
-###Installing
+### Installing
 Clone repository from bitbucket:
 ```
 $ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
@@ -31,7 +31,7 @@ Install using [pip3](https://pip.pypa.io/en/stable/):
 ```
 $ pip3 install nxtodo/nxtodo-lib/dist/nxtodo-1.0.tar.gz
 ```
-###Initializing
+### Initializing
 After downloading and installing PostgreSQL, you should initialize the nxtodo:
 
 For default:
@@ -48,7 +48,7 @@ For a more advanced configuration, use function with arguments:
    )
 ```      
 \**settings_module* - is a django [settings](https://docs.djangoproject.com/en/1.11/ref/settings/) module:
-###Configuration
+### Configuration
 If you want to use **already existing** database, you should only configure nxtodo:
 ```python
 >> nxtodo.configure()
@@ -57,18 +57,18 @@ or
 ```python
 >> nxtodo.configure('your_settings_module')
 ```
-##Simple examples
+## Simple examples
 Here you can find some simple examples to get you started.
 ```python
 >> import nxtodo
 >> nxtodo.configure()
 >> from nxtodo import queries
 ```
-###Adding task
+### Adding task
 ```python
 >> queries.add_task(executor='creator', title='simple_task')
 ```
-###Task with owners
+### Task with owners
 ```python
 >> from nxtodo.thirdparty import Owner, AccessLevels
 >> owners = [
@@ -78,7 +78,7 @@ Here you can find some simple examples to get you started.
 >> queries.add_task(executor='creator', title='task_with_owners', owners=owners)
 ```
 \* *note, that owners 'user_1' and 'user_2' must be existing nxtodo users.*
-###Getting tasks of user 'user_1'
+### Getting tasks of user 'user_1'
 ```python
 >> queries.get_tasks(user='user_1')
 <QuerySet [<Task: task_1>]>
@@ -88,11 +88,11 @@ And some filters:
 >> queries.get_tasks(user='user_1', category='sport', priority=2)
 <QuerySet [<Task: do_exercises>]>
 ```
-###Adding subtasks
+### Adding subtasks
 ```python
 >> queries.add_subtasks(user_name='user_1', task_id=to_task, subtasks_ids=[subtask1, subtask2 ...])
 ```
-###Create a reminder for 'user_1', which can remind in a week before deadline with a periodicity of one day and also remind 2018/06/07 at 17:00:00
+### Create a reminder for 'user_1', which can remind in a week before deadline with a periodicity of one day and also remind 2018/06/07 at 17:00:00
 ```python
 >> queries.add_reminder(
     user='user_1',
@@ -106,12 +106,12 @@ And this same reminder to another task:
 ```
 >> queries.add_reminders_to_task('user_1', task_2_id, [reminder_1, ...])
 ```
-###Getting notification from tasks, events
+### Getting notification from tasks, events
 ```python
 >> queries.get_tasks_notifications(user='user_1')
 >> queries.get_events_notifications(user='user_1')
 ```
-###And a bit more interesting:
+### And a bit more interesting:
 Create a plan by 'user_1', which will create common for users 'user_2'
     and 'user_3' task 'task_1' and event 'event_1' from 2018/06/10 10:00
     to 2018/07/20 20:30 with a periodicity of 8 hours, and on weekends.
@@ -136,7 +136,7 @@ Create a plan by 'user_1', which will create common for users 'user_2'
   )
 >> queries.check_plans(user='user_2')
 ```
-##Running the tests
+## Running the tests
 First, you need to initialize the database for tests:
 ```
 $ python3
@@ -149,9 +149,9 @@ Run all tests for nxtodo:
 ```
 $ python -m unittest discover nxtodo/nxtodo-lib/nxtodo/tests/ -v
 ```
-#nxtodo (cli)
+# nxtodo (cli)
 nxtodo_cli - is a console client for nxtodo library.
-##How to install?
+## How to install?
 Clone repository from bitbucket:
 ```
 $ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
@@ -160,28 +160,28 @@ Install using [pip3](https://pip.pypa.io/en/stable/):
 ```
 $ pip3 install nxtodo/nxtodo-cli/dist/nxtodo_cli-1.0.tar.gz
 ```
-##Customize nxtodo
+## Customize nxtodo
 After installing nxtodo_cli you can find '.nxtodo' folder in your home catalog. This folder contains 
 the **config file.** For example, you can set your colors for display, set the current user and some other parameters.
-##How it works?
+## How it works?
 Each command has two parts and additional arguments:
 ```
 $ nxtodo <entity> <action> <additional_arguments>
 ```
-####For example:
-#####Add user 
+#### For example:
+##### Add user 
 ```
 $ nxtodo user add -n username
 ```
-#####Create task 'simple task' with deadline 2018/07/10 10:00:00
+##### Create task 'simple task' with deadline 2018/07/10 10:00:00
 ```
 $ nxtodo task add -t 'simple task' -D '2018/07/10 10:00:00'
 ```
-#####Show tasks with category 'sport' and priority '1'
+##### Show tasks with category 'sport' and priority '1'
 ```
 $ nxtodo task show -c sport -p 1
 ```
-##Simple work session
+## Simple work session
 Creating users:
 ```commandline
 $ nxtodo user add -n nikita
@@ -343,7 +343,7 @@ Sun 17 24     1  8 15 22 29     5 12 19 26
 ```commandline
 $ nxtodo task -h
 ```
-##Author
+## Author
 Mikita Kharitonau, nikita.kharitonov99@gmail.com
 
 
