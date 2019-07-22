@@ -1,6 +1,6 @@
 # Table of Contents
-* [nxtodo (lib)](#markdown-header-nxtodo-lib)
-    * [Getting started](#markdown-header-getting-started)
+* [nxtodo (lib)](#nxtodo-lib)
+    * [Getting started](#getting-started)
     * [Simple examples](#markdown-header-simple-examples)
     * [Running the tests](#markdown-header-running-the-tests)
 * [nxtodo (cli)](#markdown-header-nxtodo-cli)
@@ -13,7 +13,7 @@
 nxtodo - is a simple python library that will allow you to create applications
 like todos. Users, tasks, events, plans, reminders - store them in the
 database and manage them as you want.
-##Getting started
+## Getting started
 nxtodo depends on a [PostgreSQL](https://www.postgresql.org/), open source 
 object-relational database. Please, install it before using nxtodo:
 
