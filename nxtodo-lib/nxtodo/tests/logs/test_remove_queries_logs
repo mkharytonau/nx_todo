@@ -106,3 +106,93 @@
 2018-06-15 13:05:32,983 - ERROR - Error when removing '739' task by user 'user_readonly': Permission denied, you can't edit '739' task. - wrapper
 2018-06-15 13:05:33,046 - INFO - Successfully removed '739' task by user 'queries_tester' - wrapper
 2018-06-15 13:05:33,079 - INFO - Successfully removed user 'user_1' - wrapper
+2019-07-23 10:41:55,068 - INFO - Successfully added user 'queries_tester' - wrapper
+2019-07-23 10:41:55,072 - INFO - Successfully added user 'user_readonly' - wrapper
+2019-07-23 10:41:55,074 - INFO - Successfully added user 'user_1' - wrapper
+2019-07-23 10:41:55,087 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '26' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:41:55,087 - INFO - Successfully added task id='26' by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,100 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '6' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:41:55,100 - INFO - Successfully added event id='6' by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,110 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '5' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:41:55,110 - INFO - Successfully added plan id='5' by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,114 - INFO - Successfully added reminder id='8' by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,117 - ERROR - Error when removing '6' event by user 'user_readonly': Permission denied, you can't edit '6' event. - wrapper
+2019-07-23 10:41:55,125 - INFO - Successfully removed '6' event by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,129 - ERROR - Error when removed '5' plan by user 'user_readonly': Permission denied, you can't edit '5' plan. - wrapper
+2019-07-23 10:41:55,138 - INFO - Successfully removed '5' plan by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,147 - INFO - Successfully removed '8' reminder by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,151 - ERROR - Error when removing '26' task by user 'user_readonly': Permission denied, you can't edit '26' task. - wrapper
+2019-07-23 10:41:55,161 - INFO - Successfully removed '26' task by user 'queries_tester' - wrapper
+2019-07-23 10:41:55,168 - INFO - Successfully removed user 'user_1' - wrapper
+2019-07-23 10:47:19,881 - INFO - Successfully added user 'queries_tester' - wrapper
+2019-07-23 10:47:19,883 - INFO - Successfully added user 'user_readonly' - wrapper
+2019-07-23 10:47:19,886 - INFO - Successfully added user 'user_1' - wrapper
+2019-07-23 10:47:19,898 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '52' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:47:19,898 - INFO - Successfully added task id='52' by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,911 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '12' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:47:19,911 - INFO - Successfully added event id='12' by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,919 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '10' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:47:19,919 - INFO - Successfully added plan id='10' by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,923 - INFO - Successfully added reminder id='16' by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,925 - ERROR - Error when removing '12' event by user 'user_readonly': Permission denied, you can't edit '12' event. - wrapper
+2019-07-23 10:47:19,933 - INFO - Successfully removed '12' event by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,937 - ERROR - Error when removed '10' plan by user 'user_readonly': Permission denied, you can't edit '10' plan. - wrapper
+2019-07-23 10:47:19,946 - INFO - Successfully removed '10' plan by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,957 - INFO - Successfully removed '16' reminder by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,961 - ERROR - Error when removing '52' task by user 'user_readonly': Permission denied, you can't edit '52' task. - wrapper
+2019-07-23 10:47:19,971 - INFO - Successfully removed '52' task by user 'queries_tester' - wrapper
+2019-07-23 10:47:19,978 - INFO - Successfully removed user 'user_1' - wrapper
+2019-07-23 10:48:10,822 - INFO - Successfully added user 'queries_tester' - wrapper
+2019-07-23 10:48:10,825 - INFO - Successfully added user 'user_readonly' - wrapper
+2019-07-23 10:48:10,828 - INFO - Successfully added user 'user_1' - wrapper
+2019-07-23 10:48:10,839 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '78' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:48:10,839 - INFO - Successfully added task id='78' by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,850 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '18' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:48:10,850 - INFO - Successfully added event id='18' by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,859 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '15' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:48:10,860 - INFO - Successfully added plan id='15' by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,863 - INFO - Successfully added reminder id='24' by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,866 - ERROR - Error when removing '18' event by user 'user_readonly': Permission denied, you can't edit '18' event. - wrapper
+2019-07-23 10:48:10,874 - INFO - Successfully removed '18' event by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,889 - ERROR - Error when removed '15' plan by user 'user_readonly': Permission denied, you can't edit '15' plan. - wrapper
+2019-07-23 10:48:10,908 - INFO - Successfully removed '15' plan by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,918 - INFO - Successfully removed '24' reminder by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,922 - ERROR - Error when removing '78' task by user 'user_readonly': Permission denied, you can't edit '78' task. - wrapper
+2019-07-23 10:48:10,932 - INFO - Successfully removed '78' task by user 'queries_tester' - wrapper
+2019-07-23 10:48:10,939 - INFO - Successfully removed user 'user_1' - wrapper
+2019-07-23 10:51:59,267 - INFO - Successfully added user 'queries_tester' - wrapper
+2019-07-23 10:51:59,269 - INFO - Successfully added user 'user_readonly' - wrapper
+2019-07-23 10:51:59,271 - INFO - Successfully added user 'user_1' - wrapper
+2019-07-23 10:51:59,280 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '107' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:51:59,280 - INFO - Successfully added task id='107' by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,291 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '26' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:51:59,291 - INFO - Successfully added event id='26' by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,304 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '21' by user 'nxtodo_admin' - wrapper
+2019-07-23 10:51:59,305 - INFO - Successfully added plan id='21' by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,308 - INFO - Successfully added reminder id='38' by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,312 - ERROR - Error when removing '26' event by user 'user_readonly': Permission denied, you can't edit '26' event. - wrapper
+2019-07-23 10:51:59,320 - INFO - Successfully removed '26' event by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,325 - ERROR - Error when removed '21' plan by user 'user_readonly': Permission denied, you can't edit '21' plan. - wrapper
+2019-07-23 10:51:59,333 - INFO - Successfully removed '21' plan by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,349 - INFO - Successfully removed '38' reminder by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,354 - ERROR - Error when removing '107' task by user 'user_readonly': Permission denied, you can't edit '107' task. - wrapper
+2019-07-23 10:51:59,363 - INFO - Successfully removed '107' task by user 'queries_tester' - wrapper
+2019-07-23 10:51:59,369 - INFO - Successfully removed user 'user_1' - wrapper
+2019-07-23 11:00:47,033 - INFO - Successfully added user 'queries_tester' - wrapper
+2019-07-23 11:00:47,035 - INFO - Successfully added user 'user_readonly' - wrapper
+2019-07-23 11:00:47,038 - INFO - Successfully added user 'user_1' - wrapper
+2019-07-23 11:00:47,047 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to task '136' by user 'nxtodo_admin' - wrapper
+2019-07-23 11:00:47,048 - INFO - Successfully added task id='136' by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,061 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] participants to event '34' by user 'nxtodo_admin' - wrapper
+2019-07-23 11:00:47,061 - INFO - Successfully added event id='34' by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,072 - INFO - Successfully added [Owner(user_name='queries_tester', access_level='edit'), Owner(user_name='user_readonly', access_level='readonly')] owners to plan '27' by user 'nxtodo_admin' - wrapper
+2019-07-23 11:00:47,072 - INFO - Successfully added plan id='27' by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,075 - INFO - Successfully added reminder id='52' by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,078 - ERROR - Error when removing '34' event by user 'user_readonly': Permission denied, you can't edit '34' event. - wrapper
+2019-07-23 11:00:47,088 - INFO - Successfully removed '34' event by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,092 - ERROR - Error when removed '27' plan by user 'user_readonly': Permission denied, you can't edit '27' plan. - wrapper
+2019-07-23 11:00:47,100 - INFO - Successfully removed '27' plan by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,109 - INFO - Successfully removed '52' reminder by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,113 - ERROR - Error when removing '136' task by user 'user_readonly': Permission denied, you can't edit '136' task. - wrapper
+2019-07-23 11:00:47,121 - INFO - Successfully removed '136' task by user 'queries_tester' - wrapper
+2019-07-23 11:00:47,127 - INFO - Successfully removed user 'user_1' - wrapper

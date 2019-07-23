@@ -1,3 +1,8 @@
+# nxtodo
+Users, tasks, events, plans, reminders - store and manage them as you want.
+
+![nxtodo](img/logo.png)
+
 # Table of Contents
 * [nxtodo (lib)](#nxtodo-lib)
     * [Getting started](#getting-started)
@@ -8,6 +13,9 @@
     * [Customize nxtodo](#customize-nxtodo)
     * [How it works?](#how-it-works)
     * [Simple work session](#simple-work-session)
+* [nxtodo (web)](#nxtodo-web)
+    * [How to run?](#how-to-run)
+    * [Some examples](#some-examples)
 
 # nxtodo (lib)
 nxtodo - is a simple python library that will allow you to create applications
@@ -20,27 +28,36 @@ object-relational database. Please, install it before using nxtodo:
 For ubuntu:
 ```
 $ sudo apt-get update
-$ sudo apt-get install postgresql postgresql-contrib
+$ sudo apt-get install postgresql postgresql-contrib libpq-dev
 ``` 
 ### Installing
-Clone repository from bitbucket:
+Clone this repository:
 ```
-$ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
+$ git clone https://github.com/Mikita-Kharitonau/nx_todo.git
 ```
-Install using [pip3](https://pip.pypa.io/en/stable/):
+Create and activate virtual environment, e. g. [virtualenv](https://virtualenv.pypa.io/en/stable/installation/):
 ```
-$ pip3 install nxtodo/nxtodo-lib/dist/nxtodo-1.0.tar.gz
+$ cd nx_todo
+$ virtualenv venv
+$ source venv/bin/activate
+```
+Create a source distribution, and then install using [pip](https://pip.pypa.io/en/stable/):
+```
+$ cd nxtodo-lib
+$ python3 setup.py sdist
+$ pip3 install ./dist/nxtodo-1.0.tar.gz
 ```
 ### Initializing
 After downloading and installing PostgreSQL, you should initialize the nxtodo:
 
 For default:
 ```python
+>> import nxtodo
 >> nxtodo.initialize()
 ```
 For a more advanced configuration, use function with arguments:
 ```python
->> initialize(
+>> nxtodo.initialize(
         psql_user='nxtodo',
         psql_password='todotodo',
         psql_db_name='nxtodo',
@@ -152,13 +169,26 @@ $ python -m unittest discover nxtodo/nxtodo-lib/nxtodo/tests/ -v
 # nxtodo (cli)
 nxtodo_cli - is a console client for nxtodo library.
 ## How to install?
-Clone repository from bitbucket:
+First of all, you need to have [nxtodo (lib)](#nxtodo-lib) installed and properly initialized on your machine:
 ```
-$ git clone https://kharivitalij@bitbucket.org/kharivitalij/nxtodo.git
+>> import nxtodo
+>> nxtodo.initialize(psql_db_name='nxtodo_cli')
 ```
-Install using [pip3](https://pip.pypa.io/en/stable/):
+Clone this repository:
 ```
-$ pip3 install nxtodo/nxtodo-cli/dist/nxtodo_cli-1.0.tar.gz
+$ git clone https://github.com/Mikita-Kharitonau/nx_todo.git
+```
+Create (or activate, if created) virtual environment, e. g. [virtualenv](https://virtualenv.pypa.io/en/stable/installation/):
+```
+$ cd nx_todo
+$ virtualenv venv
+$ source venv/bin/activate
+```
+Create a source distribution, and then install using [pip](https://pip.pypa.io/en/stable/):
+```
+$ cd nxtodo-cli
+$ python3 setup.py sdist
+$ pip3 install ./dist/nxtodo_cli-1.0.tar.gz
 ```
 ## Customize nxtodo
 After installing nxtodo_cli you can find '.nxtodo' folder in your home catalog. This folder contains 
@@ -343,6 +373,57 @@ Sun 17 24     1  8 15 22 29     5 12 19 26
 ```commandline
 $ nxtodo task -h
 ```
+
+# nxtodo (web)
+nxtodo web - it's a web client for nxtodo library.
+
+## How to run?
+First of all, you need to have [nxtodo (lib)](#nxtodo-lib) installed and properly initialized on your machine:
+```
+>> import nxtodo
+>> nxtodo.initialize(psql_db_name='nxtodo_web')
+```
+And then run as usual Django application:
+```
+$ cd nxtodo-web
+$ python3 manage.py migrate
+$ python3 manage.py runserver
+```
+
+## Some examples
+
+Here you can see some examples just how Web interface looks like.
+
+#### Getting started
+![Getting Started](img/getting_started.png)
+
+#### Sign up
+![Sign up](img/signup.png)
+
+#### Home view
+![Home view](img/home_view.png)
+
+#### Task creation
+![Task creation](img/task_creation.png)
+
+#### Task view
+![Task view](img/task_view.png)
+
+#### Task edit
+![Task edit](img/task_edit.png)
+
+#### Reminder creation
+![Reminder creation](img/reminder_creation.png)
+
+#### Reminder view
+![Reminder view](img/reminder_view.png)
+
+#### Plan creation
+![Plan creation](img/plan_creation.png)
+
+#### Reminders view
+![Reminders view](img/home_view2.png)
+
 ## Author
 Mikita Kharitonau, nikita.kharitonov99@gmail.com
 

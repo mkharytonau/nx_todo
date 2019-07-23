@@ -1,4 +1,7 @@
-from datetime import datetime
+from datetime import (
+    datetime,
+    timedelta
+)
 
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -95,7 +98,7 @@ class Reminder(models.Model):
         """
         return Entities.REMINDER
 
-    def notify(self, now, entity, maxdelta=0):
+    def notify(self, now, entity, maxdelta=timedelta(0)):
 
         """Entry point of reminder, this function identifies a type of entity
         and determines where 'now' is relative to the reminder in time.
