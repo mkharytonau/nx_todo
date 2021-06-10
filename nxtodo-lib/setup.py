@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'psycopg2-binary==2.7.4',
-        'django==1.11'
+        'django==2.2.24'
     ],
     license='MIT',
     author='kharivitalij',
